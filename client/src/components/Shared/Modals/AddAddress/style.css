@@ -1,0 +1,60 @@
+.add-address-modal {
+  background: #f8f8f8;
+  box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  max-width: 480px;
+  width: 100%;
+}
+.add-address-modal__header {
+  box-shadow: 0px 4px 4px rgba(204, 204, 204, 0.25);
+  border-radius: 10px 10px 0px 0px;
+  padding: 21px 29px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-address-modal__header span {
+    font-size: 16px;
+    font-weight: 700;
+}
+.add-address-modal__header button[type="submit"] {
+    color: #FF1F84;
+    background-color: transparent;
+    border: none;
+    outline: none!important;
+    font-weight: 600;
+}
+.add-address-modal__header img {
+    cursor: pointer;;
+}
+.add-address-modal__content {
+  padding: 17px 29px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-address-modal__content .form__row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.add-address-modal__content .form__row.column {
+    display: flex;
+    flex-direction: row;
+    gap: 31px;
+}
+.add-address-modal__content .form__row.column > div {
+    width: 100%;
+}
+.add-address-modal__content .form__row input {
+    border: 0.5px solid #CCCCCC;
+    height: 50px;
+}
+.add-address-modal__content .form__row .blends-select input {
+    height: 37px;
+}
+.add-address-modal__content .form__row .blends-select__control {
+    border: 0.5px solid #CCCCCC;
+}

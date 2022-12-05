@@ -1,0 +1,133 @@
+.swiper {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 52px;
+  overflow: unset;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imgBox {
+  height: 312px;
+  overflow: hidden;
+  position: relative;
+  /* box-shadow: 0px 0px 4px rgba(194, 194, 194, 0.25); */
+  border-radius: 10px;
+}
+
+.imgBox img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bgOverlay {
+  /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 1) 100%); */
+  width: 100%;
+  height: 44%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(220, 229, 223, 0) 0.19%,
+    #464646 108.6%
+  );
+}
+
+.textOverlay {
+  position: absolute;
+  bottom: 0;
+  padding: 10px;
+  color: #fff;
+  direction: rtl;
+  right: 15px;
+}
+
+.textOverlay p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 15px;
+  text-align: right;
+}
+
+.textOverlay h5 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  font-size: 18px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+  color: #fff;
+  text-align: right;
+}
+
+.swiper-pagination-bullet {
+  background-color: #d0dcd4;
+  opacity: 1;
+}
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background-color: #aec2b4;
+}
+
+.prev-slide,
+.next-slide {
+  border: none;
+  outline: none!important;
+  background: #ffffffc2;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+}
+.next-slide {
+    right: 0;
+}
+.prev-slide {
+    left: 0;
+}
+@media screen and (max-width: 480px) {
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+  }
+}

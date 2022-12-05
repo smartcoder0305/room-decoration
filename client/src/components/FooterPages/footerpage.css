@@ -1,0 +1,82 @@
+.button_bx {
+    background-color: #ffffff;
+    padding: 15px 15px;
+    position: fixed;
+    border: 1px solid #b4aeae7d;
+    bottom: 0;
+    left: 0;
+    right: 0px;
+    text-align: center;
+    box-shadow: 0px 40px 100px;
+}
+.site-whtbtn {
+    width: 195px;
+    height: 47.28px;
+    color: #E6166C;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    margin: auto;
+    background: #FFFFFF;
+    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+    border: 1px solid #A8A8A8;
+    border-radius: 10px;
+}
+.site-whtbtn:hover{
+   background-color:#E6166C;
+   border-color:#E6166C;
+   color:#ffffff;
+}
+.text_area {
+    padding-bottom: 80px;
+    overflow-y: scroll;
+}
+.text_area::-webkit-scrollbar {
+    width: 7px;
+}
+
+.text_area::-webkit-scrollbar-track {
+   background:transparent;
+}
+
+.text_area::-webkit-scrollbar-thumb {
+    background: #C4C4C4;
+    outline: 1px solid #C4C4C4;
+}
+
+@media only screen and (min-height: 770px) and (max-height: 900px)  {
+    .fixed-to-bottom-btn {
+        position: absolute !important;
+        bottom: 0 !important;
+        width: 100% !important;
+    }
+    .sk-foo{
+        height: 25vh;
+    }
+}
+.footer-link-page-haders{
+    margin-left: auto;
+    margin-right: auto;
+}
+.footer-link-page-haders p{
+    font-size: 16px;
+    font-weight: 700;
+    font-family: Rubik;
+}
+
+.site-header{
+    padding: 15px 0 0 0;
+    box-shadow: 0px 1px 8px -1px rgba(0,0,0,0.10);
+    background: #fff;
+}
+
+@media only screen and (max-width:480px){
+    .site-header{
+        padding: 15px 0 0 0;
+    }
+}

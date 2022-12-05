@@ -1,0 +1,56 @@
+.btn {
+    padding: 12px 15px 12px 15px;
+    border-radius: 3px;
+    margin: 0px 8px 0px 8px;
+    color: #fbdedb;
+    background-color: #fbdedb;
+    display: inline-block;
+    background: #e74c3c;
+    transition: 0.3s;
+    font-family: sans-serif;
+    font-weight: 800;
+    font-size: .85em;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0em -0.3rem 0em rgb(0 0 0 / 10%) inset;
+    position: relative;
+}
+.btn:hover, .btn:focus {
+    opacity: 0.8;
+}
+.btn:active {
+    -webkit-transform: scale(0.80);
+    -moz-transform: scale(0.80);
+    -ms-transform: scale(0.80);
+    -o-transform: scale(0.80);
+    transform: scale(0.80);
+}
+.btn.block {
+    display: block !important;
+}
+.btn.circular {
+  border-radius: 50em !important;
+}
+.blue {
+    background-color: #7abedf;
+}
+.red{
+    background-color: #c74f2b;
+}
+
+
+
+@media screen and (max-width: 480px) {
+    .odd td{
+        min-width: 150px;
+    }
+    
+    .MainDash {
+        display: block;
+        overflow-x: auto;
+    }
+    .dataTables_wrapper{
+        overflow-x: auto;
+    }
+}

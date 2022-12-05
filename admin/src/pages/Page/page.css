@@ -1,0 +1,28 @@
+.page-name-input {
+    width: 100%;
+}
+
+.page-name-input input {
+    width: 50%;
+}
+
+.add-page-button {
+    width: 25%;
+}
+
+@media screen and (max-width: 480px) {
+    .page-name-input input {
+        width: 90%;
+    }
+
+    .add-page-button {
+        width: 100%;
+        margin-bottom: 50px !important;
+    }
+}
+.upload-page-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    margin-bottom: 50px;
+}

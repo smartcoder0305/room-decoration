@@ -1,0 +1,51 @@
+
+  /* .first-sk-loader-header{
+    width: 25px;
+    height: 25px;
+  } */
+
+  @media screen and (max-width: 480px) {
+    .skeleton-loader {
+
+      display: block;
+      background: #F5F5F5;
+      background-repeat: repeat-y;
+      background-size: 50px 500px;
+      background-position: 0 0;
+      animation: shine 1s infinite;	  
+    }
+    @keyframes shine {	
+      to {
+        background-position: 100% 0, /* move highlight to right */ 0 0;
+      }
+    }
+    .first-sk-loader{
+      width: 100%;
+      height: 250px;
+    }
+    .second-sk-loader{
+      width: 25%;
+      height: 80px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  
+    .third-sk-loader{
+      width: 35%;
+      height: 15px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 15px;
+    }
+    .fourth-sk-loader{
+      width: 90%;
+      height: 50px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 20px;
+    }
+    .first-sk-loader-header{
+      width: 25px;
+      height: 25px;
+    }
+}

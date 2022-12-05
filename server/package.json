@@ -1,0 +1,31 @@
+{
+  "name": "stk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "base64-img": "^1.0.4",
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "filestack-js": "^3.25.0",
+    "fs": "^0.0.1-security",
+    "jimp": "^0.16.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.3",
+    "mongoose": "^6.2.0",
+    "multer": "^1.4.4",
+    "nanoid": "^4.0.0",
+    "node-fetch": "^2.6.7",
+    "request": "^2.88.2",
+    "request-progress": "^3.0.0",
+    "sharp": "^0.30.0"
+  }
+}

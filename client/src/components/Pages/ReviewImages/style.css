@@ -1,0 +1,264 @@
+.preview-image__wrapper {
+  padding: 87px 64px;
+}
+
+.upload-form {
+  top: 150%;
+  transition: all 0.3s ease-in-out;
+}
+.upload-form.show {
+  top: 50%;
+}
+.additional-info-mobile {
+  text-align: center;
+
+  font-weight: 700;
+  margin-top: 35px;
+}
+.additional-info-mobile img {
+  margin-bottom: 5px;
+}
+.additional-info-mobile p {
+  margin-bottom: 2px;
+  font-size: 18px;
+  line-height: 21px;
+}
+.checkout-wrapper {
+  padding: 140px 36px 0 36px;
+  border-right: 2px solid rgb(196 196 196 / 40%);
+}
+.aside-checkout {
+  text-align: center;
+}
+.aside-checkout h1 {
+  font-size: 24px;
+  line-height: 18px;
+  font-weight: 400;
+  margin-bottom: 9px;
+}
+.checkout-btn {
+  width: 212px;
+}
+.review-images-wrapper {
+  display: grid;
+  grid-template-columns: 25% 75%;
+  height: calc(100% - 220px);
+}
+.gift-list {
+}
+.gift {
+  margin-top: 83px;
+}
+.gift h2 {
+  text-align: right;
+  margin-bottom: 22px;
+}
+ul.gift-list li {
+  padding: 0;
+  left: unset;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.alert-icon {
+  position: absolute;
+  width: 20px!important;
+  height: 20px!important;
+  z-index: 20;
+  top: 15px;
+  left: 15px;
+  cursor: pointer;
+}
+.album-item-wrapper {
+  position: relative;
+  height: 260px;
+    width: 260px;
+}
+
+.album-item-wrapper .img-con {
+  position: absolute;
+  background-image: none!important;
+  z-index: 1;
+  object-fit: cover;
+}
+
+.album-item-wrapper .img-con.ever {
+  width: 230px;
+  left: 14px;
+  top: 11px;
+}
+.album-item-wrapper .img-con.classic {
+  width: 169px;
+  left: 47px;
+  top: 43px;
+}
+
+.album-item-wrapper .img-con.bold {
+  width: 226px;
+  left: 17px;
+  top: 14px;
+}
+
+.album-item-wrapper .img-con.clean {
+  width: 180px;
+  left: 40px;
+  top: 38px;
+}
+.my-album .album-item {
+  z-index: 2;
+}
+
+@media screen and (max-width: 1199px) {
+  .album-item-wrapper {
+    width: 170px;
+    height: 170px;
+  }
+  .album-item-wrapper .img-con.ever {
+    width: 147px;
+    left: 10px;
+    top: 7px;
+  }
+  .album-item-wrapper .img-con.classic {
+    width: 111px;
+    left: 31px;
+    top: 28px;
+  }
+  
+  .album-item-wrapper .img-con.bold {
+    width: 148px;
+    left: 11px;
+    top: 9px;
+  }
+  
+  .album-item-wrapper .img-con.clean {
+    width: 117px;
+    left: 26px;
+    top: 25px;
+  }
+}
+@media screen and (max-width: 1270px) {
+  .album-item-wrapper {
+    width: 220px;
+    height: 220px;
+  }
+  .album-item-wrapper .img-con.ever {
+    width: 190px;
+    left: 12px;
+    top: 10px;
+  }
+  .album-item-wrapper .img-con.classic {
+    width: 142px;
+    left: 41px;
+    top: 38px;
+  }
+  
+  .album-item-wrapper .img-con.bold {
+    width: 192px;
+    left: 14px;
+    top: 11px;
+  }
+  
+  .album-item-wrapper .img-con.clean {
+    width: 152px;
+    left: 34px;
+    top: 31px;
+  }
+}
+@media screen and (max-width: 1199px) {
+
+  .album-item-wrapper {
+    width: 170px;
+    height: 170px;
+  }
+  .album-item-wrapper .img-con.ever {
+    width: 147px;
+    left: 10px;
+    top: 7px;
+  }
+  .album-item-wrapper .img-con.classic {
+    width: 111px;
+    left: 31px;
+    top: 28px;
+  }
+  
+  .album-item-wrapper .img-con.bold {
+    width: 148px;
+    left: 11px;
+    top: 9px;
+  }
+  
+  .album-item-wrapper .img-con.clean {
+    width: 117px;
+    left: 27px;
+    top: 25px;
+  }
+
+}
+@media screen and (max-width: 767px) {
+  .review-images-wrapper {
+    grid-template-columns: 1fr;
+  }
+  .trx {
+    overflow: hidden;
+  }
+  .my-album .classic .img-con {
+    top: -3px !important;
+    right: -1px !important;
+    height: 65%;
+    width: 65%;
+  }
+
+  .my-album .bold .img-con {
+    top: -4px !important;
+    right: 0px !important;
+    height: 87% !important;
+    width: 87% !important;
+  }
+
+  .my-album .evet .img-con {
+    height: 87% !important;
+    width: 87% !important;
+    top: -4px !important;
+    right: 2px !important;
+  }
+
+  .my-album .clean .img-con {
+    height: 68% !important;
+    width: 68% !important;
+    top: -3px !important;
+    right: 0px !important;
+  }
+
+
+  .album-item-wrapper .img-con.ever {
+    width: 216px;
+    left: 14px;
+    top: 11px;
+  }
+  .album-item-wrapper .img-con.classic {
+    width: 162px;
+    left: 47px;
+    top: 42px;
+  }
+  
+  .album-item-wrapper .img-con.bold {
+    width: 218px;
+    left: 16px;
+    top: 13px;
+  }
+  
+  .album-item-wrapper .img-con.clean {
+    width: 173px;
+    left: 39px;
+    top: 36px;
+  }
+  .my-album .album-item:not(:last-child) {
+    width: 250px;
+    height: 250px;
+  }
+  .album-item-wrapper {
+    width: 250px;
+    height: 250px;
+  }
+}

@@ -1,0 +1,111 @@
+.closebtn {
+    border: none;
+    outline: none!important;
+    background-color: transparent;
+    right: 20px;
+    top: 20px;
+}
+.card-and-address-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 19px;
+    padding-bottom: 33px;
+    border-bottom: 1px solid #727272;
+    width: 100%;
+}
+.checkout-card-wrapper {
+    padding: 0 29px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100%;
+}
+.card-and-address-buttons button {
+    border: none;
+    background-color: transparent;
+    outline: none!important;
+    color: #FF1F84;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: bold;
+}
+.card-and-address-buttons button.checked {
+    color: #000;
+}
+.checkout-calculation {
+   
+}
+
+.checkout-calculation__info {
+    color: #087E63;
+    display: flex;
+    gap: 11px;
+    align-items: center;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 500;
+    padding-top: 26px;
+    margin-bottom: 56px;
+}
+.checkout-calculation__info p {
+    margin-bottom: 0;
+}
+
+.price__table {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.price__table--row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 500;
+}
+
+.price__table--row.total {
+    color: #B12704;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+
+}
+.price__table--row.total div:nth-child(1) {
+    font-size: 24px;
+}
+
+.checkout-button-wrapper {
+    text-align: center;
+    width: 100%;
+    padding-top: 40px;
+}
+
+.checkout-button-wrapper button {
+    width: 200px;
+    height: 50px;
+    color: #fff;
+    border: none;
+    outline: none!important;
+    background-color: #FF1F84;
+    border-radius: 5px;
+}
+.checkout-button-wrapper button:disabled {
+    background-color: #F3F6F4;
+    pointer-events: none;
+    margin-bottom: 15px;
+}
+.checkout-button-wrapper p {
+    color: #FF1F84;
+    font-size: 15px;
+    line-height: 17px;
+    font-weight: 400;
+}

@@ -1,0 +1,42 @@
+.add-card-modal {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 10px;
+    background: #FFFFFF;
+box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 0.15);
+border-radius: 15px;
+width: 100%;
+max-width: 400px;
+}
+
+.add-card-modal button {
+    background-color: transparent;
+    border: none;
+    outline: none!important;
+    padding: 9px 17px;
+    text-align: right;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 45px;
+    gap: 18px;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    text-align: right;
+}
+.add-card-modal button img {
+    margin: 0 auto;
+}
+.add-card-modal ul {
+    border-top: 1px solid #CECECE;
+}
+.add-card-modal ul li {
+    left: 0;
+    line-height: 1;
+    width: 100%;
+    border-bottom: 1px solid #CECECE;
+}
+.add-card-modal ul li:last-child {
+    border-bottom: none;
+}

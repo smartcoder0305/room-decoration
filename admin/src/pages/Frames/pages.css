@@ -1,0 +1,14 @@
+.quill {
+    background-color: #fff;
+}
+.scrollable-element {
+    scrollbar-color: red yellow;
+  }
+  .upload-page-btn{
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+  }
+  .css-jpln7h-MuiTabs-scroller {
+    overflow-x: auto !important;
+  }

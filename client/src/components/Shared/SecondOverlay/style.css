@@ -1,0 +1,13 @@
+.second-overlay.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+.second-overlay {
+    transition: all .4s ease-in-out;
+    background: #737171b5;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    height: 100%;
+}

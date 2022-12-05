@@ -1,0 +1,7 @@
+.overlay_cart.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+.overlay_cart {
+    transition: all .4s ease-in-out;
+}

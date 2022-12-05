@@ -1,0 +1,31 @@
+.dataTables_wrapper{
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 50px;
+}
+.table-frame-img{
+    width: 40px;
+    margin: 0px 20px;
+}
+
+.table-image-td{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.table-action-td{
+    min-width: 100px;
+}
+.table-cardnumber-td{
+    min-width: 165px;
+}
+table.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {
+    /* border-top: none; */
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.order-stable-orderpage-link{
+    text-decoration: none;
+    color: #000;
+}

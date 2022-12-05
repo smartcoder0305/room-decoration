@@ -1,0 +1,64 @@
+.confirm-delete-modal {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 20px);
+  gap: 10px;
+  max-width: 540px;
+  margin: 0 10px;
+  bottom: 46px;
+  position: absolute;
+}
+.confirm-delete__preview {
+  background-color: #fff;
+  padding: 29px 29px 21px;
+  text-align: center;
+  box-shadow: 0px 0px 15px 10px rgba(204, 204, 204, 0.5);
+  border-radius: 8px;
+}
+.confirm-delete__preview img {
+  width: 142px;
+  margin-bottom: 25px;
+  margin-top: 35px;
+}
+.confirm-delete__preview h2 {
+    font-size: 18px;
+    line-height: 21px;
+    font-weight: 600;
+    color: #304036;
+}
+.confirm-delete__preview .description {
+  color: #919191;
+  text-align: center;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 600;
+  max-width: 272px;
+  margin: 0 auto;
+}
+.confirm-delete__actions {
+  background-color: #fff;
+  padding: 0 10px;
+  box-shadow: 0px 0px 15px 10px rgba(204, 204, 204, 0.5);
+  border-radius: 8px;
+}
+.confirm-delete__actions button {
+  background-color: transparent;
+  border: none;
+  outline: none !important;
+  font-size: 14px;
+  line-height: 16px;
+  color: #304036;
+  font-weight: 600;
+  width: 100%;
+  padding: 19px 0;
+}
+.confirm-delete__actions .delete {
+  color: #e64d00;
+  border-bottom: 1px solid #f8f8f8;
+}
+
+@media screen and (max-width: 767px) {
+    .confirm-delete-modal {
+        bottom: 10px;
+    }
+}

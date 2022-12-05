@@ -1,0 +1,42 @@
+.mobile-checkout {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 16px 0 15px;
+    background-color: #fff;
+
+}
+.mobile-checkout-info {
+    margin-bottom: 16px;
+    text-align: center;
+    color: #087E63;
+}
+.mobile-checkout-info p {
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1;
+}
+.mobile-checkout-button {
+    width: calc(100% - 30px);
+    margin: 0 auto;
+
+}
+.mobile-checkout-button a {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 17px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.file {
+    bottom: 80px;
+}
+
+.mobile-checkout-modal {
+    position: fixed;
+    background-color: #fff;
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+}
