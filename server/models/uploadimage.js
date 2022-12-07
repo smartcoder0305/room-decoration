@@ -49,6 +49,10 @@ const UploadimageSchema = new mongoose.Schema({
     date:{
         type:Number,
         default:Date.now
+    },
+    keepImage: {
+        required: false,
+        type: Boolean
     }
 },{
     timestamps: true

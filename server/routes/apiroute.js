@@ -114,7 +114,7 @@ router.get("/delete_image_by_user/:uid", imagedelete);
 router.post("/imageupload_single", imageuploadsing, imageupload);
 router.post("/cropped_img", cropped_img);
 router.post("/socialimage_upload", social_image_upload);
-router.get("/image_keep/:id", image_keep);
+router.put("/image_keep/:id", image_keep);
 router.post("/frameselected", setframe);
 
 router.post("/social-photo-import", uploadSocialPhoto, socialPhotoImport);

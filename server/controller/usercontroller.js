@@ -302,6 +302,7 @@ exports.imagedelete = async (req, res) => {
   });
 };
 
+
 // exports.cropped_img = async (req, res) => {
 
 //   var base64Str = req.body.base64Image;
@@ -427,19 +428,21 @@ exports.social_image_upload = async (requ, resp) => {
 };
 
 exports.image_keep = async (req, res) => {
-  console.log(req.params.id);
-  var query = { _id: req.params.id };
-  updated = { imageext: 1 };
+  console.log("image_keep",req.params.id);
+  let query = { _id: req.params.id };
+  updated = { keepImage: true };
 
-  var response = await Uploadimg.findOneAndUpdate(
+  const response = await Uploadimg.findOneAndUpdate(
     query,
     updated,
-    { upsert: true },
-    function (err, doc) {
-      if (err) return res.send(500, { error: err });
-      return res.send("Succesfully saved.");
-    }
+    { upsert: true }
   );
+  
+  if(response){
+      res.status(200).json({
+        message: "Image Save Sucessfully",
+      });
+    }
 };
 
 exports.paymentProcessing = async (req, res) => {
@@ -548,7 +551,7 @@ exports.paymentProcessing = async (req, res) => {
 
 
 
-          
+
 
           const data = {
             finalPrice,

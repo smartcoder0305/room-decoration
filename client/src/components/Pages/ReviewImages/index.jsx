@@ -76,8 +76,8 @@ const ReviewImages = () => {
   }
 
   const keep_image = (id) => {
-    axios.get(BASE_URL + "/image_keep/" + id).then((v) => {
-      getimagesdb();
+    axios.put(BASE_URL + "/image_keep/" + id).then((v) => {
+      console.log("keep_image")
     });
   };
 
@@ -92,6 +92,7 @@ const ReviewImages = () => {
     if (lowImage) {
       modal("open", "deleteConfirm", {
         data: lowImage,
+        onKeepImage: (id) => keep_image(id),
         onDelete: () =>
           removeImage(lowImage._id).then(() => {
             setCount(count + 1);

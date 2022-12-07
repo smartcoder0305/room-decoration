@@ -22,6 +22,7 @@ import './style.css'
     const imageId = modalData.data._id;
     const updateImages = images.map(item => item._id === imageId ? ({ ...item, keepImage: true }) : item);
     setImages(updateImages);
+    modalData.onKeepImage(imageId);
     handleCloseModal('deleteConfirm');
   }
 
