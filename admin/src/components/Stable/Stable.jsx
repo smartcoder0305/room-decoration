@@ -25,7 +25,7 @@ function Stable({ myData, header }) {
   }, []);
 
   const downloadImageZip = (url,zipName) => {
-    let newImgArr = url.map((data) => `${MAIN_URL}/${data.view_image}`);
+    let newImgArr = url.map((data) => `${data.view_image}`);
     console.log(newImgArr);
     const zipFileName = `imagesZip_${zipName}`;
     downloadImagesAsZip.execute(newImgArr, zipFileName, function () {
@@ -35,7 +35,7 @@ function Stable({ myData, header }) {
 
   const downloadImages = (url) => {
     for (let i = 0; i < url.length; i++) {
-      const newUrl = `${MAIN_URL}/${url[i].view_image}`;
+      const newUrl = `${url[i].view_image}`;
       const imgName = url[i].view_image;
       downloadEmployeeData(newUrl, imgName);
     }

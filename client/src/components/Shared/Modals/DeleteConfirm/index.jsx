@@ -11,7 +11,7 @@ import './style.css'
 
     const MAIN_URL = process.env.REACT_APP_MAIN_URL;
 
-  const imageUrl = `${MAIN_URL}/${modalData?.data?.image}`;
+  const imageUrl = `${modalData?.data?.image}`;
 
   const handleDeleteImage = () => {
     modalData.onDelete();

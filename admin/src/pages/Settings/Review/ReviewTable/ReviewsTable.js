@@ -124,7 +124,7 @@ function ReviewsTable() {
                   {row.review.length > 80 ? <>.....</> : null}
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="row">
-                  <img className="review-images" src={`${MAIN_URL}${row.image}`} />
+                  <img className="review-images" src={`${row.image}`} />
                 </StyledTableCell>
                 <StyledTableCell align="left">
                 <IconButton

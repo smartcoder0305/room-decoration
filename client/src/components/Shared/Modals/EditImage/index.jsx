@@ -144,7 +144,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
             initialAspectRatio={1}
             preview=".img-preview"
             checkCrossOrigin={true}
-            src={`${MAIN_URL}/${imageonpopup.image}`}
+            src={`${imageonpopup.image}`}
             viewMode={3}
             autoCropArea={1}
             guides={false}

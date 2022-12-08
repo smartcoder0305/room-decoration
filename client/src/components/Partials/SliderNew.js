@@ -89,7 +89,7 @@ const SliderNew = () => {
               <SwiperSlide key={data._id}>
                 <div className="imgBox">
                   <a className="boxLink" href="#">
-                    <img src={`${MAIN_URL}${data.image}`} alt="" />
+                    <img src={`${data.image}`} alt="" />
                     <div className="bgOverlay">
                       <div className="textOverlay">
                         <h5>{data.customerName}</h5>

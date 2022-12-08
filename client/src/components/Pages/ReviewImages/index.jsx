@@ -242,7 +242,7 @@ const ReviewImages = () => {
           )}
         </div>
         <img
-            src={`${MAIN_URL}/${im.view_image}`}
+            src={`${im.view_image}`}
             className={cn(`img-con ${frameChoose}`)}
             alt="icon"
           />

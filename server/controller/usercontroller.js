@@ -15,21 +15,14 @@ const moment = require("moment");
 
 const filestack = require("filestack-js");
 const { exit } = require("process");
+const filestack_client = filestack.init("A91T8CN73Qa64EuVi4Kkgz"); // Champ
 // const filestack_client = filestack.init("AjG97B0OhQvK5XYN9228xz"); // Champ
 //const filestack_client = filestack.init("A91T8CN73Qa64EuVi4Kkgz"); // Client
 
-const multerconfig = multer.diskStorage({
-  destination: (req, res, callback) => {
-    callback(null, "public/images");
-  },
-  filename: (req, file, callback) => {
-    const ext = file.mimetype.split("/")[1];
-    callback(null, `image_${Date.now()}.${ext}`);
-  },
-});
+const storage = multer.memoryStorage()
 
 const upload = multer({
-  storage: multerconfig,
+  storage: storage,
 });
 
 exports.uploadImage = upload.array("image", 20);
@@ -50,27 +43,19 @@ exports.imageupload = async (req, res) => {
     var crop_size = original_img_height;
   }
 
-  sharp("public/images/" + req.file.filename)
-    .rotate()
-    .resize(crop_size, crop_size)
-    .toFile("public/images/upload" + req.file.filename)
-    .then((data) => {
-      // console.log("succ",data)
-    })
-    .catch((err) => {
-      //console.log(err)
-    });
+  const filestackPromise = filestack_client.upload(req.file.buffer,undefined, {
+    filename: req.file.originalname
+  });
+  const filestackResponse = await filestackPromise;
+  console.log("filestackResponse", filestackResponse);
 
-  const original_file_path = "public/images/" + req.file.filename;
-  const viewimageFileName = "public/images/upload" + req.file.filename;
+  const handle = filestackResponse.handle;
+
+  const original_file_path = filestackResponse.url;
+  //const viewimageFileName = `https://cdn.filestackcontent.com/smart_crop=width:${crop_size},height:${crop_size},mode:auto/${handle}`;
+  const viewimageFileName = `https://cdn.filestackcontent.com/resize=height:${crop_size},width:${crop_size},fit:crop/${handle}`;
   console.log(original_file_path);
-  //filestack_client.upload("../public/images/" + req.file.filename);
-  //filestack_client.upload( "../public/images/" + req.file.filename ).then( res => console.log(res) );
 
-  // const imgurl =
-  //   "https://stickable-admin.yeshostings.com/public/images/image_1645898571016.jpeg";
-  //.storeURL(imgurl)
-  // filestack_client.upload(original_file_path).then(async (flstk_res) => {
   img = req.files;
   var cropbox_data = {
     height: crop_size,
@@ -90,61 +75,36 @@ exports.imageupload = async (req, res) => {
     cropbox_data: cropbox_data,
     zoomvalue: 0,
     rotate: 0,
+    handle
     // filestack_data: flstk_res,
   };
   //console.log(req.file);
-  const response = await Uploadimg.create(new_ar);
-  res.status(200).json({
-    success: "Successfully added",
-  });
-  // })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-
-  /* img = req.files;
-  var cropbox_data = {
-    height: crop_size,
-    width: crop_size,
-    top: 0,
-    left: 0,
-  };
-  var new_ar = {
-    uid: req.body.uid,
-    //image: req.file.filename,
-    image: original_file_path,
-    imageheight: req.body.imageheight,
-    imagewidth: req.body.imagewidth,
-    imageext: req.body.imageext,
-    view_image: req.file.filename,
-    cropbox_data: cropbox_data,
-    zoomvalue: 0,
-    rotate: 0,
-    //filestack_data: flstk_res,
-  };
-  //console.log(req.file);
-  const response = await Uploadimg.create(new_ar);
-  res.status(200).json({
-    success: "Successfully added",
-  }); */
+  const response = Uploadimg.create(new_ar);
+  Promise.all([filestackPromise, response]).then(()=>{
+    res.status(200).json({
+      success: "Successfully added",
+    }); 
+  })
 };
 
 exports.upload = async (req, res) => {
   console.log(req.files);
   console.log(req.body);
+
   for (var i = 0; i < req.files.length; i++) {
     img = req.files[i];
-    // const original_file_path = "public/images/" + req.file.filename;
-    const data = await sharp("public/images/" + img.filename)
-      .rotate()
-      .resize(600, 600)
-      .toFile("public/images/upload" + img.filename);
 
-    console.log(data);
+    const filestackPromise = filestack_client.upload(img.buffer,undefined, {
+      filename: img.originalname
+    });
+    const filestackResponse = await filestackPromise;
+    console.log("filestackResponse", filestackResponse);
+  
+    const handle = filestackResponse.handle;
 
-    const original_file_path = "public/images/" + img.filename;
-
-    const view_image_name = `public/images/upload${img.filename}`;
+    const original_file_path = filestackResponse.url;
+    //const viewimageFileName = `https://cdn.filestackcontent.com/smart_crop=width:${crop_size},height:${crop_size},mode:auto/${handle}`;
+    const viewimageFileName = `https://cdn.filestackcontent.com/resize=height:600,width:600,fit:crop/${handle}`;
 
     var cropbox_data = {
       height: 600,
@@ -152,12 +112,6 @@ exports.upload = async (req, res) => {
       top: 0,
       left: 0,
     };
-
-    //     const original_file_path = img.destination+"/"+ img.filename
-
-    // console.log(original_file_path)
-    //  const filestackresponse=await filestack_client.upload(original_file_path)
-    //  console.log(filestackresponse)
 
     var new_ar;
     if (req.body.frametype) {
@@ -167,11 +121,12 @@ exports.upload = async (req, res) => {
         imageheight: req.body.imageheight[i],
         imagewidth: req.body.imagewidth[i],
         imageext: req.body.imageext[i],
-        view_image: view_image_name,
+        view_image: viewimageFileName,
         frame: req.body.frametype[i],
         cropbox_data: cropbox_data,
         zoomvalue: 0,
         rotate: 0,
+        handle
         // filestack_data: filestackresponse
         // frame:req.body.
       };
@@ -186,6 +141,7 @@ exports.upload = async (req, res) => {
         cropbox_data: cropbox_data,
         zoomvalue: 0,
         rotate: 0,
+        handle
         // filestack_data: filestackresponse
         // frame:req.body.
       };
@@ -202,70 +158,28 @@ exports.upload = async (req, res) => {
 };
 
 exports.socialPhotoImport = async (req, res) => {
-  //console.log(req.body.uid);
-  //console.log(req.body.filesUploaded[0])
-  /* console.log(req.body.filesUploaded[1].url)
-  console.log(req.body.filesUploaded.length) */
-
-  console.log(req.body);
-
-  var download = function (uri, filename, callback) {
-    request.head(uri, function (err, res, body) {
-      request(uri).pipe(fs.createWriteStream(filename)).on("close", callback);
-    });
-  };
 
   for (var i = 0; i < req.body.filesUploaded.length; i++) {
-    dtFileName = `image_${Date.now()}.png`;
-    download(
-      req.body.filesUploaded[i].url,
-      `public/images/${dtFileName}`,
-      async () => {
-        await sharp("public/images/" + dtFileName)
-          .metadata()
-          .then((data) => {
-            imgW = data.width;
-            imgH = data.height;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+      const handle =  req.body.filesUploaded[i].handle;
+      const viewimageFileName = `https://cdn.filestackcontent.com/resize=height:600,width:600,fit:crop/${handle}`;
 
-        let original_img_width = parseInt(imgW);
-        let original_img_height = parseInt(imgH);
-        if (original_img_width <= original_img_height) {
-          var crop_size = original_img_width;
-        } else {
-          var crop_size = original_img_height;
-        }
+      const aresp = await axios.get(`https://cdn.filestackcontent.com/imagesize/${handle}`);
+       console.log(aresp);
 
-        await sharp("public/images/" + dtFileName)
-          .rotate()
-          .resize(crop_size, crop_size)
-          .toFile("public/images/upload" + dtFileName)
-          .then((data) => {
-            console.log("succ", data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        const original_file_path = "public/images/" + dtFileName;
-        const viewImage = "public/images/upload" + dtFileName;
-
-        var cropbox_data = {
-          height: crop_size,
-          width: crop_size,
+       var cropbox_data = {
+          height: 600,
+          width: 600,
           top: 0,
           left: 0,
         };
         console.log(req.body.filesUploaded[i]);
         var new_ar = {
           uid: req.body.uid,
-          image: original_file_path,
-          imageheight: imgH,
-          imagewidth: imgW,
+          image: req.body.filesUploaded[i].url,
+          imageheight: aresp.height,
+          imagewidth: aresp.width,
           imageext: 0,
-          view_image: viewImage,
+          view_image:  viewimageFileName,
           cropbox_data: cropbox_data,
           zoomvalue: 0,
           rotate: 0,
@@ -273,8 +187,7 @@ exports.socialPhotoImport = async (req, res) => {
         };
         await Uploadimg.create(new_ar);
       }
-    );
-  }
+  
   //  console.log(req.files);
   res.status(200).json({
     success: "Successfully added",

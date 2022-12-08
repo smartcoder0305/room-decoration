@@ -83,27 +83,8 @@ const {
 
 
 const multer = require("multer");
-const path = require("path");
-
-
-
-
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(path.dirname(__dirname), "public/reviewimage"));
-  },
-  filename: function (req, file, cb) {
-    const ext = file.mimetype.split("/")[1];
-    cb(null, file.fieldname + "-" +Math.floor((Math.random() * 100000000000) + 1)+`.${ext}`);
-  },
-});
+const storage = multer.memoryStorage()
 const uploadImageNew = multer({ storage });
-
-
-
-
-
-
 
 const router = express.Router();
 

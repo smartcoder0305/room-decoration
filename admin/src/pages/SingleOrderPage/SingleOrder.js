@@ -217,7 +217,7 @@ function SingleOrder() {
                             <td className="mx_wth bdr_right">
                               <div className="imagebx">
                                 <img
-                                  src={`${MAIN_URL}/${data.image}`}
+                                  src={`${data.image}`}
                                   className="table_img"
                                 />
                                 {/* <p>{data?.images[0]?.frame}</p> */}
@@ -263,7 +263,7 @@ function SingleOrder() {
                                 <IconButton
                                   onClick={() => {
                                     downloadEmployeeData(
-                                      `${MAIN_URL}/${data.view_image}`,
+                                      `${data.view_image}`,
                                       data.view_image
                                     );
                                   }}
@@ -275,7 +275,7 @@ function SingleOrder() {
                               </h1>
                               <a
                                 target="blank"
-                                href={`${MAIN_URL}/${data.view_image}`}
+                                href={`${data.view_image}`}
                                 className="link"
                                 download
                               >{`${MAIN_URL}/${data.view_image}`}</a>
