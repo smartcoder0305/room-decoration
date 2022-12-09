@@ -14,7 +14,7 @@ app.use('/admin', express.static(__dirname + '/public/admin'));
 
  app.use("/api", apiroute);
  
- app.listen(9999, function () {
+ app.listen(process.env.PORT, function () {
     
     console.log("Server running");
  })
