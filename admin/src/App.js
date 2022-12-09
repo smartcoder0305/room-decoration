@@ -46,7 +46,7 @@ function App() {
 
   return (
     <Provider store={store}>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Signin />} />
           <Route path="/admin/siginup" element={<Signup />} />
