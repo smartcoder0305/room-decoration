@@ -39,6 +39,7 @@ function getFrameSelected() {
 }
 
 const ReviewImages = () => {
+
   const localstr = localStorage.getItem("uniqueUserId");
   const [imageonpopup, setimageonpopup] = useRecoilState(popUpImage);
   const [images, setImages] = useRecoilState(imagesData);
@@ -120,29 +121,7 @@ const ReviewImages = () => {
     });
   };
 
-  const savetodb = (facebookpic) => {
-    const localstr = localStorage.getItem("uniqueUserId");
 
-    var indata = {
-      uid: localstr,
-      link: facebookpic,
-    };
-    const config = {
-      headers: {
-        "content-type": "application/json",
-      },
-    };
-
-    axios.post(BASE_URL + "/socialimage_upload", indata, config).then((v) => {
-      closefbmodal();
-      getimagesdb();
-    });
-  };
-
-  const closefbmodal = () => {
-    setsocialopc("none");
-    setfacebook_modal("none");
-  };
 
   const deleteImage = (item) => {
     const id = item._id;
@@ -355,58 +334,6 @@ const ReviewImages = () => {
       {/* End checkout for mobile */}
 
       <div className="body_opcy" style={{ display: socialopc }}></div>
-
-      <div className="modal" id="myModal" style={{ display: facebook_modal }}>
-        <div className="modal-dialog">
-          <div className="modal-content">
-            {/* {imageonpopup.image} */}
-            <div className="modal-header">
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                onClick={() => closefbmodal()}
-              >
-                &times;
-              </button>
-            </div>
-
-            <div className="modal-body">
-              <div className="container">
-                <div className="row">
-                  <div className="col-md-12 col-md-10 rect">
-                    {/* <img src="assets/file/images/Rectangle.png" className="img-responsive" /> */}
-                    {/* <img src={`https://stickable-admin.yeshostings.com/${imageonpopup.image}`} className="img-responsive"  style={{width:"100%"}} /> */}
-
-                    <div className="col-md-4">
-                      <img src={facebookpic} alt="fb-pic" />
-                      <button
-                        className="btn btn-primary"
-                        style={{ display: fbsavebtn }}
-                        onClick={() => {
-                          savetodb(facebookpic);
-                        }}
-                      >
-                        Save
-                      </button>
-                    </div>
-
-                    <div style={{ display: fbbuttonhide }}>
-                      {/* 985956638686717 */}
-                      {/* <FacebookLogin
-    appId="985956638686717"
-    autoLoad={true}
-    fields="name,email,picture,albums"
-    onClick={componentClicked}
-    callback={responseFacebook} /> */}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {setfirstLoader ? (
         <div

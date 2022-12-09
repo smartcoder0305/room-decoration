@@ -12,18 +12,17 @@ var base64Img = require("base64-img");
 const fetch = require("node-fetch");
 var axios = require("axios");
 const moment = require("moment");
-
 const filestack = require("filestack-js");
-const { exit } = require("process");
-const filestack_client = filestack.init("A91T8CN73Qa64EuVi4Kkgz"); // Champ
-// const filestack_client = filestack.init("AjG97B0OhQvK5XYN9228xz"); // Champ
-//const filestack_client = filestack.init("A91T8CN73Qa64EuVi4Kkgz"); // Client
+
+const filestackClient =  filestack.init(process.env.FILESTACK_KEY);
 
 const storage = multer.memoryStorage()
 
 const upload = multer({
   storage: storage,
 });
+
+const cdnBaseUrl = process.env.CDN_BASE_URL;
 
 exports.uploadImage = upload.array("image", 20);
 
@@ -43,7 +42,7 @@ exports.imageupload = async (req, res) => {
     var crop_size = original_img_height;
   }
 
-  const filestackPromise = filestack_client.upload(req.file.buffer,undefined, {
+  const filestackPromise = filestackClient.upload(req.file.buffer,undefined, {
     filename: req.file.originalname
   });
   const filestackResponse = await filestackPromise;
@@ -53,7 +52,7 @@ exports.imageupload = async (req, res) => {
 
   const original_file_path = filestackResponse.url;
   //const viewimageFileName = `https://cdn.filestackcontent.com/smart_crop=width:${crop_size},height:${crop_size},mode:auto/${handle}`;
-  const viewimageFileName = `https://cdn.filestackcontent.com/resize=height:${crop_size},width:${crop_size},fit:crop/${handle}`;
+  const viewimageFileName = `${cdnBaseUrl}/resize=height:${crop_size},width:${crop_size},fit:crop/${handle}`;
   console.log(original_file_path);
 
   img = req.files;
@@ -94,7 +93,7 @@ exports.upload = async (req, res) => {
   for (var i = 0; i < req.files.length; i++) {
     img = req.files[i];
 
-    const filestackPromise = filestack_client.upload(img.buffer,undefined, {
+    const filestackPromise = filestackClient.upload(img.buffer,undefined, {
       filename: img.originalname
     });
     const filestackResponse = await filestackPromise;
@@ -104,7 +103,7 @@ exports.upload = async (req, res) => {
 
     const original_file_path = filestackResponse.url;
     //const viewimageFileName = `https://cdn.filestackcontent.com/smart_crop=width:${crop_size},height:${crop_size},mode:auto/${handle}`;
-    const viewimageFileName = `https://cdn.filestackcontent.com/resize=height:600,width:600,fit:crop/${handle}`;
+    const viewimageFileName = `${cdnBaseUrl}/resize=height:600,width:600,fit:crop/${handle}`;
 
     var cropbox_data = {
       height: 600,
@@ -161,9 +160,9 @@ exports.socialPhotoImport = async (req, res) => {
 
   for (var i = 0; i < req.body.filesUploaded.length; i++) {
       const handle =  req.body.filesUploaded[i].handle;
-      const viewimageFileName = `https://cdn.filestackcontent.com/resize=height:600,width:600,fit:crop/${handle}`;
+      const viewimageFileName = `${cdnBaseUrl}/resize=height:600,width:600,fit:crop/${handle}`;
 
-      const aresp = await axios.get(`https://cdn.filestackcontent.com/imagesize/${handle}`);
+      const aresp = await axios.get(`${cdnBaseUrl}/imagesize/${handle}`);
        console.log(aresp);
 
        var cropbox_data = {
@@ -215,89 +214,36 @@ exports.imagedelete = async (req, res) => {
   });
 };
 
-
-// exports.cropped_img = async (req, res) => {
-
-//   var base64Str = req.body.base64Image;
-//   var filepath = base64Img.imgSync(base64Str, 'public/images/', `image_${Date.now()}`);
-// // console.log(base64Str)
-
-//   console.log(filepath)
-//   // console.log(grtData)
-
-//   myimageArray = filepath.split('\\');
-// // Jimp.read(myimageArray, (err, res) => {
-// //     if (err) throw new Error(err);
-// //     res.quality(5).write('public/images/', `image_${Date.now()}`);
-// //   });
-
-//   // const original_file_path = "public/images/" + myArray[2];
-
-//   // var imgdata = `public/images/image_${Date.now()}.png`;
-//   // const grtData=await fs.writeFile(imgdata, base64Str, { encoding: "base64" })
-// //  const filestackresponse=await filestack_client.upload(original_file_path)
-
-// //  console.log(filestackresponse)
-
-//   // var img = req.body.base64Image;
-//   // var imgdata = `public/images/image_${Date.now()}.png`;
-
-//   // console.log(grtData)
-
-//   // console.log(req.body)
-
-//   const cropeImage=`public/images/${myimageArray[2]}`
-
-//     var query = { _id: req.body.id };
-//     updated = {
-//       view_image: cropeImage,
-//       rotate: req.body.rotate,
-//       zoomvalue: req.body.zoomvalue,
-//       cropbox_data: req.body.cropbox_data,
-//       image:cropeImage
-//     };
-
-//     var response = await Uploadimg.findOneAndUpdate(query,updated,{ upsert: true });
-//     if(response){
-//       res.status(200).json({
-//         message: "Image Save Sucessfully",
-//       });
-//     }
-//     console.log('File created');
-// };
-
 exports.cropped_img = async (req, res) => {
-  var base64Str = req.body.base64Image;
-  var imgName = `image_${Date.now()}`;
-  var filepath = base64Img.imgSync(base64Str, "public/images/", imgName);
-  console.log(filepath);
+    var base64Str = req.body.base64Image;
+    
+    var regex = /^data:.+\/(.+);base64,(.*)$/;
+    var matches = base64Str.match(regex);
+    var ext = matches[1];
+    var data = matches[2];
+    var buffer = Buffer.from(data, 'base64');
+    var imgName = `image_${Date.now()}.${ext}`;
 
-  myimageArray = filepath.split("\\");
-  // const original_file_path = "public/images/" + myArray[2];
+    const filestackPromise = filestackClient.upload(buffer,undefined, {
+      filename: imgName
+    });
 
-  //  const filestackresponse=await filestack_client.upload(original_file_path)
-
-  //  console.log(filestackresponse)
-
-  // var img = req.body.base64Image;
-  // var imgdata = `public/images/image_${Date.now()}.png`;
-  // const grtData=await fs.writeFile(imgdata, img, { encoding: "base64" })
-  // console.log(grtData)
-
-  // console.log(req.body)
-
-  const cropeImage = `public/images/${imgName}.png`;
-  console.log(cropeImage);
-
-  var query = { _id: req.body.id };
-  updated = {
-    view_image: cropeImage,
-    rotate: req.body.rotate,
-    zoomvalue: req.body.zoomvalue,
-    cropbox_data: req.body.cropbox_data,
-    //image:cropeImage
-  };
-
+    const filestackResponse = await filestackPromise;
+    console.log("filestackResponse", filestackResponse);
+  
+    const cropeImage = filestackResponse.url;
+    console.log(cropeImage);
+  
+    //console.log("cropped_img", req.body);
+     var query = { _id: req.body.id };
+     updated = {
+      view_image: cropeImage,
+      rotate: req.body.rotate,
+      zoomvalue: req.body.zoomvalue,
+      cropbox_data: req.body.cropbox_data,
+      //image:cropeImage
+     };
+  
   var response = await Uploadimg.findOneAndUpdate(query, updated, {
     upsert: true,
   });
@@ -309,36 +255,6 @@ exports.cropped_img = async (req, res) => {
   console.log("File created");
 };
 
-exports.social_image_upload = async (requ, resp) => {
-  //  console.log(req.body);
-  // res.status(200).json({
-  //     response:req.body
-  // })
-
-  var download = function (uri, filename, callback) {
-    request.head(uri, function (err, res, body) {
-      request(uri).pipe(fs.createWriteStream(filename)).on("close", callback);
-    });
-  };
-
-  download(
-    requ.body.link,
-    `public/images/image_${Date.now()}.png`,
-    async () => {
-      var new_ar = {
-        uid: requ.body.uid,
-        image: `public/images/image_${Date.now()}.png`,
-      };
-      //console.log(req);
-      const response = await Uploadimg.create(new_ar);
-
-      resp.status(200).json({
-        status: 1,
-        message: "Image successfully uploaded",
-      });
-    }
-  );
-};
 
 exports.image_keep = async (req, res) => {
   console.log("image_keep",req.params.id);
@@ -375,17 +291,7 @@ exports.paymentProcessing = async (req, res) => {
     req.body.shippingAddressFormValues.totalSpending = finalPrice;
     req.body.shippingAddressFormValues.uid = uniqueUserId;
     console.log(req.body.shippingAddressFormValues.phone);
-    // console.log({
-    //   finalPrice,
-    //   uniqueUserId,
-    //   finalPrice,
-    //   email,
-    //   fullName,
-    //   phone,
-    //   orderId,
-    //   cardInfo,
-    // });
-    // console.log(sucessUrl);
+
     const orderResponse = await orderAddModel.find({});
     console.log(orderResponse);
     if (orderResponse.length === 0) {
@@ -409,18 +315,8 @@ exports.paymentProcessing = async (req, res) => {
           req.body.shippingAddressFormValues
         );
 
-
-
-
-
         //sms function
         // sendOrderSMS(finalPrice, frameQuantity, oid);
-
-
-
-
-
-
 
         return res.status(200).send({ sucessUrl });
       }
@@ -448,23 +344,8 @@ exports.paymentProcessing = async (req, res) => {
             req.body.shippingAddressFormValues
           );
 
-
-
-
-
-
-
           //sms function
           sendOrderSMS(finalPrice, frameQuantity, oid);
-
-
-
-
-
-
-
-
-
 
           const data = {
             finalPrice,
@@ -481,65 +362,6 @@ exports.paymentProcessing = async (req, res) => {
     console.log(error);
     return res.status(400).send("Something went wrong");
   }
-
-  // var options = {
-  //   method: 'POST',
-  //   url: 'https://sandbox.meshulam.co.il/api/light/server/1.0/createPaymentProcess',
-  //   headers:
-  //   {
-  //     'cache-control': 'no-cache',
-  //     'content-type': 'multipart/form-data;'
-  //   },
-  //   formData: {
-  //     'pageCode': "26ba17d7e4f6",
-  //     'userId': "dedb062057443f82",
-  //     'sum': finalPrice,
-  //     'successUrl': sucessUrl,
-  //     'cancelUrl': "/review-your-images",
-  //     'description': uniqueUserId,
-  //     'pageField[fullName]': fullName,
-  //     'pageField[phone]': phone,
-  //     'pageField[email]': email,
-
-  //   }
-  // };
-
-  //   request(options, async function (error, response, body) {
-  //     if (error) throw new Error(error);
-  //     console.log('error')
-  //     console.log(error)
-  //     var body = JSON.parse(body)
-  //     console.log('this is body')
-  //     console.log(body);
-
-  //     var payment_process_data = {
-  //       uid: uniqueUserId,
-  //       paymentInfo: body.data,
-  //       paymentSource: 'meshulam'
-  //     };
-  //     const response_payment_process = await paymentProcessModel.create(payment_process_data);
-  //     console.log('this is payment response_payment_process')
-  //     console.log(response_payment_process)
-  //     const addressresponse = await shippingAddressModel.create(req.body.shippingAddressFormValues);
-  //     console.log(addressresponse)
-
-  // if(body.status!=1){
-  //   // console.log(body)
-  //   // console.log('lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll')
-  //   body.data={
-  //     url:'/review-your-images?data=paymentdataerror'
-  //   }
-  //   return res.send(body);
-  // }
-  //     return res.send(body);
-  //     /* return res.status(response.statusCode).json({
-  //       status: 1,
-  //       error: error,
-  //       status: response.statusCode,
-  //       headers: JSON.stringify(response.headers),
-  //       response: JSON.stringify(body)
-  //     }); */
-  //   });
 };
 
 function sendOrderSMS(price, amount, oid) {
