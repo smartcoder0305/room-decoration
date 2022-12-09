@@ -229,8 +229,7 @@ exports.cropped_img = async (req, res) => {
     });
 
     const filestackResponse = await filestackPromise;
-    console.log("filestackResponse", filestackResponse);
-  
+ 
     const cropeImage = filestackResponse.url;
     console.log(cropeImage);
   
