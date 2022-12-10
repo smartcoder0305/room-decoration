@@ -36,8 +36,8 @@ import './style.css'
             </p>
         </div>
         <div className="confirm-delete__actions">
-            <button onClick={() => handleDeleteImage()} className="delete">השאר את התמונה בכל זאת</button>
-            <button onClick={() => handleCancelDelete()} className="cancel">הסר מההזמנה</button>
+            <button onClick={() => handleCancelDelete()} className="delete">השאר את התמונה בכל זאת</button>
+            <button onClick={() => handleDeleteImage()} className="cancel">הסר מההזמנה</button>
         </div>
     </div>
   )
