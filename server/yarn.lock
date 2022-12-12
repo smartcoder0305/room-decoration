@@ -2834,6 +2834,18 @@ smart-buffer@^4.2.0:
   resolved "https://registry.yarnpkg.com/smart-buffer/-/smart-buffer-4.2.0.tgz#6e1d71fa4f18c05f7d0ff216dd16a481d0e8d9ae"
   integrity sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==
 
+smartcrop-sharp@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/smartcrop-sharp/-/smartcrop-sharp-2.0.6.tgz#d3b83920b45197eb9f2e1adf8e916e9b781d9ee9"
+  integrity sha512-+dTh9FfPPBykzcK/H/gqgwqMjbrEqoD12J9CpIPrHx/+eZBn2cb+LRnxVFkPs88KEjPRuGu10cBY7UHtgWtBSQ==
+  dependencies:
+    smartcrop "^2.0.5"
+
+smartcrop@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/smartcrop/-/smartcrop-2.0.5.tgz#36828aead8823d20f6cb058819bca4d7480ece4b"
+  integrity sha512-aXoHTM8XlC51g96kgZkYxZ2mx09/ibOrIVLiUNOFozV/MHmFSgEr1/5CKVBoFD5vd+re2wSy0xra21CyjRITzA==
+
 socks@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/socks/-/socks-2.7.1.tgz#d8e651247178fde79c0663043e07240196857d55"

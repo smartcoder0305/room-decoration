@@ -8,11 +8,12 @@ const shippingAddressModel = require("../models/shippingaddress");
 const paymentProcessModel = require("../models/paymentprocess");
 const orderAddModel = require("../models/order");
 const userCountModel = require("../models/countUser");
-var base64Img = require("base64-img");
 const fetch = require("node-fetch");
 var axios = require("axios");
 const moment = require("moment");
 const filestack = require("filestack-js");
+
+const smartcrop = require('smartcrop-sharp');
 
 const filestackClient =  filestack.init(process.env.FILESTACK_KEY);
 
@@ -23,6 +24,9 @@ const upload = multer({
 });
 
 const cdnBaseUrl = process.env.CDN_BASE_URL;
+const minImgSize = 1600;
+const maxImgSize = 2100;
+const thumbSize = 250;
 
 exports.uploadImage = upload.array("image", 20);
 
@@ -31,46 +35,45 @@ exports.imageuploadsing = upload.single("image");
 exports.uploadSocialPhoto = upload.array("image", 20);
 
 exports.imageupload = async (req, res) => {
-  console.log(req.body);
-  console.log(req.file);
+ const smartCropRes = await smartcrop.crop(req.file.buffer, { width: minImgSize, height: minImgSize });
 
-  let original_img_width = parseInt(req.body.imagewidth);
-  let original_img_height = parseInt(req.body.imageheight);
-  if (original_img_width <= original_img_height) {
-    var crop_size = original_img_width;
-  } else {
-    var crop_size = original_img_height;
-  }
+ var cropbox_data = {
+    height: smartCropRes.topCrop.height,
+    width: smartCropRes.topCrop.width,
+    top: smartCropRes.topCrop.y,
+    left: smartCropRes.topCrop.x,
+  };
 
+  const thumbBuffer = await sharp(req.file.buffer)
+    .extract(cropbox_data)
+    .resize(thumbSize)
+    .toBuffer();
+
+  const filestackThumbPromise = filestackClient.upload(thumbBuffer,undefined, {
+    filename: 'thumb_'+ req.file.originalname
+  });
+    
   const filestackPromise = filestackClient.upload(req.file.buffer,undefined, {
     filename: req.file.originalname
   });
-  const filestackResponse = await filestackPromise;
+
+  const [filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackThumbPromise,filestackPromise]);
+  console.log("thumbUrl", filestackThumbPromiseResponse.url);
   console.log("filestackResponse", filestackResponse);
 
   const handle = filestackResponse.handle;
 
-  const original_file_path = filestackResponse.url;
-  //const viewimageFileName = `https://cdn.filestackcontent.com/smart_crop=width:${crop_size},height:${crop_size},mode:auto/${handle}`;
-  const viewimageFileName = `${cdnBaseUrl}/resize=height:${crop_size},width:${crop_size},fit:crop/${handle}`;
-  console.log(original_file_path);
+  console.log("cropbox_data", cropbox_data);
 
-  img = req.files;
-  var cropbox_data = {
-    height: crop_size,
-    width: crop_size,
-    top: 0,
-    left: 0,
-  };
   var new_ar = {
     uid: req.body.uid,
     //image: req.file.filename,
-    image: original_file_path,
+    image: filestackResponse.url,
     frame: req.body.frametype,
     imageheight: req.body.imageheight,
     imagewidth: req.body.imagewidth,
     imageext: req.body.imageext,
-    view_image: viewimageFileName,
+    view_image: filestackThumbPromiseResponse.url,
     cropbox_data: cropbox_data,
     zoomvalue: 0,
     rotate: 0,
@@ -79,7 +82,7 @@ exports.imageupload = async (req, res) => {
   };
   //console.log(req.file);
   const response = Uploadimg.create(new_ar);
-  Promise.all([filestackPromise, response]).then(()=>{
+  Promise.all([filestackPromise, filestackThumbPromiseResponse, response]).then(()=>{
     res.status(200).json({
       success: "Successfully added",
     }); 
@@ -87,62 +90,60 @@ exports.imageupload = async (req, res) => {
 };
 
 exports.upload = async (req, res) => {
-  console.log(req.files);
-  console.log(req.body);
-
   for (var i = 0; i < req.files.length; i++) {
     img = req.files[i];
 
-    const filestackPromise = filestackClient.upload(img.buffer,undefined, {
-      filename: img.originalname
-    });
-    const filestackResponse = await filestackPromise;
-    console.log("filestackResponse", filestackResponse);
-  
-    const handle = filestackResponse.handle;
-
-    const original_file_path = filestackResponse.url;
-    //const viewimageFileName = `https://cdn.filestackcontent.com/smart_crop=width:${crop_size},height:${crop_size},mode:auto/${handle}`;
-    const viewimageFileName = `${cdnBaseUrl}/resize=height:600,width:600,fit:crop/${handle}`;
+    const smartCropRes = await smartcrop.crop(img.buffer, { width: minImgSize, height: minImgSize });
 
     var cropbox_data = {
-      height: 600,
-      width: 600,
-      top: 0,
-      left: 0,
-    };
+       height: smartCropRes.topCrop.height,
+       width: smartCropRes.topCrop.width,
+       top: smartCropRes.topCrop.y,
+       left: smartCropRes.topCrop.x,
+     };
+   
+     const thumbBuffer = await sharp(img.buffer)
+       .extract(cropbox_data)
+       .resize(thumbSize)
+       .toBuffer();
+   
+     const filestackThumbPromise = filestackClient.upload(thumbBuffer,undefined, {
+       filename: 'thumb_'+ img.originalname
+     });
+       
+     const filestackPromise = filestackClient.upload(img.buffer,undefined, {
+       filename: img.originalname
+     });
+   
+   const [filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackThumbPromise,filestackPromise]);
 
     var new_ar;
     if (req.body.frametype) {
       new_ar = {
         uid: req.body.uid[i],
-        image: original_file_path,
+        image: filestackResponse.url,
         imageheight: req.body.imageheight[i],
         imagewidth: req.body.imagewidth[i],
         imageext: req.body.imageext[i],
-        view_image: viewimageFileName,
+        view_image: filestackThumbPromiseResponse.url,
         frame: req.body.frametype[i],
         cropbox_data: cropbox_data,
         zoomvalue: 0,
         rotate: 0,
-        handle
-        // filestack_data: filestackresponse
-        // frame:req.body.
+        handle: filestackResponse.handle
       };
     } else {
       new_ar = {
         uid: req.body.uid[i],
-        image: original_file_path,
+        image: filestackResponse.url,
         imageheight: req.body.imageheight[i],
         imagewidth: req.body.imagewidth[i],
         imageext: req.body.imageext[i],
-        view_image: view_image_name,
+        view_image: filestackThumbPromiseResponse.url,
         cropbox_data: cropbox_data,
         zoomvalue: 0,
         rotate: 0,
-        handle
-        // filestack_data: filestackresponse
-        // frame:req.body.
+        handle: filestackResponse.handle
       };
     }
 
@@ -160,32 +161,41 @@ exports.socialPhotoImport = async (req, res) => {
 
   for (var i = 0; i < req.body.filesUploaded.length; i++) {
       const handle =  req.body.filesUploaded[i].handle;
-      const viewimageFileName = `${cdnBaseUrl}/resize=height:600,width:600,fit:crop/${handle}`;
+      const input = (await axios({ url: req.body.filesUploaded[i].url, responseType: "arraybuffer" })).data;
+     
+      const smartCropRes = await smartcrop.crop(input, { width: minImgSize, height: minImgSize });
 
+      var cropbox_data = {
+        height: smartCropRes.topCrop.height,
+        width: smartCropRes.topCrop.width,
+        top: smartCropRes.topCrop.y,
+        left: smartCropRes.topCrop.x,
+      };
+   
       const aresp = await axios.get(`${cdnBaseUrl}/imagesize/${handle}`);
-       console.log(aresp);
-
-       var cropbox_data = {
-          height: 600,
-          width: 600,
-          top: 0,
-          left: 0,
-        };
-        console.log(req.body.filesUploaded[i]);
-        var new_ar = {
-          uid: req.body.uid,
-          image: req.body.filesUploaded[i].url,
-          imageheight: aresp.height,
-          imagewidth: aresp.width,
-          imageext: 0,
-          view_image:  viewimageFileName,
-          cropbox_data: cropbox_data,
-          zoomvalue: 0,
-          rotate: 0,
-          filestack_data: req.body.filesUploaded[i],
-        };
-        await Uploadimg.create(new_ar);
-      }
+      console.log(aresp,"aresp");
+      const thumbBuffer = await sharp(input)
+        .extract(cropbox_data)
+        .resize(thumbSize)
+        .toBuffer();
+    
+      const filestackThumbPromiseResponse = await filestackClient.upload(thumbBuffer);
+       
+      var new_ar = {
+        uid: req.body.uid,
+        image: req.body.filesUploaded[i].url,
+        imageheight: aresp.data.height,
+        imagewidth: aresp.data.width,
+        imageext: 0,
+        view_image:  filestackThumbPromiseResponse.url,
+        cropbox_data: cropbox_data,
+        zoomvalue: 0,
+        rotate: 0,
+        filestack_data: req.body.filesUploaded[i],
+        handle
+      };
+      await Uploadimg.create(new_ar);
+    }
   
   //  console.log(req.files);
   res.status(200).json({
