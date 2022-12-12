@@ -89,7 +89,9 @@ const ReviewImages = () => {
   }, []);
 
   useEffect(() => {
+    console.log("low image");
     const lowImage = images.find((i) => (i.imageheight < 1600 || i.imagewidth < 1600) && !i.keepImage);
+    console.log(lowImage);  
     if (lowImage) {
       modal("open", "deleteConfirm", {
         data: lowImage,

@@ -116,7 +116,7 @@ exports.upload = async (req, res) => {
      });
    
    const [filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackThumbPromise,filestackPromise]);
-
+    console.log("body", req.body);
     var new_ar;
     if (req.body.frametype) {
       new_ar = {

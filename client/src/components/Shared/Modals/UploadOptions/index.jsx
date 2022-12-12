@@ -76,31 +76,35 @@ const UploadOptions = ({
         alert("Image limit over. Max uploaded image 20");
       } else {
         // console.log(e.target);
-
+        let promises = [];
         for (let i = 0; i < e.target.files.length; i++) {
-          let files = e.target.files[i];
-          let img = document.createElement("img");
-          img.src = URL.createObjectURL(files);
-          img.onload = function () {
-          };
-          formdata.append("imagewidth", img.width);
-          formdata.append("imageheight", img.height);
-          formdata.append("imageext", 0);
-          formdata.append("image", files);
-          formdata.append("uid", uid);
-          formdata.append("frametype", frametype);
-          formdata.append("source", '151122');
+        
+          promises.push(new Promise((res, rej)=>{
+            let files = e.target.files[i];
+            let img = document.createElement("img");
+            img.src = URL.createObjectURL(files);
+              img.onload = function () {
+                formdata.append("imagewidth", img.width);
+                formdata.append("imageheight", img.height);
+                formdata.append("imageext", 0);
+                formdata.append("image", files);
+                formdata.append("uid", uid);
+                formdata.append("frametype", frametype);
+                formdata.append("source", '151122');
+                res();
+              };
+          }))       
         }
 
         //https://stickable-admin.yeshostings.com
-        uploadMultipleImages(formdata)
+        Promise.all(promises).then(()=>uploadMultipleImages(formdata)
           .then((res) => {
             setTimeout(() => {
               modal('hide', 'imageLoader')
               hideUploadOptions();
               history.push("/review-your-images");
             }, 200);
-          })
+          }));
       }
     }
   }; 
