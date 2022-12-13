@@ -247,17 +247,17 @@ const ReviewImages = () => {
         {width > 767 && (
           <div className="checkout-wrapper">
             <div className="aside-checkout">
-              <h1>תונומת {imagecount} םתרחב</h1>
+              <h1>תמונות {imagecount} יש לנו כאן</h1>
               <p>וודאו שהכל נראה טוב ונמשיך</p>
               <button className="checkout-btn" onClick={openCheckoutDrawer}>
-                םיכישממו קילק
+                קליק וממשיכים
               </button>
               <div className="gift">
-                <h2 className="">:ולבקת וז הנמזהב</h2>
+                <h2 className="">:בהזמנה זו תקבלו</h2>
 
                 <ul className="gift-list">
                   <li>
-                    שליח עד הבית
+                    משלוח עד 7 ימים אל הבית
                     <img
                       style={{ width: "23px" }}
                       src="assets/file/images/gift_1.svg"
@@ -265,12 +265,12 @@ const ReviewImages = () => {
                     />
                   </li>
                   <li>
-                    החזרה מהירה בקלות
+                   לא מרוצים? עד 14 ימים החזרה בקלות
                     <img src="assets/file/images/gift_2.svg" alt="gift" />
                   </li>
 
                   <li>
-                    תונומתה לע הרימשל הזירא
+                    אריזת מתנה לשמירה על התמונות
                     <img src="assets/file/images/gift_3.svg" alt="gift" />
                   </li>
                 </ul>

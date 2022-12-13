@@ -130,7 +130,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
       )}
       <div className="edit-modal__content">
         <h2>התאמת תמונה</h2>
-        <p>הזיזו או הגדילו את התמונה</p>
+        <p>הזיזו או הגדילו את התמונה בתוך המסגרת</p>
         <div className={`${modalData?.frame} cropper-frame`}>
           <Cropper
             ref={cropperRef}

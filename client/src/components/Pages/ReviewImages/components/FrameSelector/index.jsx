@@ -23,7 +23,7 @@ const FrameSelector = ({ frameChoose, frameSelected }) => {
       name: "clean",
       img: "assets/file/images/d4.png",
       text: "אותנטי",
-      label: "יראלופופ",
+      label: "פופולארי",
     },
   ];
   return (
