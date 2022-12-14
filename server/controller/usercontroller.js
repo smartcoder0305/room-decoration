@@ -46,7 +46,9 @@ exports.imageupload = async (req, res) => {
 
   const thumbBuffer = await sharp(req.file.buffer)
     .extract(cropbox_data)
+    .withMetadata() 
     .resize(thumbSize)
+    .withMetadata()
     .toBuffer();
 
   const filestackThumbPromise = filestackClient.upload(thumbBuffer,undefined, {
@@ -104,7 +106,9 @@ exports.upload = async (req, res) => {
    
      const thumbBuffer = await sharp(img.buffer)
        .extract(cropbox_data)
+       .withMetadata()
        .resize(thumbSize)
+       .withMetadata()
        .toBuffer();
    
      const filestackThumbPromise = filestackClient.upload(thumbBuffer,undefined, {
@@ -176,7 +180,9 @@ exports.socialPhotoImport = async (req, res) => {
       console.log(aresp,"aresp");
       const thumbBuffer = await sharp(input)
         .extract(cropbox_data)
+        .withMetadata()
         .resize(thumbSize)
+        .withMetadata()
         .toBuffer();
     
       const filestackThumbPromiseResponse = await filestackClient.upload(thumbBuffer);
