@@ -1,6 +1,7 @@
 import React from 'react'
 import { popUpImage, imagesData } from "@atoms";
 import { useRecoilState } from 'recoil';
+import ImageLoader from "@shared/ImageLoader";
 import './style.css'
 
  const DeleteConfirm = ({
@@ -30,7 +31,7 @@ import './style.css'
     <div className="confirm-delete-modal">
         <div className="confirm-delete__preview">
             <h2>תמונה באיכות נמוכה</h2>
-            <img src={imageUrl} alt="preview" />
+            <ImageLoader src={imageUrl} alt="preview"/>
             <p className="description">
             התמונה הזו באיכות נמוכה, היא כנראה תצא מטושטשת בהדפסה   
             </p>

@@ -22,6 +22,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
   const imageonpopup = useRecoilValue(popUpImage);
   const modalsData = useRecoilValue(modalWindows);
   const [zoomvalue, setzoomvalue] = useState(0.0);
+  const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
     cropper?.zoomTo(+imageonpopup.zoomvalue * 5);
@@ -32,12 +33,14 @@ const EditModal = ({ handleCloseModal, modalData }) => {
     target?.zoomTo(+imageonpopup.zoomvalue * 5);
     target?.rotate(+imageonpopup.rotate);
     setzoomvalue(+imageonpopup.zoomvalue);
+    setLoading(false)
   };
   const imageRotate = () => {
     cropper?.rotate(-90);
   };
 
   const getCropData = () => {
+    setLoading(true)
     if (typeof cropper !== "undefined") {
       var cc = cropper.getCroppedCanvas().toDataURL();
       var cropbox_data = cropper.getCropBoxData();
@@ -68,9 +71,9 @@ const EditModal = ({ handleCloseModal, modalData }) => {
 
       axios.post(BASE_URL + "/cropped_img", aa, config).then((v) => {
         getImagesDB();
+        setLoading(false)
+        handleCloseModal("editImage");
       });
-
-      handleCloseModal("editImage");
     }
   };
 
@@ -191,6 +194,27 @@ const EditModal = ({ handleCloseModal, modalData }) => {
         </button>
         )}
       </div>
+      {isLoading &&
+        <div
+          className="modal loaderbg"
+          id="mainImageLoaderModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+          style={{ display: isLoading }}
+        >
+          <div className="modal-dialog review-image-loader" role="document">
+            <div className="loadingio-spinner-heart-btbrqan8295">
+              <div className="ldio-kv0ui0pfesk">
+                <div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
     </div>
   );
 };

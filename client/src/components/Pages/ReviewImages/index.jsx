@@ -22,6 +22,7 @@ import Loader from "@shared/Loader";
 import "./style.css";
 import { useCallback } from "react";
 import FrameSelector from "./components/FrameSelector";
+import ImageLoader from "@shared/ImageLoader";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const MAIN_URL = process.env.REACT_APP_MAIN_URL;
@@ -195,9 +196,8 @@ const ReviewImages = () => {
 
     return images.map((im, index) => {
       return (
-        <div className="album-item-wrapper">
+        <div className="album-item-wrapper" key={index.toString()}>
         <div
-          key={index.toString()}
           className={cn(`album-item ${frameChoose}`)}
           onClick={() => openImageOptions(im)}
         >
@@ -222,11 +222,11 @@ const ReviewImages = () => {
             </div>
           )}
         </div>
-        <img
-            src={`${im.view_image}`}
-            className={cn(`img-con ${frameChoose}`)}
-            alt="icon"
-          />
+        <ImageLoader
+          src={im.view_image}
+          className={cn(`img-con ${frameChoose}`)}
+          alt="icon"
+        />
         </div>
       );
     });
