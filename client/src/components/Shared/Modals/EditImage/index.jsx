@@ -29,10 +29,34 @@ const EditModal = ({ handleCloseModal, modalData }) => {
     cropper?.rotate(+imageonpopup.rotate);
   }, []);
 
+  const calCropData = (imageonpopup) => {
+    if (imageonpopup.cropbox_data.naturalWidth) return {
+      ...imageonpopup.cropbox_data
+    }
+    let left = imageonpopup.cropbox_data.left;
+    let top = imageonpopup.cropbox_data.top;
+    const naturalHeight = parseInt(imageonpopup.imageheight);
+    const naturalWidth = parseInt(imageonpopup.imagewidth);
+    const croperSize = getCropperSize();
+    let rate;
+    if (naturalHeight <= naturalWidth) {
+      rate = croperSize / naturalHeight;
+    } else {
+      rate = croperSize / naturalWidth;
+    }
+    left = left * -rate;
+    top = top * -rate;
+    return {
+      top,
+      left,
+    }
+  }
   const InitialSets = (target) => {
     target?.zoomTo(+imageonpopup.zoomvalue * 5);
     target?.rotate(+imageonpopup.rotate);
     setzoomvalue(+imageonpopup.zoomvalue);
+    const cropData = calCropData(imageonpopup);
+    target.moveTo(cropData.left, cropData.top)
     setLoading(false)
   };
   const imageRotate = () => {
@@ -43,7 +67,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
     setLoading(true)
     if (typeof cropper !== "undefined") {
       var cc = cropper.getCroppedCanvas().toDataURL();
-      var cropbox_data = cropper.getCropBoxData();
+      var cropbox_data = cropper.getCanvasData();
       var image_data_rotation = cropper.getImageData();
       var rotate = 0;
       if (image_data_rotation.rotate === undefined) {
