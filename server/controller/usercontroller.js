@@ -35,8 +35,9 @@ exports.imageuploadsing = upload.single("image");
 exports.uploadSocialPhoto = upload.array("image", 20);
 
 exports.imageupload = async (req, res) => {
+  console.log('imageUpload')
  const smartCropRes = await smartcrop.crop(req.file.buffer, { width: minImgSize, height: minImgSize });
-
+  console.log('smartsharpResult', smartCropRes)
  var cropbox_data = {
     height: smartCropRes.topCrop.height,
     width: smartCropRes.topCrop.width,
@@ -50,7 +51,7 @@ exports.imageupload = async (req, res) => {
     .resize(thumbSize)
     .withMetadata()
     .toBuffer();
-
+  console.log('thumbResult')
   const filestackThumbPromise = filestackClient.upload(thumbBuffer,undefined, {
     filename: 'thumb_'+ req.file.originalname
   });
@@ -167,6 +168,7 @@ exports.socialPhotoImport = async (req, res) => {
       const handle =  req.body.filesUploaded[i].handle;
       const input = (await axios({ url: req.body.filesUploaded[i].url, responseType: "arraybuffer" })).data;
      
+
       const smartCropRes = await smartcrop.crop(input, { width: minImgSize, height: minImgSize });
 
       var cropbox_data = {
