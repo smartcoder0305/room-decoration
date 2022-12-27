@@ -237,9 +237,10 @@ exports.cropped_img = async (req, res) => {
     var regex = /^data:.+\/(.+);base64,(.*)$/;
     const subBase64Str = base64Str.substring(0, 50);
     const matches = subBase64Str.match(regex);
+    const splitBase64Str = base64Str.split(';base64,');
     console.log('matches', matches);
     var ext = matches[1];
-    var data = base64Str;
+    var data = splitBase64Str[1];
     var buffer = Buffer.from(data, 'base64');
     console.log('read the buffer')
     var imgName = `image_${Date.now()}.${ext}`;
