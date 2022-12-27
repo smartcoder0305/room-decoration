@@ -235,6 +235,7 @@ exports.cropped_img = async (req, res) => {
     console.log('editing image');
     var base64Str = req.body.base64Image;
     console.log('read the base64Str');
+    console.log(base64Str)
     var regex = /^data:.+\/(.+);base64,(.*)$/;
     var matches = base64Str.match(regex);
     console.log('matches', matches);
