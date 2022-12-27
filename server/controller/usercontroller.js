@@ -233,14 +233,13 @@ exports.imagedelete = async (req, res) => {
 exports.cropped_img = async (req, res) => {
   try {
     console.log('editing image');
-    var base64Str = req.body.base64Image;
-    console.log('read the base64Str');
-    console.log(base64Str)
+    const base64Str = req.body.base64Image;
     var regex = /^data:.+\/(.+);base64,(.*)$/;
-    var matches = base64Str.match(regex);
+    const subBase64Str = base64Str.substring(0, 50);
+    const matches = subBase64Str.match(regex);
     console.log('matches', matches);
     var ext = matches[1];
-    var data = matches[2];
+    var data = base64Str;
     var buffer = Buffer.from(data, 'base64');
     console.log('read the buffer')
     var imgName = `image_${Date.now()}.${ext}`;
