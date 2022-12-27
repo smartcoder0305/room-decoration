@@ -231,10 +231,12 @@ exports.imagedelete = async (req, res) => {
 };
 
 exports.cropped_img = async (req, res) => {
+  try {
     var base64Str = req.body.base64Image;
     
     var regex = /^data:.+\/(.+);base64,(.*)$/;
     var matches = base64Str.match(regex);
+    console.log('matches', matches);
     var ext = matches[1];
     var data = matches[2];
     var buffer = Buffer.from(data, 'base64');
@@ -245,7 +247,7 @@ exports.cropped_img = async (req, res) => {
     });
 
     const filestackResponse = await filestackPromise;
- 
+    console.log('fileStackResponse', filestackResponse);
     const cropeImage = filestackResponse.url;
     console.log(cropeImage);
   
@@ -259,15 +261,23 @@ exports.cropped_img = async (req, res) => {
       //image:cropeImage
      };
   
-  var response = await Uploadimg.findOneAndUpdate(query, updated, {
-    upsert: true,
-  });
-  if (response) {
-    res.status(200).json({
-      message: "Image Save Sucessfully",
+    var response = await Uploadimg.findOneAndUpdate(query, updated, {
+      upsert: true,
+    });
+    if (response) {
+      res.status(200).json({
+        message: "Image Save Sucessfully",
+      });
+    } else {
+      console.log('db update bug exists.')
+    }
+    console.log("File created");
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({
+      message: err.message
     });
   }
-  console.log("File created");
 };
 
 
