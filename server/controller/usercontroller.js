@@ -238,7 +238,14 @@ exports.cropped_img = async (req, res) => {
     const base64Str = req.body.base64Image;
     var regex = /^data:.+\/(.+);base64,(.*)$/;
     const subBase64Str = base64Str.substring(0, 50);
+    console.log('######### - subBase64Str - ', subBase64Str)
     const matches = subBase64Str.match(regex);
+    if (!matches) {
+      res.status(404).json({
+        message: "Invalid Image",
+      });
+      return
+    }
     const splitBase64Str = base64Str.split(';base64,');
     console.log('matches', matches);
     var ext = matches[1];
