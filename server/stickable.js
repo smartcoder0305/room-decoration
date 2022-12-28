@@ -6,6 +6,10 @@ const bodyparser = require("body-parser");
 const apiroute = require('./routes/apiroute');
 const mongoose  = require("mongoose");
 
+process.on('unhandledRejection', (reason, promise) => {
+  console.log('Unhandled Rejection at:', reason.stack || reason)
+})
+
 mongoose.connect(process.env.MONGO_URI);
 app.use(cors());
 app.use(bodyparser.json({limit: '50mb'}));
