@@ -235,24 +235,25 @@ exports.imagedelete = async (req, res) => {
 exports.cropped_img = async (req, res) => {
   try {
     console.log('editing image');
-    const base64Str = req.body.base64Image;
-    var regex = /^data:.+\/(.+);base64,(.*)$/;
-    const subBase64Str = base64Str.substring(0, 50);
+    let base64Str = req.body.base64Image;
+    let regex = /^data:.+\/(.+);base64,(.*)$/;
+    let subBase64Str = base64Str.substring(0, 50);
     console.log('######### - subBase64Str - ', subBase64Str)
-    const matches = subBase64Str.match(regex);
+    let matches = subBase64Str.match(regex);
     if (!matches) {
       res.status(404).json({
         message: "Invalid Image",
       });
       return
     }
-    const splitBase64Str = base64Str.split(';base64,');
+    let splitBase64Str = base64Str.split(';base64,');
     console.log('matches', matches);
-    var ext = matches[1];
-    var data = splitBase64Str[1];
-    var buffer = Buffer.from(data, 'base64');
-    console.log('read the buffer')
-    var imgName = `image_${Date.now()}.${ext}`;
+    let ext = matches[1];
+    let data = splitBase64Str[1];
+    console.log('base64 Data', data);
+    let buffer = Buffer.from(data, 'base64');
+    console.log('read the buffer', buffer);
+    let imgName = `image_${Date.now()}.${ext}`;
 
     const filestackPromise = filestackClient.upload(buffer,undefined, {
       filename: imgName
