@@ -236,6 +236,7 @@ exports.cropped_img = async (req, res) => {
   try {
     console.log('editing image');
     let base64Str = req.body.base64Image;
+    console.log(base64Str);
     let regex = /^data:.+\/(.+);base64,(.*)$/;
     let subBase64Str = base64Str.substring(0, 50);
     console.log('######### - subBase64Str - ', subBase64Str)
@@ -250,7 +251,7 @@ exports.cropped_img = async (req, res) => {
     console.log('matches', matches);
     let ext = matches[1];
     let data = splitBase64Str[1];
-    console.log('base64 Data', data);
+    // console.log('base64 Data', data);
     let buffer = Buffer.from(data, 'base64');
     console.log('read the buffer', buffer);
     let imgName = `image_${Date.now()}.${ext}`;
