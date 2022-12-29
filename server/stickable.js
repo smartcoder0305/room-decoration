@@ -12,7 +12,7 @@ process.on('unhandledRejection', (reason, promise) => {
 
 mongoose.connect(process.env.MONGO_URI);
 app.use(cors());
-app.use(bodyparser.json({limit: '50mb'}));
+app.use(bodyparser.json({limit: '500mb'}));
 app.use('/public', express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
