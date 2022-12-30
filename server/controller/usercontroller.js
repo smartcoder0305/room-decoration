@@ -265,10 +265,10 @@ exports.cropped_img = async (req, res) => {
     if (img.imagewidth > img.imageheight) imageSize = img.imageheight;
     const buffer = await sharp(imgBuffer)
       .extract({
-        width: imageSize / rate,
-        height: imageSize / rate,
-        top: -cropbox_data.top * (img.imageheight / cropbox_data.height),
-        left: -cropbox_data.left * (img.imagewidth / cropbox_data.width),
+        width: Math.floor(imageSize / rate),
+        height: Math.floor(imageSize / rate),
+        top: Math.round(-cropbox_data.top * (img.imageheight / cropbox_data.height)),
+        left: Math.round(-cropbox_data.left * (img.imagewidth / cropbox_data.width)),
       })
       .withMetadata()
       .toBuffer();
