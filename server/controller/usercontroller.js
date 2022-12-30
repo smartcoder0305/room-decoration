@@ -270,8 +270,8 @@ exports.cropped_img = async (req, res) => {
       .extract({
         width: Math.floor(imageSize / rate),
         height: Math.floor(imageSize / rate),
-        top: Math.round(-cropbox_data.top / (img.imageheight / cropbox_data.height)),
-        left: Math.round(-cropbox_data.left / (img.imagewidth / cropbox_data.width)),
+        top: Math.round(-cropbox_data.top * (img.imageheight / cropbox_data.height)),
+        left: Math.round(-cropbox_data.left * (img.imagewidth / cropbox_data.width)),
       })
       .withMetadata()
       .toBuffer();
