@@ -66,7 +66,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
   const getCropData = async () => {
     setLoading(true)
     if (typeof cropper !== "undefined") {
-      var cc = await cropper.getCroppedCanvas().toDataURL().toString();
+      // var cc = await cropper.getCroppedCanvas().toDataURL().toString();
       var cropbox_data = cropper.getCanvasData();
       var image_data_rotation = cropper.getImageData();
       var rotate = 0;
@@ -83,7 +83,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
       const aa = {
         uid: localstr,
         id: imageonpopup?._id,
-        base64Image: cc,
+        // base64Image: cc,
         cropbox_data: cropbox_data,
         rotate: rotate,
         zoomvalue: zoomvalue,
