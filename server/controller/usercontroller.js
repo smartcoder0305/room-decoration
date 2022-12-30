@@ -261,7 +261,7 @@ exports.cropped_img = async (req, res) => {
     console.log('cropbox_data', cropbox_data);
     const defaultSize = req.body.defaultSize;
     console.log('defaultSize', defaultSize);
-    let rate = 1;
+    let rate = 1.0;
     if (!req.body.zoomvalue) {
       const minSize = cropbox_data.width > cropbox_data.height ? cropbox_data.height : cropbox_data.width;
       rate = minSize / defaultSize;
