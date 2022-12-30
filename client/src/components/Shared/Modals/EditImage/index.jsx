@@ -63,10 +63,10 @@ const EditModal = ({ handleCloseModal, modalData }) => {
     cropper?.rotate(-90);
   };
 
-  const getCropData = () => {
+  const getCropData = async () => {
     setLoading(true)
     if (typeof cropper !== "undefined") {
-      var cc = cropper.getCroppedCanvas().toDataURL();
+      var cc = await cropper.getCroppedCanvas().toDataURL().toString();
       var cropbox_data = cropper.getCanvasData();
       var image_data_rotation = cropper.getImageData();
       var rotate = 0;
