@@ -261,7 +261,7 @@ exports.cropped_img = async (req, res) => {
     console.log('cropbox_data', cropbox_data);
     let rate = 1;
     if (!req.body.zoomvalue) {
-      rate = img.imagewidth / cropbox_data.height;
+      rate = img.imagewidth / cropbox_data.width;
     }
     const imgBuffer = (await axios({ url: img.image, responseType: "arraybuffer" })).data;
     let imageSize = img.imagewidth;
