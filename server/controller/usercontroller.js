@@ -280,8 +280,8 @@ exports.cropped_img = async (req, res) => {
     //   .withMetadata()
     //   .toBuffer();
     console.log('read the buffer', blob);
-    const arrayBuffer = await blob.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+    // const arrayBuffer = await blob.arrayBuffer();
+    const buffer = Buffer.from(blob);
     let imgName = `image_${Date.now()}.${img.imageext}`;
 
     const filestackPromise = filestackClient.upload(buffer,undefined, {
