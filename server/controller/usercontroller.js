@@ -259,10 +259,14 @@ exports.cropped_img = async (req, res) => {
     console.log('imgData', img)
     const cropbox_data = req.body.cropbox_data;
     console.log('cropbox_data', cropbox_data);
+    const defaultSize = req.body.defaultSize;
+    console.log('defaultSize', defaultSize);
     let rate = 1;
     if (!req.body.zoomvalue) {
-      rate = img.imagewidth / cropbox_data.width;
+      const minSize = cropbox_data.width > cropbox_data.height ? cropbox_data.height : cropbox_data.width;
+      rate = minSize / defaultSize;
     }
+    console.log('rate', rate);
     const imgBuffer = (await axios({ url: img.image, responseType: "arraybuffer" })).data;
     let imageSize = img.imagewidth;
     if (img.imagewidth > img.imageheight) imageSize = img.imageheight;

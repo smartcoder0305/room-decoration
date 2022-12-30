@@ -75,6 +75,8 @@ const EditModal = ({ handleCloseModal, modalData }) => {
       } else {
         rotate = image_data_rotation.rotate;
       }
+      console.log('crop', cropbox_data, zoomvalue);
+      // return;
       //console.log(rotate);
       // let base64Image = cc.split(";base64,").pop();
 
@@ -85,6 +87,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
         cropbox_data: cropbox_data,
         rotate: rotate,
         zoomvalue: zoomvalue,
+        defaultSize: getCropperSize(),
       };
 
       const config = {
