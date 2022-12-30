@@ -258,6 +258,7 @@ exports.cropped_img = async (req, res) => {
     const img = await Uploadimg.findOne(query)
     console.log('imgData', img)
     const cropbox_data = req.body.cropbox_data;
+    console.log('cropbox_data', cropbox_data);
     const imgBuffer = (await axios({ url: img.image, responseType: "arraybuffer" })).data;
     const buffer = await sharp(imgBuffer)
       .extract({
