@@ -7986,10 +7986,10 @@ react-click-outside@3.0.1:
   dependencies:
     hoist-non-react-statics "^2.1.1"
 
-react-cropper@^2.1.8:
-  version "2.1.8"
-  resolved "https://registry.yarnpkg.com/react-cropper/-/react-cropper-2.1.8.tgz#bf35a7de65769f8ad357e8ae884e791fe3fe9212"
-  integrity sha512-QEj6CE9et/gMRqpaKMgZQdBgtzLjjq+zj1pmHwtoWG6GqscDl4QpTwoEElWN2pieYxkwFaZa0lPiD2b9nwqLKQ==
+react-cropper@^2.2.0-0:
+  version "2.2.0-0"
+  resolved "https://registry.yarnpkg.com/react-cropper/-/react-cropper-2.2.0-0.tgz#213055f6c76e8435398016691a250c8a9f5b86ac"
+  integrity sha512-dDWFfrJwN0+isz+qwnHvrLNKNhqmTQru1fJli+HFTKeLBrdCt23ZPIydhuVdoqZ0HvXXWhMRhwHHND4CREgdxw==
   dependencies:
     cropperjs "^1.5.12"
 
@@ -8763,11 +8763,6 @@ slick-carousel@^1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/slick-carousel/-/slick-carousel-1.8.1.tgz#a4bfb29014887bb66ce528b90bd0cda262cc8f8d"
   integrity sha512-XB9Ftrf2EEKfzoQXt3Nitrt/IPbT+f1fgqBdoxO3W/+JYvtEOW6EgxnWfr9GH6nmULv7Y2tPmEX3koxThVmebA==
-
-smartcrop@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/smartcrop/-/smartcrop-2.0.5.tgz#36828aead8823d20f6cb058819bca4d7480ece4b"
-  integrity sha512-aXoHTM8XlC51g96kgZkYxZ2mx09/ibOrIVLiUNOFozV/MHmFSgEr1/5CKVBoFD5vd+re2wSy0xra21CyjRITzA==
 
 sockjs@^0.3.24:
   version "0.3.24"

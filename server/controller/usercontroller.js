@@ -234,55 +234,27 @@ exports.imagedelete = async (req, res) => {
 
 exports.cropped_img = async (req, res) => {
   try {
-
     console.log('editing image');
-    // let base64Str = req.body.base64Image;
-    let blob = req.body.base64Image;
-    // console.log(base64Str);
-    // let regex = /^data:.+\/(.+);base64,(.*)$/;
-    // let subBase64Str = base64Str.substring(0, 50);
-    // console.log('######### - subBase64Str - ', subBase64Str)
-    // let matches = subBase64Str.match(regex);
-    // if (!matches) {
-    //   res.status(404).json({
-    //     message: "Invalid Image",
-    //   });
-    //   return
-    // }
-    // let splitBase64Str = base64Str.split(';base64,');
-    // console.log('matches', matches);
-    // let ext = matches[1];
-    // let data = splitBase64Str[1];
-    // // console.log('base64 Data', data);
-    // let buffer = Buffer.from(data, 'base64');
-    var query = { _id: req.body.id };
-    const img = await Uploadimg.findOne(query)
-    // console.log('imgData', img)
-    // const cropbox_data = req.body.cropbox_data;
-    // console.log('cropbox_data', cropbox_data);
-    // const rate = req.body.zoomvalue * 5 + 1;
-    // const imgBuffer = (await axios({ url: img.image, responseType: "arraybuffer" })).data;
-    // let imageSize = img.imagewidth;
-    // if (img.imagewidth > img.imageheight) imageSize = img.imageheight;
-    // console.log('extract_area', {
-    //     width: Math.floor(imageSize / rate),
-    //     height: Math.floor(imageSize / rate),
-    //     top: Math.round(-cropbox_data.top * (img.imageheight / cropbox_data.height)),
-    //     left: Math.round(-cropbox_data.left * (img.imagewidth / cropbox_data.width)),
-    //   });
-    // const buffer = await sharp(imgBuffer)
-    //   .extract({
-    //     width: Math.floor(minImgSize / rate),
-    //     height: Math.floor(imageSize / rate),
-    //     top: Math.round(-cropbox_data.top * rate),
-    //     left: Math.round(-cropbox_data.left * rate),
-    //   })
-    //   .withMetadata()
-    //   .toBuffer();
-    console.log('read the buffer', blob);
-    // const arrayBuffer = await blob.arrayBuffer();
-    const buffer = Buffer.from(blob);
-    let imgName = `image_${Date.now()}.${img.imageext}`;
+    let base64Str = req.body.base64Image;
+    console.log(base64Str);
+    let regex = /^data:.+\/(.+);base64,(.*)$/;
+    let subBase64Str = base64Str.substring(0, 50);
+    console.log('######### - subBase64Str - ', subBase64Str)
+    let matches = subBase64Str.match(regex);
+    if (!matches) {
+      res.status(404).json({
+        message: "Invalid Image",
+      });
+      return
+    }
+    let splitBase64Str = base64Str.split(';base64,');
+    console.log('matches', matches);
+    let ext = matches[1];
+    let data = splitBase64Str[1];
+    // console.log('base64 Data', data);
+    let buffer = Buffer.from(data, 'base64');
+    console.log('read the buffer', buffer);
+    let imgName = `image_${Date.now()}.${ext}`;
 
     const filestackPromise = filestackClient.upload(buffer,undefined, {
       filename: imgName
@@ -294,6 +266,7 @@ exports.cropped_img = async (req, res) => {
     console.log(cropeImage);
   
     //console.log("cropped_img", req.body);
+     var query = { _id: req.body.id };
      updated = {
       view_image: cropeImage,
       rotate: req.body.rotate,
