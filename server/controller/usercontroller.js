@@ -26,6 +26,7 @@ const upload = multer({
 const cdnBaseUrl = process.env.CDN_BASE_URL;
 const minImgSize = 1600;
 const maxImgSize = 2100;
+const maxOriginSize = 2500;
 const thumbSize = 250;
 
 exports.uploadImage = upload.array("image", 20);
@@ -36,7 +37,24 @@ exports.uploadSocialPhoto = upload.array("image", 20);
 
 exports.imageupload = async (req, res) => {
   console.log('imageUpload')
- const smartCropRes = await smartcrop.crop(req.file.buffer, { width: minImgSize, height: minImgSize });
+ let newBuffer, newWid, newHei;
+ newBuffer = req.file.buffer;
+ newWid = req.body.imagewidth;
+ newHei = req.body.imageheight;
+ if (req.body.imageheight > maxOriginSize && req.body.imagewidth > maxOriginSize) {
+  if (req.body.imageheight > req.body.imagewidth) {
+    newWid = maxOriginSize;
+    newHei = Math.floor(req.body.imageheight / req.body.imagewidth * maxOriginSize);
+  } else {
+    newHei = maxOriginSize;
+    newWid = Math.floor(req.body.imagewidth / req.body.imageheight * maxOriginSize);
+  }
+  newBuffer = await sharp(req.file.buffer)
+  .resize({ width: newWid, height: newHei })
+  .toBuffer();
+ }
+
+ const smartCropRes = await smartcrop.crop(newBuffer, { width: minImgSize, height: minImgSize });
   console.log('smartsharpResult', smartCropRes)
  var cropbox_data = {
     height: smartCropRes.topCrop.height,
@@ -45,7 +63,7 @@ exports.imageupload = async (req, res) => {
     left: smartCropRes.topCrop.x,
   };
 
-  const thumbBuffer = await sharp(req.file.buffer)
+  const thumbBuffer = await sharp(newBuffer)
     .extract(cropbox_data)
     .withMetadata() 
     .resize(thumbSize)
@@ -56,7 +74,7 @@ exports.imageupload = async (req, res) => {
     filename: 'thumb_'+ req.file.originalname
   });
     
-  const filestackPromise = filestackClient.upload(req.file.buffer,undefined, {
+  const filestackPromise = filestackClient.upload(newBuffer,undefined, {
     filename: req.file.originalname
   });
 
@@ -73,8 +91,8 @@ exports.imageupload = async (req, res) => {
     //image: req.file.filename,
     image: filestackResponse.url,
     frame: req.body.frametype,
-    imageheight: req.body.imageheight,
-    imagewidth: req.body.imagewidth,
+    imageheight: newHei,
+    imagewidth: newWid,
     imageext: req.body.imageext,
     view_image: filestackThumbPromiseResponse.url,
     cropbox_data: cropbox_data,
@@ -93,10 +111,27 @@ exports.imageupload = async (req, res) => {
 };
 
 exports.upload = async (req, res) => {
+  let newBuffer, newWid, newHei;
   for (var i = 0; i < req.files.length; i++) {
     img = req.files[i];
 
-    const smartCropRes = await smartcrop.crop(img.buffer, { width: minImgSize, height: minImgSize });
+    newBuffer = img.buffer;
+    newWid = req.body.imagewidth[i];
+    newHei = req.body.imageheight[i];
+    if (req.body.imageheight[i] > maxOriginSize && req.body.imagewidth[i] > maxOriginSize) {
+    if (req.body.imageheight[i] > req.body.imagewidth[i]) {
+      newWid = maxOriginSize;
+      newHei = Math.floor(req.body.imageheight[i] / req.body.imagewidth[i] * maxOriginSize);
+    } else {
+      newHei = maxOriginSize;
+      newWid = Math.floor(req.body.imagewidth[i] / req.body.imageheight[i] * maxOriginSize);
+    }
+    newBuffer = await sharp(img.buffer)
+    .resize({ width: newWid, height: newHei })
+    .toBuffer();
+    }
+
+    const smartCropRes = await smartcrop.crop(newBuffer, { width: minImgSize, height: minImgSize });
 
     var cropbox_data = {
        height: smartCropRes.topCrop.height,
@@ -105,7 +140,7 @@ exports.upload = async (req, res) => {
        left: smartCropRes.topCrop.x,
      };
    
-     const thumbBuffer = await sharp(img.buffer)
+     const thumbBuffer = await sharp(newBuffer)
        .extract(cropbox_data)
        .withMetadata()
        .resize(thumbSize)
@@ -116,7 +151,7 @@ exports.upload = async (req, res) => {
        filename: 'thumb_'+ img.originalname
      });
        
-     const filestackPromise = filestackClient.upload(img.buffer,undefined, {
+     const filestackPromise = filestackClient.upload(newBuffer,undefined, {
        filename: img.originalname
      });
    
@@ -127,8 +162,8 @@ exports.upload = async (req, res) => {
       new_ar = {
         uid: req.body.uid[i],
         image: filestackResponse.url,
-        imageheight: req.body.imageheight[i],
-        imagewidth: req.body.imagewidth[i],
+        imageheight: newHei,
+        imagewidth: newWid,
         imageext: req.body.imageext[i],
         view_image: filestackThumbPromiseResponse.url,
         frame: req.body.frametype[i],
@@ -141,8 +176,8 @@ exports.upload = async (req, res) => {
       new_ar = {
         uid: req.body.uid[i],
         image: filestackResponse.url,
-        imageheight: req.body.imageheight[i],
-        imagewidth: req.body.imagewidth[i],
+        imageheight: newHei,
+        imagewidth: newWid,
         imageext: req.body.imageext[i],
         view_image: filestackThumbPromiseResponse.url,
         cropbox_data: cropbox_data,
