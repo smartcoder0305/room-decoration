@@ -25,7 +25,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
-    cropper?.zoomTo(+imageonpopup.zoomvalue * 5);
+    cropper?.zoomTo(+imageonpopup.zoomvalue);
     cropper?.rotate(+imageonpopup.rotate);
   }, []);
 
@@ -52,9 +52,9 @@ const EditModal = ({ handleCloseModal, modalData }) => {
     }
   }
   const InitialSets = (target) => {
-    target?.zoomTo(+imageonpopup.zoomvalue * 5);
+    target?.zoomTo(+imageonpopup.zoomvalue);
     target?.rotate(+imageonpopup.rotate);
-    setzoomvalue(+imageonpopup.zoomvalue);
+    setzoomvalue(+imageonpopup.zoomvalue === 0.0 ? 0.1 : +imageonpopup.zoomvalue);
     const cropData = calCropData(imageonpopup);
     target.moveTo(cropData.left, cropData.top)
     setLoading(false)
@@ -105,35 +105,38 @@ const EditModal = ({ handleCloseModal, modalData }) => {
   };
 
   const handleOnZoom = ({ detail }) => {
-    const zoom = +(detail.ratio / 5).toFixed(2);
-    if (zoom > 5) {
+    console.log('detail', detail);
+    console.log('zoomvalue', zoomvalue);
+    const zoom = +(detail.ratio);
+    if (zoom > 1) {
       return;
     } else {
-      setzoomvalue(+(detail.ratio / 5).toFixed(2));
+      setzoomvalue(+(detail.ratio));
     }
   };
 
   const handleZoomTo = (e) => {
     setzoomvalue(+e.target.value);
-    cropper?.zoomTo(+e.target.value * 5);
+    cropper?.zoomTo(+e.target.value);
   };
 
   const zoomvalueplus = () => {
-    if (zoomvalue >= 1.0) {
+    if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) return;
+    if (zoomvalue >= 0.125) {
       return;
     } else {
-      setzoomvalue((zm) => zm + 0.1);
-      cropper.zoomTo((zoomvalue + 0.1) * 5);
+      setzoomvalue((zm) => zm + 0.005);
+      cropper.zoomTo((zoomvalue + 0.005));
     }
   };
 
   const zoomvalueminus = () => {
-    if (zoomvalue < 0.1) {
+    if (zoomvalue < 0.005) {
       setzoomvalue(0.0);
       cropper.zoomTo(0.0);
     } else {
-      setzoomvalue((zm) => zm - 0.1);
-      cropper.zoomTo((zoomvalue - 0.1) * 5);
+      setzoomvalue((zm) => zm - 0.005);
+      cropper.zoomTo((zoomvalue - 0.005));
     }
   };
   const getCropperSize = () => ({
@@ -199,11 +202,11 @@ const EditModal = ({ handleCloseModal, modalData }) => {
           />
           <input
             type="range"
-            min="0"
-            max=".25"
+            min="0.1"
+            max="0.125"
             value={zoomvalue}
             onChange={(e) => handleZoomTo(e)}
-            step="0.025"
+            step="0.005"
             id="zoomer"
             className="slider"
           />
