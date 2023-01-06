@@ -703,7 +703,7 @@ exports.getUserCount = async (req, res) => {
 exports.createOrder = async (req, res) => {
   console.log(req.body);
   try {
-    const orderCreate = await orderAddModel.create();
+    const orderCreate = await orderAddModel.create({uid: req.body.uid});
     console.log(orderCreate);
     res.json({
       success: "Successfully working",
