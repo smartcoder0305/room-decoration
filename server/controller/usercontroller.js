@@ -704,7 +704,7 @@ exports.createOrder = async (req, res) => {
   console.log(req.body);
   try {
     const orderCreate = await orderAddModel.create({uid: req.body.uid});
-    console.log(orderCreate);
+    console.log('orderCreate:::::::', orderCreate);
     res.json({
       success: "Successfully working",
       status: 200,

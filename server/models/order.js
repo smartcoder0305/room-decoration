@@ -7,7 +7,7 @@ const OrderSchema = new mongoose.Schema({
     },
     oid: {
         type: Number,
-        required: true
+        default:534410000
     },
     uid: {
         type: String,
