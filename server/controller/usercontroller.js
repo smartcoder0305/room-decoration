@@ -697,3 +697,22 @@ exports.getUserCount = async (req, res) => {
     });
   }
 };
+
+////// Order Controller/////////
+
+exports.createOrder = async (req, res) => {
+  console.log(req.body);
+  try {
+    const orderCreate = await orderAddModel.create();
+    console.log(orderCreate);
+    res.json({
+      success: "Successfully working",
+      status: 200,
+    });
+  } catch (error) {
+    res.json({
+      success: "Something went wrong",
+      status: 400,
+    });
+  }  
+}
