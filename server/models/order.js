@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const autoIncrement = require('mongoose-auto-increment');
 
 const OrderSchema = new mongoose.Schema({
     checkid:{
@@ -14,12 +13,13 @@ const OrderSchema = new mongoose.Schema({
     timestamps: true
 })
 
-OrderSchema.plugin(autoIncrement.plugin, {
-    model: 'Order',
-    field: 'oid',
-    startAt: 534410001,
-    incrementBy: 1
-    });
-
 const model = mongoose.model("Order", OrderSchema);
+
+OrderSchema.pre('save', async function(next) {
+    var doc = this;
+    const max = await model.find({}).sort({ oid: 1 }).limit(1);
+    doc.oid = max.oid || 534410001  + 1;
+    next();
+});
+
 module.exports = model;
