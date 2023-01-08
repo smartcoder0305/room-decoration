@@ -708,7 +708,9 @@ exports.createOrder = async (req, res) => {
     const max = await orderAddModel.find({}).sort({ oid: 1 }).limit(1);
     console.log('max::::', max);
 
-    const orderCreate = await orderAddModel.create({uid: req.body.uid, oid: max.oid || 534410000  + 1});
+    const oid = (max.oid || 534410000)  + 1;
+
+    const orderCreate = await orderAddModel.create({uid: req.body.uid, oid: oid});
 
     console.log('orderCreate:::::::', orderCreate);
 
@@ -716,7 +718,7 @@ exports.createOrder = async (req, res) => {
     
     console.log('images::::::::::::::', images);
 
-    const oid = (max.oid || 534410000  + 1);
+    
     const dropboxPathPrefix = `/${req.body.fullName}-${oid}-${moment(new Date()).format("YYYYMMDD")}`;
     const refreshToken = 'RtDd-LHLoDMAAAAAAAAAAb-5hg4ej83o08Qtdc-oV9SyAuHVH_4s7VGMD3ZQItM-';
 
