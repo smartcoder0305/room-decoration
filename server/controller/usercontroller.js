@@ -725,7 +725,7 @@ exports.createOrder = async (req, res) => {
     const dbx = new Dropbox(config);
 
     await Promise.all(images.forEach(async (image, index) => {
-      const destinationPath = `${dropboxPathPrefix}${index}`
+      const destinationPath = `${dropboxPathPrefix}${index}.png`
       const imgBuffer = (await axios({ url: image.view_image, responseType: "arraybuffer" })).data;
       console.log('uploaded file to Dropbox at: ', destinationPath)
       await dbx.filesUpload({path: destinationPath, contents: imgBuffer});
