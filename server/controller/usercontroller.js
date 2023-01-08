@@ -705,10 +705,10 @@ exports.createOrder = async (req, res) => {
   console.log(req.body);
   try {
 
-    const max = await orderAddModel.find({}).sort({ oid: -1 }).limit(1);
-    console.log('max::::', max);
+    const maxOid = await orderAddModel.find({}).sort({ oid: -1 }).limit(1);
+    console.log('max::::', maxOid);
 
-    const oid = max.oid ? max.oid + 1 : 534410001;
+    const oid = maxOid.oid ? maxOid.oid + 1 : 534410003;
 
     console.log('oid::::', oid);
     const orderCreate = await orderAddModel.create({uid: req.body.uid, oid: oid});
@@ -735,11 +735,20 @@ exports.createOrder = async (req, res) => {
     await Promise.all(images.forEach(async (image, index) => {
       const destinationPath = `${dropboxPathPrefix}/${oid}-${index}.png`
       const imgBuffer = (await axios({ url: image.view_image, responseType: "arraybuffer" })).data;
-      console.log('uploaded file to Dropbox at: ', destinationPath)
+      console.log('uploaded file to Dropbox at: ', destinationPath);
       await dbx.filesUpload({path: destinationPath, contents: imgBuffer});
     }));
 
-    const orderText = `heealfsjdfaosjflsdjfasdjof`;
+    const orderText = `(1) Name of chosen frame : ${images[0].frame}
+(2) Full Customer Name : ${req.body.fullName}
+(3) Email : ${req.body.email}
+(4) Address : ${req.body.address}
+(5) City : ${req.body.city}
+(6) Postal Code : ${req.body.zipCode}
+(7) Notes : ${req.body.arrivalInstructions}
+(8) Total number of frames : ${images.length}
+(9) Date and time of order : ${moment(new Date()).format("MM/DD/YYYY")}
+(10) Order ID : ${oid}`;
     
     console.log('orderText:::::::::', orderText);
     await dbx.filesUpload({path: `${dropboxPathPrefix}/order.txt`, contents: orderText});
@@ -749,6 +758,7 @@ exports.createOrder = async (req, res) => {
       status: 200,
     });
   } catch (error) {
+    console.log('error:::::::::::::',error);
     res.json({
       success: "Something went wrong",
       status: 400,
