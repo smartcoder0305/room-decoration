@@ -706,9 +706,9 @@ exports.createOrder = async (req, res) => {
   try {
 
     const maxOid = await orderAddModel.find({}).sort({ oid: -1 }).limit(1);
-    console.log('max::::', maxOid);
+    console.log('max::::', maxOid.oid);
 
-    const oid = maxOid.oid ? maxOid.oid + 1 : 534410003;
+    const oid = maxOid.oid ? maxOid.oid + 1 : 534410001;
 
     console.log('oid::::', oid);
     const orderCreate = await orderAddModel.create({uid: req.body.uid, oid: oid});
