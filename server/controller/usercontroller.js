@@ -705,7 +705,7 @@ exports.createOrder = async (req, res) => {
   console.log(req.body);
   try {
 
-    const max = await orderAddModel.find({}).sort({ oid: 1 }).limit(1);
+    const max = await orderAddModel.find({}).sort({ oid: -1 }).limit(1);
     console.log('max::::', max);
 
     const oid = (max.oid || 534410000)  + 1;
@@ -750,6 +750,7 @@ exports.createOrder = async (req, res) => {
 (10) Order ID : ${oid}
 `;
     
+console.log('orderText:::::::::', orderText);
     await dbx.filesUpload({path: `${dropboxPathPrefix}/order.txt`, contents: orderText});
 
     res.json({
