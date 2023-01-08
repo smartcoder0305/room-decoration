@@ -708,8 +708,9 @@ exports.createOrder = async (req, res) => {
     const max = await orderAddModel.find({}).sort({ oid: -1 }).limit(1);
     console.log('max::::', max);
 
-    const oid = (max.oid || 534410000)  + 1;
+    const oid = max.oid ? max.oid + 1 : 534410001;
 
+    console.log('oid::::', oid);
     const orderCreate = await orderAddModel.create({uid: req.body.uid, oid: oid});
 
     console.log('orderCreate:::::::', orderCreate);
@@ -737,20 +738,10 @@ exports.createOrder = async (req, res) => {
       console.log('uploaded file to Dropbox at: ', destinationPath)
       await dbx.filesUpload({path: destinationPath, contents: imgBuffer});
     }));
-    const orderText = `
-(1) Name of chosen frame : ${images[0].frame}
-(2) Full Customer Name : ${req.body.fullName}
-(3) Email : ${req.body.email}
-(4) Address : ${req.body.address}
-(5) City : ${req.body.city}
-(6) Postal Code : ${req.body.zipCode}
-(7) Notes, if he left any : ${req.body.arrivalInstructions}
-(8) Total number of frames : ${images.length}
-(9) Date and time of order : ${moment(new Date()).format("MM/DD/YYYY")}
-(10) Order ID : ${oid}
-`;
+
+    const orderText = `heealfsjdfaosjflsdjfasdjof`;
     
-console.log('orderText:::::::::', orderText);
+    console.log('orderText:::::::::', orderText);
     await dbx.filesUpload({path: `${dropboxPathPrefix}/order.txt`, contents: orderText});
 
     res.json({
