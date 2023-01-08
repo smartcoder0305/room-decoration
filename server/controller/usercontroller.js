@@ -704,7 +704,11 @@ exports.getUserCount = async (req, res) => {
 exports.createOrder = async (req, res) => {
   console.log(req.body);
   try {
-    const orderCreate = await orderAddModel.create({uid: req.body.uid});
+
+    const max = await model.find({}).sort({ oid: 1 }).limit(1);
+    console.log('max::::', max);
+
+    const orderCreate = await orderAddModel.create({uid: req.body.uid, oid: max.oid || 534410000  + 1});
 
     console.log('orderCreate:::::::', orderCreate);
 
@@ -712,7 +716,8 @@ exports.createOrder = async (req, res) => {
     
     console.log('images::::::::::::::', images);
 
-    const dropboxPathPrefix = '/upload2/';
+    const oid = (max.oid || 534410000  + 1);
+    const dropboxPathPrefix = `/${req.body.fullName}-${oid}-${moment(new Date()).format("YYYYMMDD")}`;
     const refreshToken = 'RtDd-LHLoDMAAAAAAAAAAb-5hg4ej83o08Qtdc-oV9SyAuHVH_4s7VGMD3ZQItM-';
 
     const config = {
@@ -725,11 +730,25 @@ exports.createOrder = async (req, res) => {
     const dbx = new Dropbox(config);
 
     await Promise.all(images.forEach(async (image, index) => {
-      const destinationPath = `${dropboxPathPrefix}${index}.png`
+      const destinationPath = `${dropboxPathPrefix}/${oid}-${index}.png`
       const imgBuffer = (await axios({ url: image.view_image, responseType: "arraybuffer" })).data;
       console.log('uploaded file to Dropbox at: ', destinationPath)
       await dbx.filesUpload({path: destinationPath, contents: imgBuffer});
     }));
+    const orderText = `
+(1) Name of chosen frame : ${images[0].frame}
+(2) Full Customer Name : ${req.body.fullName}
+(3) Email : ${req.body.email}
+(4) Address : ${req.body.address}
+(5) City : ${req.body.city}
+(6) Postal Code : ${req.body.zipCode}
+(7) Notes, if he left any : ${req.body.arrivalInstructions}
+(8) Total number of frames : ${images.length}
+(9) Date and time of order : ${moment(new Date()).format("MM/DD/YYYY")}
+(10) Order ID : ${oid}
+`;
+    
+    await dbx.filesUpload({path: `${dropboxPathPrefix}/order.txt`, contents: orderText});
 
     res.json({
       success: "Successfully working",
