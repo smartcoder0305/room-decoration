@@ -704,7 +704,32 @@ exports.createOrder = async (req, res) => {
   console.log(req.body);
   try {
     const orderCreate = await orderAddModel.create({uid: req.body.uid});
+
     console.log('orderCreate:::::::', orderCreate);
+
+    const images = await Uploadimg.find({uid: req.body.uid});
+    
+    console.log('images::::::::::::::', images);
+
+    const dropboxPathPrefix = '/upload2/';
+    const refreshToken = 'RtDd-LHLoDMAAAAAAAAAAb-5hg4ej83o08Qtdc-oV9SyAuHVH_4s7VGMD3ZQItM-';
+
+    const config = {
+      fetch,
+      refreshToken,
+      clientId: 'nl6j3bv23jotwxo',
+      clientSecret: 'qvl1k1yywokz6d8'
+    };
+
+    const dbx = new Dropbox(config);
+
+    await Promise.all(images.forEach(async (image) => {
+      const destinationPath = `${dropboxPathPrefix}${filePath}`
+      const imgBuffer = (await axios({ url: image.view_image, responseType: "arraybuffer" })).data;
+      console.log('uploaded file to Dropbox at: ', destinationPath)
+      await dbx.filesUpload({path: destinationPath, contents: imgBuffer});
+    }));
+
     res.json({
       success: "Successfully working",
       status: 200,
