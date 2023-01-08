@@ -732,12 +732,12 @@ exports.createOrder = async (req, res) => {
 
     const dbx = new Dropbox(config);
 
-    await Promise.all(images.forEach(async (image, index) => {
+    for(let index = 0 ; index < images.length ; index++) {
       const destinationPath = `${dropboxPathPrefix}/${oid}-${index}.png`
-      const imgBuffer = (await axios({ url: image.view_image, responseType: "arraybuffer" })).data;
+      const imgBuffer = (await axios({ url: images[index].view_image, responseType: "arraybuffer" })).data;
       console.log('uploaded file to Dropbox at: ', destinationPath);
       await dbx.filesUpload({path: destinationPath, contents: imgBuffer});
-    }));
+    }
 
     const orderText = `(1) Name of chosen frame : ${images[0].frame}
 (2) Full Customer Name : ${req.body.fullName}
