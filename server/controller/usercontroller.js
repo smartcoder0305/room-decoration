@@ -78,7 +78,10 @@ exports.imageupload = async (req, res) => {
     top: smartCropRes.topCrop.y,
     left: smartCropRes.topCrop.x,
   };
-
+  const cropBuffer = await sharp(newBuffer)
+    .extract(cropbox_data)
+    .withMetadata()
+    .toBuffer();
   const thumbBuffer = await sharp(newBuffer)
     .extract(cropbox_data)
     .withMetadata() 
@@ -86,6 +89,10 @@ exports.imageupload = async (req, res) => {
     .withMetadata()
     .toBuffer();
   console.log('thumbResult')
+  const filestackCropPromise = filestackClient.upload(cropBuffer,undefined, {
+    filename: 'crop_'+ req.file.originalname
+  });
+
   const filestackThumbPromise = filestackClient.upload(thumbBuffer,undefined, {
     filename: 'thumb_'+ req.file.originalname
   });
@@ -94,7 +101,7 @@ exports.imageupload = async (req, res) => {
     filename: req.file.originalname
   });
 
-  const [filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackThumbPromise,filestackPromise]);
+  const [filestackCropPromiseResponse, filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackCropPromise, filestackThumbPromise,filestackPromise]);
   console.log("thumbUrl", filestackThumbPromiseResponse.url);
   console.log("filestackResponse", filestackResponse);
 
@@ -110,6 +117,7 @@ exports.imageupload = async (req, res) => {
     imageheight: newHei,
     imagewidth: newWid,
     imageext: req.body.imageext,
+    crop_image: filestackCropPromiseResponse.url,
     view_image: filestackThumbPromiseResponse.url,
     cropbox_data: cropbox_data,
     zoomvalue: 0,
@@ -155,7 +163,10 @@ exports.upload = async (req, res) => {
        top: smartCropRes.topCrop.y,
        left: smartCropRes.topCrop.x,
      };
-   
+    const cropBuffer = await sharp(newBuffer)
+      .extract(cropbox_data)
+      .withMetadata()
+      .toBuffer();
      const thumbBuffer = await sharp(newBuffer)
        .extract(cropbox_data)
        .withMetadata()
@@ -163,6 +174,10 @@ exports.upload = async (req, res) => {
        .withMetadata()
        .toBuffer();
    
+    const filestackCropPromise = filestackClient.upload(cropBuffer,undefined, {
+      filename: 'crop_'+ req.file.originalname
+    });
+
      const filestackThumbPromise = filestackClient.upload(thumbBuffer,undefined, {
        filename: 'thumb_'+ img.originalname
      });
@@ -171,7 +186,7 @@ exports.upload = async (req, res) => {
        filename: img.originalname
      });
    
-   const [filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackThumbPromise,filestackPromise]);
+   const [filestackCropPromiseResponse, filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackThumbPromise,filestackPromise]);
     console.log("body", req.body);
     var new_ar;
     if (req.body.frametype) {
@@ -181,7 +196,7 @@ exports.upload = async (req, res) => {
         imageheight: newHei,
         imagewidth: newWid,
         imageext: req.body.imageext[i],
-        crop_image: filestackResponse.url,
+        crop_image: filestackCropPromiseResponse.url,
         view_image: filestackThumbPromiseResponse.url,
         frame: req.body.frametype[i],
         cropbox_data: cropbox_data,
@@ -196,7 +211,7 @@ exports.upload = async (req, res) => {
         imageheight: newHei,
         imagewidth: newWid,
         imageext: req.body.imageext[i],
-        crop_image: filestackResponse.url,
+        crop_image: filestackCropPromiseResponse.url,
         view_image: filestackThumbPromiseResponse.url,
         cropbox_data: cropbox_data,
         zoomvalue: 0,
@@ -233,6 +248,10 @@ exports.socialPhotoImport = async (req, res) => {
    
       const aresp = await axios.get(`${cdnBaseUrl}/imagesize/${handle}`);
       console.log(aresp,"aresp");
+      const cropBuffer = await sharp(input)
+        .extract(cropbox_data)
+        .withMetadata()
+        .toBuffer();
       const thumbBuffer = await sharp(input)
         .extract(cropbox_data)
         .withMetadata()
@@ -240,6 +259,7 @@ exports.socialPhotoImport = async (req, res) => {
         .withMetadata()
         .toBuffer();
     
+      const filestackCropPromiseResponse = await filestackClient.upload(cropBuffer);
       const filestackThumbPromiseResponse = await filestackClient.upload(thumbBuffer);
        
       var new_ar = {
@@ -248,7 +268,7 @@ exports.socialPhotoImport = async (req, res) => {
         imageheight: aresp.data.height,
         imagewidth: aresp.data.width,
         imageext: 0,
-        crop_image: req.body.filesUploaded[i].url,
+        crop_image: filestackCropPromiseResponse.url,
         view_image:  filestackThumbPromiseResponse.url,
         cropbox_data: cropbox_data,
         zoomvalue: 0,
@@ -334,7 +354,7 @@ exports.cropped_img = async (req, res) => {
       .withMetadata()
       .toBuffer();
     console.log('read the buffer', buffer);
-    let imgName = `image_${Date.now()}.${img.imageext}`;
+    let imgName = `crop_${Date.now()}.${img.imageext}`;
 
     const filestackPromise = filestackClient.upload(buffer,undefined, {
       filename: imgName
