@@ -747,7 +747,7 @@ exports.createOrder = async (req, res) => {
     console.log('images::::::::::::::', images);
 
     
-    const dropboxPathPrefix = `/${req.body.fullName}-${oid}-${moment(new Date()).format("YYYYMMDD")}`;
+    const dropboxPathPrefix = `${req.body.fullName}-${oid}-${moment(new Date()).format("YYYYMMDD")}`;
     const refreshToken = 'RtDd-LHLoDMAAAAAAAAAAb-5hg4ej83o08Qtdc-oV9SyAuHVH_4s7VGMD3ZQItM-';
 
     const config = {
