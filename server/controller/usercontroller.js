@@ -13,12 +13,20 @@ const axios = require("axios");
 const Dropbox = require('dropbox').Dropbox;
 const moment = require("moment");
 const filestack = require("filestack-js");
-
 const smartcrop = require('smartcrop-sharp');
+const aws = require('aws-sdk');
 
 const filestackClient =  filestack.init(process.env.FILESTACK_KEY);
 
 const storage = multer.memoryStorage()
+
+const s3 = new aws.S3({
+  params: {
+    Bucket: process.env.S3_BUCKET,
+  },
+  accessKeyId: process.env.S3_ACCESS_ID,
+  secretAccessKey: process.env.S3_ACCESS_KEY,
+});
 
 const upload = multer({
   storage: storage,
@@ -701,11 +709,30 @@ exports.getUserCount = async (req, res) => {
 
 ////// Order Controller/////////
 
+exports.s3Upload = async (fileData, filePath) => {
+  try {
+    await new Promise((resolve, reject) => {
+      s3.upload({
+        Key: filePath,
+        Body: fileData,
+      }).send(async (errS3, data) => {
+        if (errS3) {
+          reject(errS3);
+        } else {
+          resolve(data);
+        }
+      })
+    })
+    return true;
+  } catch (err) {
+    throw err;
+  }
+}
+
 exports.createOrder = async (req, res) => {
   console.log(req.body);
   try {
-
-    const maxOid = await orderAddModel.find({}).sort({ oid: -1 }).limit(1);
+    const maxOid = await orderAddModel.findOne({}).sort({ oid: -1 }).limit(1);
     console.log('max::::', maxOid.oid);
 
     const oid = maxOid.oid ? maxOid.oid + 1 : 534410001;
@@ -736,7 +763,7 @@ exports.createOrder = async (req, res) => {
       const destinationPath = `${dropboxPathPrefix}/${oid}-${index}.png`
       const imgBuffer = (await axios({ url: images[index].view_image, responseType: "arraybuffer" })).data;
       console.log('uploaded file to Dropbox at: ', destinationPath);
-      await dbx.filesUpload({path: destinationPath, contents: imgBuffer});
+      await s3Upload(imgBuffer, destinationPath);
     }
 
     const orderText = `(1) Name of chosen frame : ${images[0].frame}
@@ -751,7 +778,7 @@ exports.createOrder = async (req, res) => {
 (10) Order ID : ${oid}`;
     
     console.log('orderText:::::::::', orderText);
-    await dbx.filesUpload({path: `${dropboxPathPrefix}/order.txt`, contents: orderText});
+    await s3Upload(orderText, `${dropboxPathPrefix}/order.txt`);
 
     res.json({
       success: "Successfully working",
