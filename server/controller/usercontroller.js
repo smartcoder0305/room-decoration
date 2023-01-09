@@ -38,6 +38,13 @@ const maxImgSize = 2100;
 const maxOriginSize = 2500;
 const thumbSize = 250;
 
+const FRAMES = {
+  classic: "קלאסי",
+  bold: "נועז",
+  ever: "נקי",
+  clean: "אותנטי",
+};
+
 exports.uploadImage = upload.array("image", 20);
 
 exports.imageuploadsing = upload.single("image");
@@ -174,6 +181,7 @@ exports.upload = async (req, res) => {
         imageheight: newHei,
         imagewidth: newWid,
         imageext: req.body.imageext[i],
+        crop_image: filestackResponse.url,
         view_image: filestackThumbPromiseResponse.url,
         frame: req.body.frametype[i],
         cropbox_data: cropbox_data,
@@ -188,6 +196,7 @@ exports.upload = async (req, res) => {
         imageheight: newHei,
         imagewidth: newWid,
         imageext: req.body.imageext[i],
+        crop_image: filestackResponse.url,
         view_image: filestackThumbPromiseResponse.url,
         cropbox_data: cropbox_data,
         zoomvalue: 0,
@@ -239,6 +248,7 @@ exports.socialPhotoImport = async (req, res) => {
         imageheight: aresp.data.height,
         imagewidth: aresp.data.width,
         imageext: 0,
+        crop_image: req.body.filesUploaded[i].url,
         view_image:  filestackThumbPromiseResponse.url,
         cropbox_data: cropbox_data,
         zoomvalue: 0,
@@ -337,6 +347,7 @@ exports.cropped_img = async (req, res) => {
   
     //console.log("cropped_img", req.body);
      updated = {
+      crop_image: cropeImage,
       view_image: cropeImage,
       rotate: req.body.rotate,
       zoomvalue: req.body.zoomvalue,
@@ -761,12 +772,12 @@ exports.createOrder = async (req, res) => {
 
     for(let index = 0 ; index < images.length ; index++) {
       const destinationPath = `${dropboxPathPrefix}/${oid}-${index}.png`
-      const imgBuffer = (await axios({ url: images[index].view_image, responseType: "arraybuffer" })).data;
+      const imgBuffer = (await axios({ url: images[index].crop_image, responseType: "arraybuffer" })).data;
       console.log('uploaded file to Dropbox at: ', destinationPath);
       await s3Upload(imgBuffer, destinationPath);
     }
 
-    const orderText = `(1) Name of chosen frame : ${images[0].frame}
+    const orderText = `(1) Name of chosen frame : ${FRAMES[images[0].frame || 'classic']}
 (2) Full Customer Name : ${req.body.fullName}
 (3) Email : ${req.body.email}
 (4) Address : ${req.body.address}

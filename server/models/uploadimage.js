@@ -14,6 +14,10 @@ const UploadimageSchema = new mongoose.Schema({
         default: 'classic',
         required:true
     },
+    crop_image:{
+        type:String,
+        required:true
+    },
     view_image:{
         type:String,
         required:true
