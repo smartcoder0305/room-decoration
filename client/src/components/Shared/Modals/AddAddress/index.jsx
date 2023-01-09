@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import StyledSelect from "@shared/components/Select";
 import Input from "@shared/components/Input";
@@ -8,6 +8,7 @@ import { object, string, number } from "yup";
 import { useSecondModal } from "@helpers/hooks/useSecondModal";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { selectedShippingAddress } from "@atoms";
+import axios from 'axios';
 
 import "./style.css";
 
@@ -15,6 +16,24 @@ const AddAddressModal = () => {
   const modal = useSecondModal();
   const setAddress = useSetRecoilState(selectedShippingAddress);
   const selectedAddress = useRecoilValue(selectedShippingAddress);
+  const [isLoading, setLoading] = useState(false);
+
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const postData = async (data) => {
+      try {
+          const config = {
+              headers: {
+                  'Content-Type': 'application/json'
+              }
+          }
+          const res = await axios.post(`${BASE_URL}/user/createorder`, data, config);
+          if (res.data.status === 200) {
+              console.log('----success-----')
+          }
+      } catch (error) {
+          console.log(error)
+      }
+  }
 
   useEffect(() => {
     selectedAddress && formik.setValues(selectedAddress);
@@ -43,9 +62,13 @@ const AddAddressModal = () => {
       city: string().required("Required"),
       arrivalInstructions: "",
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       if (!Object.keys(formik.errors).length) {
+        setLoading(true);
         setAddress(values);
+        console.log(values);
+        await postData({...values, uid:localStorage.getItem('uniqueUserId')});
+        setLoading(false);
         handleCloseModal();
       }
     },
@@ -54,99 +77,122 @@ const AddAddressModal = () => {
     modal("close", "addAddress");
   };
   return (
-    <form className="add-address-modal" onSubmit={formik.handleSubmit}>
-      <div className="add-address-modal__header">
-        <button type="submit" className="submit">
-          רושיא
-        </button>
-        <span>נא להזין את פרטי המשלוח</span>
-        <img
-          onClick={() => handleCloseModal()}
-          src="assets/file/images/cross.svg"
-          alt="cross"
-        />
-      </div>
-      <div className="add-address-modal__content rtl">
-        <div className="form__row">
-          <Input
-            label="אלמ םש"
-            name="fullName"
-            placeholder="החפשמ םשו יטרפ םש"
-            onChange={formik.handleChange}
-            value={formik.values.fullName}
-            error={formik.errors.fullName}
+    <>
+      <form className="add-address-modal" onSubmit={formik.handleSubmit}>
+        <div className="add-address-modal__header">
+          <button type="submit" className="submit">
+            רושיא
+          </button>
+          <span>נא להזין את פרטי המשלוח</span>
+          <img
+            onClick={() => handleCloseModal()}
+            src="assets/file/images/cross.svg"
+            alt="cross"
           />
         </div>
-        <div className="form__row">
-          <Input
-            name="phoneNumber"
-            type="tel"
-            mask="999-999-9999"
-            label="ןופלט ‘סמ"
-            value={formik.values.phoneNumber}
-            onChange={formik.handleChange}
-            error={formik.errors.phoneNumber}
-          />
+        <div className="add-address-modal__content rtl">
+          <div className="form__row">
+            <Input
+              label="אלמ םש"
+              name="fullName"
+              placeholder="החפשמ םשו יטרפ םש"
+              onChange={formik.handleChange}
+              value={formik.values.fullName}
+              error={formik.errors.fullName}
+            />
+          </div>
+          <div className="form__row">
+            <Input
+              name="phoneNumber"
+              type="tel"
+              mask="999-999-9999"
+              label="ןופלט ‘סמ"
+              value={formik.values.phoneNumber}
+              onChange={formik.handleChange}
+              error={formik.errors.phoneNumber}
+            />
+          </div>
+          <div className="form__row">
+            <Input
+              name="email"
+              type="email"
+              label="ליימיא"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={formik.errors.email}
+            />
+          </div>
+          <div className="form__row">
+            <Input
+              name="address"
+              label="תבותכ"
+              placeholder="רחוב ומספר בית או תא דואר"
+              value={formik.values.address}
+              onChange={formik.handleChange}
+              error={formik.errors.address}
+            />
+            <Input
+              name="addressDetails"
+              placeholder="דירה, כניסה, קומה"
+              onChange={formik.handleChange}
+              value={formik.values.addressDetails}
+              error={formik.errors.addressDetails}
+            />
+          </div>
+          <div className="form__row column">
+            <StyledSelect
+              label="ריע"
+              name="city"
+              placeholder={false}
+              search
+              options={cityData}
+              onChange={(i) => formik.setFieldValue("city", i.value)}
+              value={cityData.find((itm) => itm.value === formik.values.city)}
+              defaultValue={cityData.find(
+                (itm) => itm.value === formik.values.city
+              )}
+              error={formik.errors.city}
+            />
+            <Input
+              name="zipCode"
+              onChange={formik.handleChange}
+              label="דוקימ"
+              value={formik.values.zipCode}
+              error={formik.errors.zipCode}
+            />
+          </div>
+          <div className="form__row">
+            <Textarea
+              label="הוראות הגעה (אופציונלי)"
+              placeholder="הערות, העדפות, קוד לבניין ועוד"
+              value={formik.values.arrivalInstructions}
+              name="arrivalInstructions"
+            />
+          </div>
         </div>
-        <div className="form__row">
-          <Input
-            name="email"
-            type="email"
-            label="ליימיא"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            error={formik.errors.email}
-          />
+      </form>
+      {isLoading &&
+        <div
+          className="modal loaderbg"
+          id="mainImageLoaderModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+          style={{ display: isLoading }}
+        >
+          <div className="modal-dialog review-image-loader" role="document">
+            <div className="loadingio-spinner-heart-btbrqan8295">
+              <div className="ldio-kv0ui0pfesk">
+                <div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="form__row">
-          <Input
-            name="address"
-            label="תבותכ"
-            placeholder="רחוב ומספר בית או תא דואר"
-            value={formik.values.address}
-            onChange={formik.handleChange}
-            error={formik.errors.address}
-          />
-          <Input
-            name="addressDetails"
-            placeholder="דירה, כניסה, קומה"
-            onChange={formik.handleChange}
-            value={formik.values.addressDetails}
-            error={formik.errors.addressDetails}
-          />
-        </div>
-        <div className="form__row column">
-          <StyledSelect
-            label="ריע"
-            name="city"
-            placeholder={false}
-            search
-            options={cityData}
-            onChange={(i) => formik.setFieldValue("city", i.value)}
-            value={cityData.find((itm) => itm.value === formik.values.city)}
-            defaultValue={cityData.find(
-              (itm) => itm.value === formik.values.city
-            )}
-            error={formik.errors.city}
-          />
-          <Input
-            name="zipCode"
-            onChange={formik.handleChange}
-            label="דוקימ"
-            value={formik.values.zipCode}
-            error={formik.errors.zipCode}
-          />
-        </div>
-        <div className="form__row">
-          <Textarea
-            label="הוראות הגעה (אופציונלי)"
-            placeholder="הערות, העדפות, קוד לבניין ועוד"
-            value={formik.values.arrivalInstructions}
-            name="arrivalInstructions"
-          />
-        </div>
-      </div>
-    </form>
+      }
+    </>
   );
 };
 
