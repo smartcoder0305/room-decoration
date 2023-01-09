@@ -709,7 +709,7 @@ exports.getUserCount = async (req, res) => {
 
 ////// Order Controller/////////
 
-exports.s3Upload = async (fileData, filePath) => {
+const s3Upload = async (fileData, filePath) => {
   try {
     await new Promise((resolve, reject) => {
       s3.upload({
