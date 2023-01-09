@@ -796,7 +796,7 @@ exports.createOrder = async (req, res) => {
       console.log('uploaded file to Dropbox at: ', destinationPath);
       await s3Upload(imgBuffer, destinationPath);
     }
-const frameName = images[0].frame ? FRAMES[images[0].frame] : FRAMES.classic;
+    const frameName = FRAMES[images[0].frame] || FRAMES.classic;
     const orderText = `(1) Name of chosen frame : ${frameName}
 (2) Full Customer Name : ${req.body.fullName}
 (3) Email : ${req.body.email}
