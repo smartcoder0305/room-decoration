@@ -166,6 +166,7 @@ const AddAddressModal = () => {
               label="הוראות הגעה (אופציונלי)"
               placeholder="הערות, העדפות, קוד לבניין ועוד"
               value={formik.values.arrivalInstructions}
+              onChange={formik.handleChange}
               name="arrivalInstructions"
             />
           </div>
