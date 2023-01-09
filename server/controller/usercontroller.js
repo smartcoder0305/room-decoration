@@ -186,7 +186,7 @@ exports.upload = async (req, res) => {
        filename: img.originalname
      });
    
-   const [filestackCropPromiseResponse, filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackThumbPromise,filestackPromise]);
+   const [filestackCropPromiseResponse, filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackCropPromise, filestackThumbPromise,filestackPromise]);
     console.log("body", req.body);
     var new_ar;
     if (req.body.frametype) {
