@@ -175,7 +175,7 @@ exports.upload = async (req, res) => {
        .toBuffer();
    
     const filestackCropPromise = filestackClient.upload(cropBuffer,undefined, {
-      filename: 'crop_'+ req.file.originalname
+      filename: 'crop_'+ img.originalname
     });
 
      const filestackThumbPromise = filestackClient.upload(thumbBuffer,undefined, {
