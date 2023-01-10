@@ -5,6 +5,7 @@ import { Transition, CSSTransition } from "react-transition-group";
 import { useRecoilState } from "recoil";
 import SelectCardModal from "@modals/SelectCard";
 import AddAddressModal from "@modals/AddAddress";
+import AddAddressModalMobile from "@modals/AddAddressMobile";
 import AddCardForm from '@modals/AddCardForm';
 import './style.css';
 
@@ -87,6 +88,16 @@ const SecondaryModals = () => {
         unmountOnExit
       >
         <AddAddressModal
+          handleCloseModal={handleCloseModal}
+        />
+      </CSSTransition>
+      <CSSTransition
+        in={modals.addAddressMobile.visible}
+        timeout={duration}
+        classNames="css-transition"
+        unmountOnExit
+      >
+        <AddAddressModalMobile
           handleCloseModal={handleCloseModal}
         />
       </CSSTransition>

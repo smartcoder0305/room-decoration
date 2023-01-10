@@ -11,6 +11,7 @@ import PayPal from "./components/PayPal";
 import TestPay from "./components/TestPay";
 import uniqid from "uniqid";
 import AdressModal from "./components/AdressModal";
+import { useSecondModal } from "@helpers/hooks/useSecondModal";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const digit = /[0-9]/;
@@ -74,6 +75,8 @@ const CheckoutMobile = (props) => {
         email: "",
       };
     });
+
+  const modal = useSecondModal();
 
   useEffect(() => {
     localStorage.setItem(
@@ -273,7 +276,7 @@ const CheckoutMobile = (props) => {
 
 
   const openAddressPopupMobile = () => {
-    
+    modal("open", 'addAddressMobile');
   };
 
   const closeAddressPopupMobile = () => {
@@ -282,7 +285,7 @@ const CheckoutMobile = (props) => {
 
   const openPaymentPopupMobile = async () => {
     // if address form not filled and validated
-    if (!shippingAddressFormValues.fromValidate) {
+    if (shippingAddressFormValues.fromValidate) {
       openAddressPopupMobile();
     }
   };
@@ -662,17 +665,6 @@ const CheckoutMobile = (props) => {
           </div>
         </div>
       </div>
-
-      {/* Start address modal */}
-      <AdressModal
-        handleChange={handleChange}
-        handleChangeCity={handleChangeCity}
-        handleShippingAddressFormSubmit={handleShippingAddressFormSubmit}
-        shippingAddressFormValidateErr={shippingAddressFormValidateErr}
-        mycloseAddressPopupMobile={mycloseAddressPopupMobile}
-        shippingAddressFormValues={shippingAddressFormValues}
-      />
-      {/* End address modal */}
 
       {/* Start payment option choose */}
       <PaymentOptions selectPaymentOption={selectPaymentOption} />
