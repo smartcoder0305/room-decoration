@@ -165,6 +165,8 @@ const AddAddressModalMobile = () => {
               value={formik.values.arrivalInstructions}
               onChange={formik.handleChange}
               name="arrivalInstructions"
+              style={{minHeight: 0}}
+              rows="1"
             />
           </div>
           <div className="form_row">
