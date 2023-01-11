@@ -12,15 +12,7 @@ export const secondOverlayState = atom({
 
 export const paymentMethods = atom({
     key: 'payments',
-    default: [
-        // {
-        //     cardNumber: '4800 0000 0000 0000',
-        //     cardHolder: 'Rusan Matusevich',
-        //     expiriedMonth: '01',
-        //     expiriedYear: '2022',
-        //     cvv: '000',
-        // }
-    ]
+    default: []
 })
 
 export const selectedPaymentMethod = atom({
