@@ -242,7 +242,7 @@ const CheckoutMobile = (props) => {
           selectedAddress.fullName +
           ", " +
           selectedAddress.city,
-        img: <img src="assets/images/method_check.svg" />,
+        img: <img src="assets/images/method_check.svg" alt="method_check"/>,
       };
     } else {
       return {
@@ -253,6 +253,7 @@ const CheckoutMobile = (props) => {
             src="assets/images/form_address.svg"
             style={{ marginLeft: "5px" }}
             width={25}
+            alt="form_address"
           />
         ),
       };
@@ -363,7 +364,7 @@ const CheckoutMobile = (props) => {
                 >
                   בהזמנה זו תקבלו משלוח חינם
                 </span>
-                <img src="assets/file/images/V Cart icon.svg" />
+                <input type="checkbox" style={{width: "14px"}}/>
               </div>
             </div>
 
@@ -377,7 +378,7 @@ const CheckoutMobile = (props) => {
                     data-toggle="modal"
                     data-target="#addwin"
                     onClick={openAddressPopupMobile}
-                    style={{paddingTop: "26px"}}
+                    style={{paddingTop: "26px", fontWeight: 700}}
                   >
                     {renderAddAddressButton().img}
                     &nbsp;&nbsp;&nbsp;
@@ -389,7 +390,7 @@ const CheckoutMobile = (props) => {
                     <span>
                       <p
                         className="new-link add-padd text-black-color"
-                        style={{ color: "black", paddingTop: "26px" }}
+                        style={{ color: "black", paddingTop: "26px", fontWeight: 700}}
                         data-dismiss="modal"
                         data-toggle="modal"
                         data-target="#addwin"
@@ -410,7 +411,7 @@ const CheckoutMobile = (props) => {
                         data-toggle="modal"
                         data-target="#addwin"
                         onClick={mySaveCardPopUp}
-                        style={{marginBottom: "26px"}}
+                        style={{marginBottom: "26px", fontWeight: 700}}
                       >
                         <img
                           src="assets/file/images/mycard.svg"
@@ -434,10 +435,13 @@ const CheckoutMobile = (props) => {
                 </p> */}
               </div>
               <div className="checkout-calculation">
-                <div className="checkout-calculation__info">
+                <div className="checkout-calculation__info" style={{fontWeight: 400}}>
                   <p>
-                    ההזמנה שלכם זכאית למשלוח חינם, המשלוח צפוי להגיע עד יום שלישי
-                    ה29 ביולי
+                    ההזמנה שלכם זכאית ל
+                    <span style={{fontWeight: 500}}>משלוח חינם,</span>
+                     המשלוח צפוי
+                    להגיע עד 
+                    <span style={{fontWeight: 500}}>יום שלישי ה29 ביולי</span>
                   </p>
                   <img src="assets/images/checkout_check.svg" alt="check" />
                 </div>
@@ -518,7 +522,7 @@ const CheckoutMobile = (props) => {
               className="btn cls pay-by-card-button "
               onClick={cardPaymentProcess}
             >
-              ביצוע ההזמנה שלך בשקלים
+              נזמין
             </button>
           </>
         ) : (
@@ -528,7 +532,7 @@ const CheckoutMobile = (props) => {
               className="btn cls pay-by-card-button data-not-full-field"
               onClick={openPaymentPopupMobile}
             >
-              ביצוע ההזמנה שלך בשקלים
+              תחילה נזין את פרטי המשלוח והתשלום
             </button>
           </>
         )}
