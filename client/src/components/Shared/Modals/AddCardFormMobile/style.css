@@ -1,0 +1,102 @@
+.add-new-card-form-mobile {
+  max-width: 750px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 0.15);
+  height: 100%;
+  color: black !important;
+  font-weight: 500;
+  font-size: 14px;
+}
+.add-new-card-form-mobile input {
+    font-size: 14px;
+    outline: none;
+    border: 0.5px solid #CCCCCC;
+}
+.add-new-card-form-mobile input::placeholder {
+    font-size: 14px;
+}
+.add-new-card-form-mobile__header {
+    padding: 20px 38px;
+    box-shadow: 0px 4px 4px rgba(204, 204, 204, 0.25);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.add-new-card-form-mobile__content {
+  display: flex;
+  grid-template-columns: 40% 60%;
+  padding: 20px;
+}
+.form__description {
+    padding: 13px 20px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #F1F1F1;
+}
+.add-new-card-form-mobile__footer {
+    padding: 30px 20px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 19px;
+}
+
+.add-new-card-form-mobile__footer button {
+    padding: 10px 0;
+    border: none;
+    background-color: transparent;
+    outline: none!important;
+    box-shadow: 0px 2px 5px rgba(204, 204, 204, 0.5);
+    border-radius: 8px;
+    font-size: 14px;
+}
+.add-new-card-form-mobile__footer button[type="submit"] {
+    color: #fff;
+    background-color: #FF007C;
+    width: 100%;
+}
+.add-new-card-form-mobile__footer button[type="button"] {
+    width: 102px;
+    background-color: #fff;
+}
+
+.form__fields-mobile {
+    width: 100%;
+}
+.form__fields-mobile--row {
+    width: 100%;
+}
+
+.form__fields-mobile--row span {
+    direction: rtl;
+    font-size: 14px;
+    font-weight: 600;
+}
+.form__fields-mobile--row input {
+    direction: rtl;
+}
+.form__fields-mobile--row .selects {
+    display: flex;
+    gap: 16px;
+}
+.form__fields-mobile--row .selects > div {
+    width: 100%;
+}
+
+.form__fields-mobile .no-bottom-radius .blends-input{
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+
+.form__fields-mobile .no-top-radius .blends-input{
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+}
+
+.form__fields-mobile--row .blends-input {
+    height: 50px !important;
+}
+
+.form__fields-mobile--row .blends-select__value-container {
+    height: 50px !important;
+}

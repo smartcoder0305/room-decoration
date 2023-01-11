@@ -91,7 +91,7 @@ export async function getImagesDB() {
     setRecoil(imagesData, imageshow);
     setRecoil(imageCountState, imageshow.length);
 
-    let set_net_price = imageshow.length * 39;
+    let set_net_price = imageshow.length * 45;
     let set_discount_percentage = 0;
     let set_discount_price = 0;
     let set_total_price = 0;

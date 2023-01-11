@@ -4,9 +4,11 @@ import cn from "classnames";
 import { Transition, CSSTransition } from "react-transition-group";
 import { useRecoilState } from "recoil";
 import SelectCardModal from "@modals/SelectCard";
+import SelectCardModalMobile from "@modals/SelectCardMobile";
 import AddAddressModal from "@modals/AddAddress";
 import AddAddressModalMobile from "@modals/AddAddressMobile";
 import AddCardForm from '@modals/AddCardForm';
+import AddCardFormMobile from '@modals/AddCardFormMobile';
 import './style.css';
 
 const SecondaryModals = () => {
@@ -27,6 +29,9 @@ const SecondaryModals = () => {
         addCard: { visible: false },
         selectCard: { visible: false },
         addAddress: { visible: false },
+        addCardMobile: { visible: false },
+        selectCardMobile: { visible: false },
+        addAddressMobile: { visible: false },
       }));
       setOverlay(false);
     }
@@ -43,6 +48,13 @@ const SecondaryModals = () => {
   const transitionStyles = {
     entering: { bottom: "60px" },
     entered: { bottom: "60px" },
+    exiting: { bottom: "-150%" },
+    exited: { bottom: "-150%" },
+  };
+
+  const transitionStylesMobile = {
+    entering: { bottom: "10px" },
+    entered: { bottom: "10px" },
     exiting: { bottom: "-150%" },
     exited: { bottom: "-150%" },
   };
@@ -66,6 +78,17 @@ const SecondaryModals = () => {
         />
       </CSSTransition>
 
+      <CSSTransition
+        in={modals.addCardMobile.visible}
+        timeout={duration}
+        classNames="css-transition"
+        unmountOnExit
+      >
+        <AddCardFormMobile
+          handleCloseModal={handleCloseModal}
+        />
+      </CSSTransition>
+
       <Transition
         classNames="bounce-down"
         timeout={duration}
@@ -78,6 +101,21 @@ const SecondaryModals = () => {
               ...transitionStyles[state],
             }}
             isOpen={modals.selectCard.visible}
+          />
+        )}
+      </Transition>
+      <Transition
+        classNames="bounce-down"
+        timeout={duration}
+        in={modals.selectCardMobile.visible}
+      >
+        {(state) => (
+          <SelectCardModalMobile
+            style={{
+              ...defaultStyle,
+              ...transitionStylesMobile[state],
+            }}
+            isOpen={!modals.selectCardMobile.visible}
           />
         )}
       </Transition>

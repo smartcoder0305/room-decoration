@@ -67,6 +67,7 @@ exports.imageupload = async (req, res) => {
   }
   newBuffer = await sharp(req.file.buffer)
   .resize({ width: newWid, height: newHei })
+  .withMetadata()
   .toBuffer();
  }
 
@@ -152,6 +153,7 @@ exports.upload = async (req, res) => {
     }
     newBuffer = await sharp(img.buffer)
     .resize({ width: newWid, height: newHei })
+    .withMetadata()
     .toBuffer();
     }
 

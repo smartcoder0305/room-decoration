@@ -48,12 +48,12 @@ const Checkout = (props) => {
     if (isDisplay) {
       if (frameQuantity >= numberOfImages) {
         totalPrice =
-          39 * frameQuantity - ((39 * frameQuantity) / 100) * percentages;
+          45 * frameQuantity - ((45 * frameQuantity) / 100) * percentages;
       } else {
-        totalPrice = 39 * frameQuantity;
+        totalPrice = 45 * frameQuantity;
       }
     } else {
-      totalPrice = 39 * frameQuantity;
+      totalPrice = 45 * frameQuantity;
     }
     const paymentData = {
       uniqueUserId: uniqueUserId,

@@ -16,7 +16,7 @@ const Input = (props) => {
         value={props.value}
         onChange={props.onChange}
       >
-        <input id={props.name} className="blends-input" {...props} />
+        <input id={props.name} className="blends-input" {...props}/>
       </InputMask>
     </div>
   );

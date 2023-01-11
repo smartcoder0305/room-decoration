@@ -54,7 +54,9 @@ export const secondaryModals = atom({
     key: 'secondary-modals',
     default: {
         addCard: { visible: false, data: {}},
+        addCardMobile: { visible: false, data: {}},
         selectCard: { visible: false, },
+        selectCardMobile: { visible: false, },
         addAddress: { visible: false, data: {}},
         addAddressMobile: { visible: false, data: {}},
     }

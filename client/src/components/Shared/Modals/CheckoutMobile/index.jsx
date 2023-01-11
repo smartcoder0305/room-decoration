@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import cn from "classnames";
 
 import "./style.css";
 
@@ -12,6 +13,15 @@ import TestPay from "./components/TestPay";
 import uniqid from "uniqid";
 import AdressModal from "./components/AdressModal";
 import { useSecondModal } from "@helpers/hooks/useSecondModal";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  netPriceState,
+  imageCountState,
+  totalPriceState,
+  discountPriceState,
+  discountPercentageState,
+} from "@atoms/priceCalc";
+import { selectedPaymentMethod, selectedShippingAddress } from "@atoms";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const digit = /[0-9]/;
@@ -45,14 +55,15 @@ const CheckoutMobile = (props) => {
 
   // const []=useState('')
   const { style } = props;
+  const netPrice = useRecoilValue(netPriceState);
+  const imagecount = useRecoilValue(imageCountState);
   const [numberOfImages, setNumberOfImages] = useState();
   const [percentages, setPercentages] = useState();
   const [isDisplay, setIsDisplay] = useState();
 
   const [checkoutNameColor, setcheckoutNameColor] = useState("");
 
-  const [shippingAddressFormValues, setShippingAddressFormValues] =
-    useState(getFormValues);
+  const [shippingAddressFormValues, setShippingAddressFormValues] = useState(getFormValues);
   const [totalPrice, settotalPrice] = useState(props.netPrice);
 
   const [fnameFormValidate, setfnameFormValidate] = useState(false);
@@ -62,7 +73,8 @@ const CheckoutMobile = (props) => {
   const [cardDate, setcardDate] = useState("");
   const [cardCvv, setcardCvv] = useState("");
   const [cardHolderId, setcardHolderId] = useState("");
-
+  const selectedAddress = useRecoilValue(selectedShippingAddress);
+  console.log('selectedAddress', selectedAddress)
   const [shippingAddressFormValidateErr, setShippingAddressFormValidateErr] =
     useState(() => {
       return {
@@ -93,175 +105,6 @@ const CheckoutMobile = (props) => {
     history.push("/review-your-images");
   }
 
-  function handleShippingAddressFormSubmit(event) {
-    event.preventDefault();
-    document.getElementById("fullname").style.display = "block";
-    document.getElementById("address11").style.display = "block";
-    document.getElementById("postalCode1").style.display = "block";
-    document.getElementById("phone1").style.display = "block";
-    document.getElementById("email1").style.display = "block";
-    let errors = {};
-    let formIsValid = true;
-
-    if (!shippingAddressFormValues["fullName"]) {
-      formIsValid = false;
-      errors["fullName"] = "כאן כותבים שם פרטי ושם משפחה";
-    }
-
-    /* if (typeof shippingAddressFormValues["fullName"] !== "undefined") {
-      if (!shippingAddressFormValues["fullName"].match(/^[a-zA-Z\s]+$/)) {
-        formIsValid = false;
-        errors["fullName"] = "Only letters are acceptable for your full name";
-      }
-    } */
-
-    if (!shippingAddressFormValues["address1"]) {
-      formIsValid = false;
-      errors["address1"] = "נא לכתוב כתובת למשלוח";
-    }
-
-    // if (!shippingAddressFormValues["postalCode"]) {
-    //   formIsValid = false;
-    //   errors["postalCode"] = "Please provide your postal code";
-    // }
-
-    if (!shippingAddressFormValues["city"]) {
-      formIsValid = false;
-      errors["city"] = "בחרו עיר מהרשימה";
-    }
-
-    if (!shippingAddressFormValues["phone"]) {
-      formIsValid = false;
-      errors["phone"] = "מספר טלפון בבקשה :)";
-    }
-
-    //Email
-    if (!shippingAddressFormValues["email"]) {
-      formIsValid = false;
-      errors["email"] = "נא להזין את כתובת המייל שלכם";
-    }
-
-    if (typeof shippingAddressFormValues["email"] !== "undefined") {
-      let lastAtPos = shippingAddressFormValues["email"].lastIndexOf("@");
-      let lastDotPos = shippingAddressFormValues["email"].lastIndexOf(".");
-
-      if (
-        !(
-          lastAtPos < lastDotPos &&
-          lastAtPos > 0 &&
-          shippingAddressFormValues["email"].indexOf("@@") == -1 &&
-          lastDotPos > 2 &&
-          shippingAddressFormValues["email"].length - lastDotPos > 2
-        )
-      ) {
-        formIsValid = false;
-        errors["email"] = "נא להזין את כתובת המייל שלכם";
-      }
-      // console.log('kokokoko')
-      if (formIsValid) {
-        document.body.classList.remove("overflowhdn");
-        openCheckoutDrawerMobile();
-        closeAddressPopupMobile();
-      }
-    }
-
-    setShippingAddressFormValidateErr(errors);
-
-    setShippingAddressFormValues((previousValues) => ({
-      ...previousValues,
-      ["fromValidate"]: formIsValid,
-    }));
-
-    if (formIsValid) {
-      document.body.classList.remove("overflowhdn");
-      closeAddressPopupMobile();
-      openCheckoutDrawerMobile();
-    }
-  }
-
-  const handlePaymentFormSubmit = async (event) => {
-    event.preventDefault();
-    const uniqueUserId = props.uniqueUserId;
-    const frameQuantity = props.imagecount;
-
-    const paymentData = {
-      uniqueUserId: uniqueUserId,
-      frameQuantity: frameQuantity,
-      shippingAddressFormValues: shippingAddressFormValues,
-    };
-
-    const config = {
-      headers: {
-        "content-type": "application/json",
-      },
-    };
-
-    await axios
-      .post(BASE_URL + "/payment-processing", paymentData, config)
-      .then((res) => {
-        console.log(res.data.data.processId);
-        localStorage.setItem("paymentProcessId", res.data.data.processId);
-        localStorage.setItem("paymentProcessToken", res.data.data.processToken);
-        //window.location.href = res.data.data.url;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  function handleChange(event) {
-    console.log(event.target.name);
-    if (event.target.name === "fullName") {
-      if (!event.target.value) {
-        document.getElementById("fullname").style.display = "block";
-      } else {
-        document.getElementById("fullname").style.display = "none";
-      }
-    }
-    if (event.target.name === "address1") {
-      if (!event.target.value) {
-        document.getElementById("address11").style.display = "block";
-      } else {
-        document.getElementById("address11").style.display = "none";
-      }
-    }
-    if (event.target.name === "postalCode") {
-      if (!event.target.value) {
-        document.getElementById("postalCode1").style.display = "block";
-      } else {
-        document.getElementById("postalCode1").style.display = "none";
-      }
-    }
-    if (event.target.name === "phone") {
-      if (!event.target.value) {
-        document.getElementById("phone1").style.display = "block";
-      } else {
-        document.getElementById("phone1").style.display = "none";
-      }
-    }
-    if (event.target.name === "email") {
-      if (!event.target.value) {
-        document.getElementById("email1").style.display = "block";
-      } else {
-        document.getElementById("email1").style.display = "none";
-      }
-    }
-
-    setShippingAddressFormValues((previousValues) => ({
-      ...previousValues,
-      [event.target.name]: event.target.value,
-    }));
-  }
-
-  function handleChangeCity(event) {
-    //alert(event.value)
-    //alert(event.value)
-    setShippingAddressFormValues((previousValues) => ({
-      ...previousValues,
-      ["city"]: event.value,
-    }));
-  }
-
   const openCheckoutDrawerMobile = () => {
     document.body.classList.add("overflowhdn");
     closeAddressPopupMobile();
@@ -285,7 +128,7 @@ const CheckoutMobile = (props) => {
 
   const openPaymentPopupMobile = async () => {
     // if address form not filled and validated
-    if (shippingAddressFormValues.fromValidate) {
+    if (selectedAddress) {
       openAddressPopupMobile();
     }
   };
@@ -299,12 +142,12 @@ const CheckoutMobile = (props) => {
     if (isDisplay) {
       if (frameQuantity >= numberOfImages) {
         totalPrice =
-          39 * frameQuantity - ((39 * frameQuantity) / 100) * percentages;
+          45 * frameQuantity - ((45 * frameQuantity) / 100) * percentages;
       } else {
-        totalPrice = 39 * frameQuantity;
+        totalPrice = 45 * frameQuantity;
       }
     } else {
-      totalPrice = 39 * frameQuantity;
+      totalPrice = 45 * frameQuantity;
     }
 
     const paymentData = {
@@ -359,12 +202,6 @@ const CheckoutMobile = (props) => {
     // });
   };
 
-  const addCardDetails = () => {};
-
-  const closePaymentPopup = () => {
-    document.getElementById("paymentModal").style.display = "none";
-  };
-
   const selectPaymentOption = (option) => {
     console.log("props");
     console.log(props.netPrice);
@@ -383,10 +220,7 @@ const CheckoutMobile = (props) => {
   };
 
   const mySaveCardPopUp = () => {
-    localStorage.setItem("totalamount", props.netPrice);
-    document.getElementById("checkoutOverlayMobile").style.display = "none";
-    document.getElementById("paymentWithCardFormMobile").style.display =
-      "block";
+    modal("open", 'selectCardMobile');
   };
 
   const closePaymentWithCardFormMobile = () => {
@@ -401,14 +235,14 @@ const CheckoutMobile = (props) => {
   };
 
   const renderAddAddressButton = () => {
-    if (shippingAddressFormValues.fromValidate) {
+    if (selectedAddress) {
       return {
-        class: "new-link textBlack",
+        class: cn("", { checked: selectedAddress }),
         text:
-          shippingAddressFormValues.fullName +
+          selectedAddress.fullName +
           ", " +
-          shippingAddressFormValues.city,
-        img: <img src="assets/file/images/black_tick.png" />,
+          selectedAddress.city,
+        img: <img src="assets/images/method_check.svg" />,
       };
     } else {
       return {
@@ -416,9 +250,9 @@ const CheckoutMobile = (props) => {
         text: "כתובת למשלוח",
         img: (
           <img
-            src="assets/file/images/add.png"
+            src="assets/images/form_address.svg"
             style={{ marginLeft: "5px" }}
-            width={15}
+            width={25}
           />
         ),
       };
@@ -522,7 +356,7 @@ const CheckoutMobile = (props) => {
                   style={{
                     marginRight: "5px",
                     fontSize: "16px",
-                    color: "#84998B",
+                    color: "#000000",
                     fontWeight: "500",
                     fontFamily: "rubik",
                   }}
@@ -543,10 +377,11 @@ const CheckoutMobile = (props) => {
                     data-toggle="modal"
                     data-target="#addwin"
                     onClick={openAddressPopupMobile}
+                    style={{paddingTop: "26px"}}
                   >
-                    {renderAddAddressButton().text}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
                     {renderAddAddressButton().img}
+                    &nbsp;&nbsp;&nbsp;
+                    {renderAddAddressButton().text}
                   </p>
                 </span>
                 {isCardDetails ? (
@@ -554,7 +389,7 @@ const CheckoutMobile = (props) => {
                     <span>
                       <p
                         className="new-link add-padd text-black-color"
-                        style={{ color: "black" }}
+                        style={{ color: "black", paddingTop: "26px" }}
                         data-dismiss="modal"
                         data-toggle="modal"
                         data-target="#addwin"
@@ -575,12 +410,13 @@ const CheckoutMobile = (props) => {
                         data-toggle="modal"
                         data-target="#addwin"
                         onClick={mySaveCardPopUp}
+                        style={{marginBottom: "26px"}}
                       >
-                        אמצעי תשלום &nbsp;&nbsp;&nbsp;&nbsp;
                         <img
                           src="assets/file/images/mycard.svg"
-                          style={{ marginLeft: "-5px" }}
                         />
+                        &nbsp;&nbsp;&nbsp;
+                        אמצעי תשלום
                       </p>
                     </span>
                   </>
@@ -597,74 +433,40 @@ const CheckoutMobile = (props) => {
                   <img src="assets/file/images/mycard.svg" />
                 </p> */}
               </div>
-              <ul className="pro-list">
-                <li>
-                  <span>₪ {props.netPrice}</span>
-                  <span> תמונות ({props.imagecount})</span>
-                </li>
-              </ul>
-              <ul className="pro-foo">
-                <li style={{ paddingBottom: "30px" }}>
-                  <span>
-                    ₪ -
-                    {isDisplay
-                      ? props.imagecount >= numberOfImages
-                        ? ((props.netPrice / 100) * percentages).toFixed(2)
-                        : 0
-                      : 0}
-                  </span>
-                  <span>
-                    {" "}
-                    (
-                    {isDisplay
-                      ? props.imagecount >= numberOfImages
-                        ? percentages
-                        : 0
-                      : 0}
-                    %) הנחה
-                  </span>
-                </li>
-                <li>
-                  <span>
-                    ₪{" "}
-                    {isDisplay
-                      ? props.imagecount >= numberOfImages
-                        ? props.netPrice -
-                          ((props.netPrice / 100) * percentages).toFixed(2)
-                        : props.netPrice
-                      : props.netPrice}
-                  </span>
-                  <span>סה"כ</span>
-                </li>
-              </ul>
-            </div>
+              <div className="checkout-calculation">
+                <div className="checkout-calculation__info">
+                  <p>
+                    ההזמנה שלכם זכאית למשלוח חינם, המשלוח צפוי להגיע עד יום שלישי
+                    ה29 ביולי
+                  </p>
+                  <img src="assets/images/checkout_check.svg" alt="check" />
+                </div>
 
-            <div className="modal-footer">
-              {isCardDetails ? (
-                <>
-                  <button
-                    type="button"
-                    className="btn btn-secondary cls pay-by-card-button "
-                    onClick={cardPaymentProcess}
-                  >
-                    ביצוע ההזמנה שלך בשקלים
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    type="button"
-                    className="btn btn-secondary cls pay-by-card-button data-not-full-field"
-                    onClick={openPaymentPopupMobile}
-                  >
-                    ביצוע ההזמנה שלך בשקלים
-                  </button>
-                </>
-              )}
+                <div className="price__table">
+                  <div className="price__table--row">
+                    <div>₪ {netPrice}</div>
+                    <div>21*21, {imagecount}</div>
+                  </div>
+                  <div className="price__table--row">
+                    <div>₪ חינם</div>
+                    <div>משלוח</div>
+                  </div>
+                  <div className="price__table--row" style={{fontWeight: "bold"}}>
+                    <div>
+                      ₪&nbsp;
+                      {isDisplay
+                        ? imagecount >= numberOfImages
+                          ? netPrice - ((netPrice / 100) * percentages).toFixed(2)
+                          : netPrice
+                        : netPrice}
+                    </div>
+                    <div>כ”הס</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
       {/* Start payment option choose */}
       <PaymentOptions selectPaymentOption={selectPaymentOption} />
@@ -678,34 +480,58 @@ const CheckoutMobile = (props) => {
       />
       {/* End payment with card */}
 
-      <div
-        className="modal my-modal1"
-        id="paypalmodel"
-        // style={{ display: "none" }}
-        // id='mob-paypal'
-      >
-        <div className="modal-dialog modal_fixed fullwidthsmall modal-dialog-centered">
-          <div
-            className="modal-content paypal-model-style-mob"
-            id="paymentOptionChooseContent"
-          >
-            <div className="modal-body p-0">
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-                onClick={() => {
-                  paypalCloseButton();
-                }}
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-              {/* <PayPal totalPrice={props.netPrice} frames={props.imagecount} /> */}
-              {/* <TestPay totalPrice={props.netPrice} frames={props.imagecount} /> */}
+        <div
+          className="modal my-modal1"
+          id="paypalmodel"
+          // style={{ display: "none" }}
+          // id='mob-paypal'
+        >
+          <div className="modal-dialog modal_fixed fullwidthsmall modal-dialog-centered">
+            <div
+              className="modal-content paypal-model-style-mob"
+              id="paymentOptionChooseContent"
+            >
+              <div className="modal-body p-0">
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  onClick={() => {
+                    paypalCloseButton();
+                  }}
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                {/* <PayPal totalPrice={props.netPrice} frames={props.imagecount} /> */}
+                {/* <TestPay totalPrice={props.netPrice} frames={props.imagecount} /> */}
+              </div>
             </div>
           </div>
         </div>
+      </div>
+      <div className="mobile-checkout-pay-btn-container">
+        {isCardDetails ? (
+          <>
+            <button
+              type="button"
+              className="btn cls pay-by-card-button "
+              onClick={cardPaymentProcess}
+            >
+              ביצוע ההזמנה שלך בשקלים
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              type="button"
+              className="btn cls pay-by-card-button data-not-full-field"
+              onClick={openPaymentPopupMobile}
+            >
+              ביצוע ההזמנה שלך בשקלים
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

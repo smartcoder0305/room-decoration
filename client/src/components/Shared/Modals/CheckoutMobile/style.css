@@ -40,3 +40,14 @@
     width: 100%;
     border-radius: 10px 10px 0 0;
 }
+
+.mobile-checkout-modal .van-wrap {
+    margin-top: 29px;
+    margin-bottom: 10px;
+    justify-content: flex-end;
+    padding-right: 1rem;
+}
+
+.mobile-checkout-modal .van-wrap img {
+    margin-right: 0px;
+}
