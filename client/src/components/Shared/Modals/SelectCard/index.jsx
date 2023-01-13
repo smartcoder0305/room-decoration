@@ -40,7 +40,7 @@ const SelectCardModal = ({ style }) => {
       <ul>
       {payments.map(item => (
         <li key={item.cardNumber}>
-          <button onClick={() => handleSelectPayment(item.cardNumber)}>{generageItemName(item.cardNumber)} <img src="assets/images/card-1.jpg" alt="card" /></button>
+          <button onClick={() => handleSelectPayment(item)}>{generageItemName(item.cardNumber)} <img src="assets/images/card-1.jpg" alt="card" /></button>
         </li>
       ))}
       </ul>

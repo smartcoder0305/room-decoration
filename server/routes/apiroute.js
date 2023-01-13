@@ -81,7 +81,9 @@ const {
   getNewOrderMonth,
   getNewOrderWeek,
 } = require("../controller/filter/dashbord");
-
+const {
+  getApiSign,
+} = require('../controller/payment');
 
 const multer = require("multer");
 const storage = multer.memoryStorage()
@@ -216,5 +218,8 @@ router.get("/user/getneworder/day", getNewOrderDay);
 router.get("/user/getneworder/week", getNewOrderWeek);
 router.get("/user/getneworder/month", getNewOrderMonth);
 
-router.post("/user/createorder", createOrder)
+router.post("/user/createorder", createOrder);
+
+//payment
+router.post('/payment/getapisign', getApiSign);
 module.exports = router;

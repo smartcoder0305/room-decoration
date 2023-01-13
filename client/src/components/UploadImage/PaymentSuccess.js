@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import axios from "axios";
 import HeaderEle from "./HeaderEle";
 import SliderReview from "../Partials/SliderReview";
 import SliderNew from "../Partials/SliderNew";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  netPriceState,
+  imageCountState,
+  totalPriceState,
+  discountPriceState,
+  discountPercentageState,
+} from "@atoms/priceCalc";
+import queryString from 'query-string'
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -12,22 +20,24 @@ const PaymentSuccess = () => {
   const history = useHistory();
   console.log("hi from sucess");
   const [orderDeteils, setOrderDeteils] = useState({});
-  const queryParams = new URLSearchParams(window.location.search);
-  console.log(queryParams);
+  const imagecount = useRecoilValue(imageCountState);
+  const { search } = useLocation()
+  const values = queryString.parse(search)
+  console.log('params', values);
   // const price = queryParams.get("price");
   // const orderid = queryParams.get("orderid");
   // const email = queryParams.get("email");
   // const imagescount = queryParams.get("imagescount");
 
-  const price = orderDeteils.finalPrice;
-  const orderid = orderDeteils.oid;
-  const email = orderDeteils.email;
-  const imagescount = orderDeteils.frameQuantity;
+  const price = values.Amount;
+  const orderid = values.Order;
+  const email = values.Fild2;
+  const imagescount = imagecount;
 
   const loadData = () => {
     const orderData = JSON.parse(localStorage.getItem("order-details"));
     if (!orderData) {
-      history.push("/");
+      // history.push("/");
     }
     setOrderDeteils(orderData);
 
@@ -175,7 +185,7 @@ const PaymentSuccess = () => {
           </div>
         </div>
       </div>
-
+      <SliderNew />
       <div className="container xy">
         <div className="row justify-content-center">
           <div className="class_fy sucess-page-btn">
@@ -195,7 +205,6 @@ const PaymentSuccess = () => {
       </div>
 
       {/* <SliderReview /> */}
-      <SliderNew />
       {/* <div className="post-slider owl-carousel" id="posts">
         <div className="each-post">
           <div className="post-head">

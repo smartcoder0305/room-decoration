@@ -12,6 +12,13 @@ import "./slidernew.css";
 // import required modules
 import { Autoplay, Navigation, Pagination } from "swiper";
 import axios from "axios";
+
+const review = {
+  image: 'assets/file/images/istockphoto.png',
+  customerName: 'ירון ברלד',
+  review: 'אין על סטיקבל קיבלתי שירות מצוין והתמונות הגיעו בזמן זה בול מה שרציתי',
+
+}
 const SliderNew = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const MAIN_URL = process.env.REACT_APP_MAIN_URL;
@@ -19,20 +26,21 @@ const SliderNew = () => {
   const nextRef = useRef(null);
   const [reviews, setReviews] = useState([]);
   const getAllReviews = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const response = await axios.get(
-        `${BASE_URL}/admin/setting/getreview`,
-        config
-      );
-      if (response.data.status === 200) {
-        setReviews(response.data.dataRes);
-      }
-    } catch (error) {}
+    // try {
+    //   const config = {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   };
+    //   const response = await axios.get(
+    //     `${BASE_URL}/admin/setting/getreview`,
+    //     config
+    //   );
+    //   if (response.data.status === 200) {
+    //     setReviews(response.data.dataRes);
+    //   }
+    // } catch (error) {}
+    setReviews([review, review, review, review, review, review])
   };
 
   useEffect(() => {
@@ -44,13 +52,13 @@ const SliderNew = () => {
   //   'next': () => sliderRef.current.swiper.slideNext(),
   // }[to]), [])
   return (
-    <>
-      <div className="slider-section--titles">
+    <div style={{height: "450px"}}>
+      {/* <div className="slider-section--titles">
         <h2 className="slider-section--title">דברים שהלקוחות שלנו אומרים</h2>
         <p className="slider-section--description">
           הנה כמה ביקורות שאספנו מהזמנות של הזמן האחרון
         </p>
-      </div>
+      </div> */}
       {reviews.length > 0 ? (
         <Swiper
           onInit={(swiper) => {
@@ -86,7 +94,7 @@ const SliderNew = () => {
         >
           {reviews.map((data, index) => {
             return (
-              <SwiperSlide key={data._id}>
+              <SwiperSlide key={index}>
                 <div className="imgBox">
                   <a className="boxLink" href="#">
                     <img src={`${data.image}`} alt="" />
@@ -131,7 +139,7 @@ const SliderNew = () => {
           </button>
         </Swiper>
       ) : null}
-    </>
+    </div>
   );
 };
 
