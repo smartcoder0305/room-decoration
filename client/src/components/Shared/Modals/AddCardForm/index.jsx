@@ -68,7 +68,7 @@ const AddCardForm = () => {
               placeholder="0000 0000 0000 0000"
               value={formik.values.cardNumber}
             />
-            <span>שם בעל הכרטיס</span>
+            <span>מספר כרטיס</span>
           </div>
           <div className="form__fields--row">
             <Input
@@ -76,7 +76,7 @@ const AddCardForm = () => {
               onChange={formik.handleChange}
               value={formik.values.cardHolder}
             />
-            <span>מספר כרטיס</span>
+            <span>שם בעל הכרטיס</span>
           </div>
           <div className="form__fields--row">
             <div className="selects">

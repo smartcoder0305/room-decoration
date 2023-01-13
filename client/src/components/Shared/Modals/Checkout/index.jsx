@@ -20,6 +20,18 @@ import "./style.css";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
+const YAAD_API_KEY = '8e819c4cd8cfc122ef968ad1034c87221d89403f';
+const YAAD_PASSWORD = 'hyp1234';
+const YAAD_TERMINAL_NUMBER = '0010249120';
+
+axios.defaults.headers.common = {
+    ...axios.defaults.headers.common,
+    'Access-Control-Allow-Origin': 'http://localhost:3000',
+    "Content-Type": 'application/json',
+};
+
+axios.defaults.preflightContinue = true;
+
 const Checkout = (props) => {
   const netPrice = useRecoilValue(netPriceState);
   const imagecount = useRecoilValue(imageCountState);
@@ -35,6 +47,66 @@ const Checkout = (props) => {
   const history = useHistory();
 
   const [paypalButton, setpaypalButton] = useState(false);
+
+  const getYaadAPISignUrl = (info) => {
+    const url = `https://icom.yaad.net/p/?
+action=APISign&
+What=SIGN&
+KEY=${YAAD_API_KEY}&
+PassP=${YAAD_PASSWORD}&
+Masof=${YAAD_TERMINAL_NUMBER}&
+Order=12345678910&
+Info=${info}&
+Amount=${netPrice}&
+UTF8=True&
+UTF8out=True&
+UserId=${props.uniqueUserId}&
+ClientName=${selectedAddress.fullName}&
+ClientLName=%20&
+street=${selectedAddress.address}&
+city=${selectedAddress.city}&
+zip=${selectedAddress.zipCode}&
+phone=${selectedAddress.phoneNumber}&
+cell=%20&
+email=${selectedAddress.email}&
+Tash=2&
+FixTash=False&
+ShowEngTashText=False&
+Coin=1&
+Postpone=False&
+J5=True&
+Sign=True&
+MoreData=True&
+sendemail=True&
+SendHesh=True&
+heshDesc=[0~משלוח~${imagecount}~${netPrice}
+]&
+Pritim=True&
+PageLang=HEB&
+tmp=1`;
+return url;
+  }
+
+  const handleYaadPayment = async (e) => {
+    e.preventDefault();
+    const {data} = await axios(getYaadAPISignUrl('Blends Service'), {
+      method: 'GET',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      withCredentials: false,
+      credentials: 'cross-origin',
+      crossDomain: true,
+    });
+    console.log(data)
+    // const response = await fetch(getYaadAPISignUrl('Blends Service'),{
+    //   method: "post",
+    //   mode: 'no-cors',
+    // });
+    // console.log(response);
+    // console.log(await response.body)
+    // console.log('apiSign', data)
+;  }
 
   const handlePaymentFormSubmit = async (event) => {
     event.preventDefault();
@@ -225,6 +297,7 @@ const Checkout = (props) => {
             <button
               className="checkout-button"
               disabled={!selectedAddress || !selectedPayment}
+              onClick={handleYaadPayment}
             >
               נזמין
             </button>

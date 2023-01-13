@@ -67,7 +67,7 @@ const AddAddressModal = () => {
         setLoading(true);
         setAddress(values);
         console.log(values);
-        await postData({...values, uid:localStorage.getItem('uniqueUserId')});
+        // await postData({...values, uid:localStorage.getItem('uniqueUserId')});
         setLoading(false);
         handleCloseModal();
       }
