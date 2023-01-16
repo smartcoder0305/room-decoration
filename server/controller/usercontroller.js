@@ -790,8 +790,6 @@ exports.createOrder = async (req, res) => {
       clientSecret: 'qvl1k1yywokz6d8'
     };
 
-    const dbx = new Dropbox(config);
-
     for(let index = 0 ; index < images.length ; index++) {
       const destinationPath = `${dropboxPathPrefix}/${oid}-${index}.png`
       const imgBuffer = (await axios({ url: images[index].crop_image, responseType: "arraybuffer" })).data;
@@ -813,10 +811,7 @@ exports.createOrder = async (req, res) => {
     console.log('orderText:::::::::', orderText);
     await s3Upload(orderText, `${dropboxPathPrefix}/order.txt`);
 
-    res.json({
-      success: "Successfully working",
-      status: 200,
-    });
+    res.json(orderCreate);
   } catch (error) {
     console.log('error:::::::::::::',error);
     res.json({

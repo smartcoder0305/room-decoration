@@ -48,18 +48,18 @@ const SliderReview = () => {
                     <div className="each-post">
                         <div>
                             <div className="post-head">
-                                <img src="assets/images/slider-user.png" alt="" />
+                                <img src="/assets/images/slider-user.png" alt="" />
                                 <div className="head-txt">
                                     <h6>talfeinstein</h6>
                                     <p>Raanana, Israel</p>
                                 </div>
                             </div>
-                            <img src="assets/images/slider-img1.png" alt="" />
+                            <img src="/assets/images/slider-img1.png" alt="" />
                             <div className="inst-info">
                                 <div className="info-grp">
-                                    <img src="assets/images/insccon1.svg" alt="" />
-                                    <img src="assets/images/insccon2.svg" alt="" />
-                                    <img src="assets/images/insccon3.svg" alt="" />
+                                    <img src="/assets/images/insccon1.svg" alt="" />
+                                    <img src="/assets/images/insccon2.svg" alt="" />
+                                    <img src="/assets/images/insccon3.svg" alt="" />
                                 </div>
                                 <p>
                                     <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -74,18 +74,18 @@ const SliderReview = () => {
                     <div className="each-post">
                         <div>
                             <div className="post-head">
-                                <img src="assets/images/slider-user.png" alt="" />
+                                <img src="/assets/images/slider-user.png" alt="" />
                                 <div className="head-txt">
                                     <h6>talfeinstein</h6>
                                     <p>Raanana, Israel</p>
                                 </div>
                             </div>
-                            <img src="assets/images/slider-img1.png" alt="" />
+                            <img src="/assets/images/slider-img1.png" alt="" />
                             <div className="inst-info">
                                 <div className="info-grp">
-                                    <img src="assets/images/insccon1.svg" alt="" />
-                                    <img src="assets/images/insccon2.svg" alt="" />
-                                    <img src="assets/images/insccon3.svg" alt="" />
+                                    <img src="/assets/images/insccon1.svg" alt="" />
+                                    <img src="/assets/images/insccon2.svg" alt="" />
+                                    <img src="/assets/images/insccon3.svg" alt="" />
                                 </div>
                                 <p>
                                     <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -100,18 +100,18 @@ const SliderReview = () => {
                     <div className="each-post">
                         <div>
                             <div className="post-head">
-                                <img src="assets/images/slider-user.png" alt="" />
+                                <img src="/assets/images/slider-user.png" alt="" />
                                 <div className="head-txt">
                                     <h6>talfeinstein</h6>
                                     <p>Raanana, Israel</p>
                                 </div>
                             </div>
-                            <img src="assets/images/slider-img1.png" alt="" />
+                            <img src="/assets/images/slider-img1.png" alt="" />
                             <div className="inst-info">
                                 <div className="info-grp">
-                                    <img src="assets/images/insccon1.svg" alt="" />
-                                    <img src="assets/images/insccon2.svg" alt="" />
-                                    <img src="assets/images/insccon3.svg" alt="" />
+                                    <img src="/assets/images/insccon1.svg" alt="" />
+                                    <img src="/assets/images/insccon2.svg" alt="" />
+                                    <img src="/assets/images/insccon3.svg" alt="" />
                                 </div>
                                 <p>
                                     <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -126,18 +126,18 @@ const SliderReview = () => {
                     <div className="each-post">
                         <div>
                             <div className="post-head">
-                                <img src="assets/images/slider-user.png" alt="" />
+                                <img src="/assets/images/slider-user.png" alt="" />
                                 <div className="head-txt">
                                     <h6>talfeinstein</h6>
                                     <p>Raanana, Israel</p>
                                 </div>
                             </div>
-                            <img src="assets/images/slider-img1.png" alt="" />
+                            <img src="/assets/images/slider-img1.png" alt="" />
                             <div className="inst-info">
                                 <div className="info-grp">
-                                    <img src="assets/images/insccon1.svg" alt="" />
-                                    <img src="assets/images/insccon2.svg" alt="" />
-                                    <img src="assets/images/insccon3.svg" alt="" />
+                                    <img src="/assets/images/insccon1.svg" alt="" />
+                                    <img src="/assets/images/insccon2.svg" alt="" />
+                                    <img src="/assets/images/insccon3.svg" alt="" />
                                 </div>
                                 <p>
                                     <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -152,18 +152,18 @@ const SliderReview = () => {
                     <div className="each-post">
                         <div>
                             <div className="post-head">
-                                <img src="assets/images/slider-user.png" alt="" />
+                                <img src="/assets/images/slider-user.png" alt="" />
                                 <div className="head-txt">
                                     <h6>talfeinstein</h6>
                                     <p>Raanana, Israel</p>
                                 </div>
                             </div>
-                            <img src="assets/images/slider-img1.png" alt="" />
+                            <img src="/assets/images/slider-img1.png" alt="" />
                             <div className="inst-info">
                                 <div className="info-grp">
-                                    <img src="assets/images/insccon1.svg" alt="" />
-                                    <img src="assets/images/insccon2.svg" alt="" />
-                                    <img src="assets/images/insccon3.svg" alt="" />
+                                    <img src="/assets/images/insccon1.svg" alt="" />
+                                    <img src="/assets/images/insccon2.svg" alt="" />
+                                    <img src="/assets/images/insccon3.svg" alt="" />
                                 </div>
                                 <p>
                                     <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -178,18 +178,18 @@ const SliderReview = () => {
                     <div className="each-post">
                         <div>
                             <div className="post-head">
-                                <img src="assets/images/slider-user.png" alt="" />
+                                <img src="/assets/images/slider-user.png" alt="" />
                                 <div className="head-txt">
                                     <h6>talfeinstein</h6>
                                     <p>Raanana, Israel</p>
                                 </div>
                             </div>
-                            <img src="assets/images/slider-img1.png" alt="" />
+                            <img src="/assets/images/slider-img1.png" alt="" />
                             <div className="inst-info">
                                 <div className="info-grp">
-                                    <img src="assets/images/insccon1.svg" alt="" />
-                                    <img src="assets/images/insccon2.svg" alt="" />
-                                    <img src="assets/images/insccon3.svg" alt="" />
+                                    <img src="/assets/images/insccon1.svg" alt="" />
+                                    <img src="/assets/images/insccon2.svg" alt="" />
+                                    <img src="/assets/images/insccon3.svg" alt="" />
                                 </div>
                                 <p>
                                     <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש

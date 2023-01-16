@@ -34,13 +34,13 @@ const SelectCardModal = ({ style }) => {
     <div className="add-card-modal" style={{ ...style }}>
       <button onClick={() => handleOpenNewCardForm()}>
         יארשא סיטרכב םולשת
-        <img src="assets/images/plus.svg" alt="add-new-card" />
+        <img src="/assets/images/plus.svg" alt="add-new-card" />
       </button>
       {payments.length > 0 && (
       <ul>
       {payments.map(item => (
         <li key={item.cardNumber}>
-          <button onClick={() => handleSelectPayment(item)}>{generageItemName(item.cardNumber)} <img src="assets/images/card-1.jpg" alt="card" /></button>
+          <button onClick={() => handleSelectPayment(item)}>{generageItemName(item.cardNumber)} <img src="/assets/images/card-1.jpg" alt="card" /></button>
         </li>
       ))}
       </ul>

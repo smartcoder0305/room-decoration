@@ -153,12 +153,12 @@ const EditModal = ({ handleCloseModal, modalData }) => {
           אישור
         </button>
         <button onClick={() => handleCloseModal("editImage")} className="close">
-          <img src="assets/file/images/cross.svg" alt="close" />
+          <img src="/assets/file/images/cross.svg" alt="close" />
         </button>
       </div>)
       : (
         <div className="edit-modal__header--mobile">
-          <button onClick={() => getCropData()}>חזור <img src="assets/file/images/arrow.png" alt="arrow"/></button>
+          <button onClick={() => getCropData()}>חזור <img src="/assets/file/images/arrow.png" alt="arrow"/></button>
         </div>
       )}
       <div className="edit-modal__content">
@@ -194,7 +194,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
         </div>
         <div className="rang_container">
           <img
-            src="assets/file/images/minus_icon.svg"
+            src="/assets/file/images/minus_icon.svg"
             onClick={() => {
               zoomvalueminus();
             }}
@@ -211,7 +211,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
             className="slider"
           />
           <img
-            src="assets/file/images/plus_icon.svg"
+            src="/assets/file/images/plus_icon.svg"
             onClick={() => {
               zoomvalueplus();
             }}

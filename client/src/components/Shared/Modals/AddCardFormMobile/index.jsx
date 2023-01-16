@@ -115,7 +115,7 @@ const AddCardFormMobile = () => {
       </div>
       <div style={{display: "flex", padding: "20px", alignItems: "center", justifyContent: "space-between"}}>
         <div style={{width: "135px", height: "0px", border: "1px solid #CECECE"}}></div>
-        <img src="assets/file/images/pci_compliance_logo.png" />
+        <img src="/assets/file/images/pci_compliance_logo.png" />
         <div style={{width: "135px", height: "0px", border: "1px solid #CECECE"}}></div>
       </div>
     </form>

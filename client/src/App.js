@@ -123,7 +123,7 @@ function App() {
           </Route>
           <Route path="/upload-your-image" component={UploadImage} />
           <Route path="/review-your-images" component={ReviewImages} />
-          <Route path="/payment-success" component={PaymentSuccess} />
+          <Route path="/payment-success/:orderId" component={PaymentSuccess} />
           <Route path="/payment-cancel" component={PaymentCancel} />
           <Route path="/faq" component={Faq} />
           <Route path="/termsofUse" component={Window1} />

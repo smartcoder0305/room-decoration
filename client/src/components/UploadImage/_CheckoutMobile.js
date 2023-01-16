@@ -288,13 +288,13 @@ const CheckoutMobile = (props) => {
           shippingAddressFormValues.fullName +
           ", " +
           shippingAddressFormValues.city,
-        img: <img src="assets/file/images/black_tick.png" />,
+        img: <img src="/assets/file/images/black_tick.png" />,
       };
     } else {
       return {
         class: "new-link",
         text: "חולשמל תבותכ תפסוה",
-        img: <img src="assets/file/images/add.png" width={15}/>,
+        img: <img src="/assets/file/images/add.png" width={15}/>,
       };
     }
   };
@@ -328,7 +328,7 @@ const CheckoutMobile = (props) => {
             <div className="modal-header">
               <div className="van-wrap">
                 <span>בהזמנה זו תקבלו משלוח חינם</span>
-                <img src="assets/file/images/res-van.png" />
+                <img src="/assets/file/images/res-van.png" />
               </div>
             </div>
 
@@ -592,7 +592,7 @@ const CheckoutMobile = (props) => {
                   }}
                 >
                   PayPal תשלום באמצעות{" "}
-                  <img src="assets/file/images/paypal.png" className="file" />
+                  <img src="/assets/file/images/paypal.png" className="file" />
                 </li>
               </ul>
             </div>
@@ -664,8 +664,8 @@ const CheckoutMobile = (props) => {
 
             <div className="modal-footer" style={{ border: "none" }}>
               <div className="abwrap">
-                <img src="assets/file/images/pay-mini.png" />
-                <img src="assets/file/images/shild.png" />
+                <img src="/assets/file/images/pay-mini.png" />
+                <img src="/assets/file/images/shild.png" />
               </div>
             </div>
           </div>

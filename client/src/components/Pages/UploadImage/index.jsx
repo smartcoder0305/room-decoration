@@ -106,7 +106,7 @@ const UploadImage = () => {
                 style={{ zIndex: "1", height: "100% !important" }}
               />
               <button>
-                <img src="assets/file/images/plus.svg" alt="plus" />
+                <img src="/assets/file/images/plus.svg" alt="plus" />
               </button>
               <h2>גררו את התמונות לכאן</h2>
               <p>הזמנה ממוצעת מכילה כ8 תמונות</p>

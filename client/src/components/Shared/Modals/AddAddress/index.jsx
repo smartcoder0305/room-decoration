@@ -86,7 +86,7 @@ const AddAddressModal = () => {
           <span>נא להזין את פרטי המשלוח</span>
           <img
             onClick={() => handleCloseModal()}
-            src="assets/file/images/cross.svg"
+            src="/assets/file/images/cross.svg"
             alt="cross"
           />
         </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import HeaderEle from "./HeaderEle";
 import SliderReview from "../Partials/SliderReview";
@@ -12,27 +12,34 @@ import {
   discountPriceState,
   discountPercentageState,
 } from "@atoms/priceCalc";
-import queryString from 'query-string'
+import { selectedPaymentMethod, selectedShippingAddress } from "@atoms";
+
+import { useModal } from "@helpers/hooks/useModal";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const PaymentSuccess = () => {
   const history = useHistory();
   console.log("hi from sucess");
+  const netPrice = useRecoilValue(netPriceState);
   const [orderDeteils, setOrderDeteils] = useState({});
   const imagecount = useRecoilValue(imageCountState);
-  const { search } = useLocation()
-  const values = queryString.parse(search)
-  console.log('params', values);
-  // const price = queryParams.get("price");
-  // const orderid = queryParams.get("orderid");
-  // const email = queryParams.get("email");
-  // const imagescount = queryParams.get("imagescount");
+  const address = useRecoilValue(selectedShippingAddress);
 
-  const price = values.Amount;
-  const orderid = values.Order;
-  const email = values.Fild2;
+  const modal = useModal();
+
+  const { orderId } = useParams();
+
+  const price = netPrice;
+  const orderid = orderId;
+  const email = address?.email;
   const imagescount = imagecount;
+
+  useEffect(() => {
+    if (!email) {
+      history.push("/");
+    }
+  }, [])
 
   const loadData = () => {
     const orderData = JSON.parse(localStorage.getItem("order-details"));
@@ -40,11 +47,12 @@ const PaymentSuccess = () => {
       // history.push("/");
     }
     setOrderDeteils(orderData);
-
-  
   };
+  
   console.log(orderDeteils);
   useEffect(() => {
+    modal("close", "checkout");
+    modal("close", "mobileCheckout");
     loadData();
   }, []);
   const location = useLocation();
@@ -100,7 +108,7 @@ const PaymentSuccess = () => {
           <div className="col-md-12">
             <div className="success_img">
               <img
-                src="assets/file/images/sucess-page-main-icon.svg"
+                src="/assets/file/images/sucess-page-main-icon.svg"
                 alt="payment-success-icon"
                 style={{ width: "80px" }}
               />
@@ -208,18 +216,18 @@ const PaymentSuccess = () => {
       {/* <div className="post-slider owl-carousel" id="posts">
         <div className="each-post">
           <div className="post-head">
-            <img src="assets/file/images/slider-user.png" alt="" />
+            <img src="/assets/file/images/slider-user.png" alt="" />
             <div className="head-txt">
               <h6>talfeinstein</h6>
               <p>Raanana, Israel</p>
             </div>
           </div>
-          <img src="assets/file/images/slider-img1.png" alt="" />
+          <img src="/assets/file/images/slider-img1.png" alt="" />
           <div className="inst-info">
             <div className="info-grp">
-              <img src="assets/file/images/insccon1.svg" alt="" />
-              <img src="assets/file/images/insccon2.svg" alt="" />
-              <img src="assets/file/images/insccon3.svg" alt="" />
+              <img src="/assets/file/images/insccon1.svg" alt="" />
+              <img src="/assets/file/images/insccon2.svg" alt="" />
+              <img src="/assets/file/images/insccon3.svg" alt="" />
             </div>
             <p>
               <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -230,18 +238,18 @@ const PaymentSuccess = () => {
         </div>
         <div className="each-post">
           <div className="post-head">
-            <img src="assets/file/images/slider-user.png" alt="" />
+            <img src="/assets/file/images/slider-user.png" alt="" />
             <div className="head-txt">
               <h6>talfeinstein</h6>
               <p>Raanana, Israel</p>
             </div>
           </div>
-          <img src="assets/file/images/slider-img1.png" alt="" />
+          <img src="/assets/file/images/slider-img1.png" alt="" />
           <div className="inst-info">
             <div className="info-grp">
-              <img src="assets/file/images/insccon1.svg" alt="" />
-              <img src="assets/file/images/insccon2.svg" alt="" />
-              <img src="assets/file/images/insccon3.svg" alt="" />
+              <img src="/assets/file/images/insccon1.svg" alt="" />
+              <img src="/assets/file/images/insccon2.svg" alt="" />
+              <img src="/assets/file/images/insccon3.svg" alt="" />
             </div>
             <p>
               <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -252,18 +260,18 @@ const PaymentSuccess = () => {
         </div>
         <div className="each-post">
           <div className="post-head">
-            <img src="assets/file/images/slider-user.png" alt="" />
+            <img src="/assets/file/images/slider-user.png" alt="" />
             <div className="head-txt">
               <h6>talfeinstein</h6>
               <p>Raanana, Israel</p>
             </div>
           </div>
-          <img src="assets/file/images/slider-img2.png" alt="" />
+          <img src="/assets/file/images/slider-img2.png" alt="" />
           <div className="inst-info">
             <div className="info-grp">
-              <img src="assets/file/images/insccon1.svg" alt="" />
-              <img src="assets/file/images/insccon2.svg" alt="" />
-              <img src="assets/file/images/insccon3.svg" alt="" />
+              <img src="/assets/file/images/insccon1.svg" alt="" />
+              <img src="/assets/file/images/insccon2.svg" alt="" />
+              <img src="/assets/file/images/insccon3.svg" alt="" />
             </div>
             <p>
               <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -274,18 +282,18 @@ const PaymentSuccess = () => {
         </div>
         <div className="each-post">
           <div className="post-head">
-            <img src="assets/file/images/slider-user.png" alt="" />
+            <img src="/assets/file/images/slider-user.png" alt="" />
             <div className="head-txt">
               <h6>talfeinstein</h6>
               <p>Raanana, Israel</p>
             </div>
           </div>
-          <img src="assets/file/images/slider-img3.png" alt="" />
+          <img src="/assets/file/images/slider-img3.png" alt="" />
           <div className="inst-info">
             <div className="info-grp">
-              <img src="assets/file/images/insccon1.svg" alt="" />
-              <img src="assets/file/images/insccon2.svg" alt="" />
-              <img src="assets/file/images/insccon3.svg" alt="" />
+              <img src="/assets/file/images/insccon1.svg" alt="" />
+              <img src="/assets/file/images/insccon2.svg" alt="" />
+              <img src="/assets/file/images/insccon3.svg" alt="" />
             </div>
             <p>
               <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -296,18 +304,18 @@ const PaymentSuccess = () => {
         </div>
         <div className="each-post">
           <div className="post-head">
-            <img src="assets/file/images/slider-user.png" alt="" />
+            <img src="/assets/file/images/slider-user.png" alt="" />
             <div className="head-txt">
               <h6>talfeinstein</h6>
               <p>Raanana, Israel</p>
             </div>
           </div>
-          <img src="assets/file/images/slider-img1.png" alt="" />
+          <img src="/assets/file/images/slider-img1.png" alt="" />
           <div className="inst-info">
             <div className="info-grp">
-              <img src="assets/file/images/insccon1.svg" alt="" />
-              <img src="assets/file/images/insccon2.svg" alt="" />
-              <img src="assets/file/images/insccon3.svg" alt="" />
+              <img src="/assets/file/images/insccon1.svg" alt="" />
+              <img src="/assets/file/images/insccon2.svg" alt="" />
+              <img src="/assets/file/images/insccon3.svg" alt="" />
             </div>
             <p>
               <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -318,18 +326,18 @@ const PaymentSuccess = () => {
         </div>
         <div className="each-post">
           <div className="post-head">
-            <img src="assets/file/images/slider-user.png" alt="" />
+            <img src="/assets/file/images/slider-user.png" alt="" />
             <div className="head-txt">
               <h6>talfeinstein</h6>
               <p>Raanana, Israel</p>
             </div>
           </div>
-          <img src="assets/file/images/slider-img1.png" alt="" />
+          <img src="/assets/file/images/slider-img1.png" alt="" />
           <div className="inst-info">
             <div className="info-grp">
-              <img src="assets/file/images/insccon1.svg" alt="" />
-              <img src="assets/file/images/insccon2.svg" alt="" />
-              <img src="assets/file/images/insccon3.svg" alt="" />
+              <img src="/assets/file/images/insccon1.svg" alt="" />
+              <img src="/assets/file/images/insccon2.svg" alt="" />
+              <img src="/assets/file/images/insccon3.svg" alt="" />
             </div>
             <p>
               <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -340,18 +348,18 @@ const PaymentSuccess = () => {
         </div>
         <div className="each-post">
           <div className="post-head">
-            <img src="assets/file/images/slider-user.png" alt="" />
+            <img src="/assets/file/images/slider-user.png" alt="" />
             <div className="head-txt">
               <h6>talfeinstein</h6>
               <p>Raanana, Israel</p>
             </div>
           </div>
-          <img src="assets/file/images/slider-img2.png" alt="" />
+          <img src="/assets/file/images/slider-img2.png" alt="" />
           <div className="inst-info">
             <div className="info-grp">
-              <img src="assets/file/images/insccon1.svg" alt="" />
-              <img src="assets/file/images/insccon2.svg" alt="" />
-              <img src="assets/file/images/insccon3.svg" alt="" />
+              <img src="/assets/file/images/insccon1.svg" alt="" />
+              <img src="/assets/file/images/insccon2.svg" alt="" />
+              <img src="/assets/file/images/insccon3.svg" alt="" />
             </div>
             <p>
               <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -362,18 +370,18 @@ const PaymentSuccess = () => {
         </div>
         <div className="each-post">
           <div className="post-head">
-            <img src="assets/file/images/slider-user.png" alt="" />
+            <img src="/assets/file/images/slider-user.png" alt="" />
             <div className="head-txt">
               <h6>talfeinstein</h6>
               <p>Raanana, Israel</p>
             </div>
           </div>
-          <img src="assets/file/images/slider-img3.png" alt="" />
+          <img src="/assets/file/images/slider-img3.png" alt="" />
           <div className="inst-info">
             <div className="info-grp">
-              <img src="assets/file/images/insccon1.svg" alt="" />
-              <img src="assets/file/images/insccon2.svg" alt="" />
-              <img src="assets/file/images/insccon3.svg" alt="" />
+              <img src="/assets/file/images/insccon1.svg" alt="" />
+              <img src="/assets/file/images/insccon2.svg" alt="" />
+              <img src="/assets/file/images/insccon3.svg" alt="" />
             </div>
             <p>
               <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -392,27 +400,27 @@ const PaymentSuccess = () => {
             </p>
           </div>
           {/* <div className="col-md-2 col-3 text-md-left text-center py-md-3">
-            <img src="assets/file/images/res-so2.svg" className="xp bb" />
-            <img src="assets/file/images/instagram.png" className="xy dd" />
+            <img src="/assets/file/images/res-so2.svg" className="xp bb" />
+            <img src="/assets/file/images/instagram.png" className="xy dd" />
             <span className="ft">
               stickable.il
             </span>
           </div> */}
           {/* <div className="col-md-2 col-3 text-md-left text-center py-md-3">
-            <img src="assets/file/images/res-so1.svg" className="xp bb" />
-            <img src="assets/file/images/fb.png" className="xy dd" />
+            <img src="/assets/file/images/res-so1.svg" className="xp bb" />
+            <img src="/assets/file/images/fb.png" className="xy dd" />
             <span className="ft">
               Stickable
             </span>
           </div> */}
           <div className="col-md-2 col-3 text-md-left text-center py-md-3 sucesspage-social-links-main">
             <img
-              src="assets/file/images/sucess-page-insta-icon.svg"
+              src="/assets/file/images/sucess-page-insta-icon.svg"
               className="xp bb"
               alt=""
             />
             <img
-              src="assets/file/images/sucess-page-insta-icon.svg"
+              src="/assets/file/images/sucess-page-insta-icon.svg"
               className="xy dd"
               alt=""
             />
@@ -420,12 +428,12 @@ const PaymentSuccess = () => {
           </div>
           <div className="col-md-2 col-3 text-md-left text-center py-md-3 sucesspage-social-links-main">
             <img
-              src="assets/file/images/sucess-page-fb-icon.svg"
+              src="/assets/file/images/sucess-page-fb-icon.svg"
               className="xp bb"
               alt=""
             />
             <img
-              src="assets/file/images/sucess-page-fb-icon.svg"
+              src="/assets/file/images/sucess-page-fb-icon.svg"
               className="xy dd"
               alt=""
             />

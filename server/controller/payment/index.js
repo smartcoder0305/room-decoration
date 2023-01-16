@@ -4,6 +4,9 @@ const YAAD_API_KEY = process.env.YAAD_API_KEY;
 const YAAD_PASSWORD = process.env.YAAD_PASSWORD;
 const YAAD_TERMINAL_NUMBER = process.env.YAAD_TERMINAL_NUMBER;
 
+const TRANZILA_PW = process.env.TRANZILA_PW;
+const TRANZILA_SUPPLIER = process.env.TRANZILA_SUPPLIER;
+
 const getYaadAPISignUrl = (payInfo) => {
   const url = `https://icom.yaad.net/p/?
 action=APISign&
@@ -54,3 +57,42 @@ exports.getApiSign = async (req, res) => {
     });
   }
 };
+
+// expdate: 0423 MMYY
+const getTranzilaPaymentUrlUsingCard = (amount, card) => {
+  const url = `https://secure5.tranzila.com/cgi-bin/tranzila71u.cgi?
+supplier=${TRANZILA_SUPPLIER}&
+tranmode=A&
+ccno=${card.no}&
+expdate=${card.expdate}&
+sum=${amount}&
+currency=1&
+cred_type=1&
+mycvv=${card.cvv}&
+TranzilaPW=${TRANZILA_PW}`;
+console.log(url.replace(/\n/g, ''));
+  return url.replace(/\n/g, '');
+}
+
+exports.payWithCard = async (req, res) => {
+  try {
+    const {amount, card} = req.body;
+    console.log('Pay Amount', amount);
+    console.log('Card Info', card);
+    const {data} = await axios.get(getTranzilaPaymentUrlUsingCard(amount, card));
+    const responseParams = data.split('&');
+    if (responseParams[0] === 'Response=000') {
+      return res.json('Payment Success!')
+    }
+    return res.json({
+      success: "Payment Failed",
+      status: 400,
+    })
+  } catch (err) {
+    console.log(err);
+    return res.json({
+      success: "Payment Failed",
+      status: 400,
+    })
+  }
+}

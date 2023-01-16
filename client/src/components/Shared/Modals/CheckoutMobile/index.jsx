@@ -73,8 +73,11 @@ const CheckoutMobile = (props) => {
   const [cardDate, setcardDate] = useState("");
   const [cardCvv, setcardCvv] = useState("");
   const [cardHolderId, setcardHolderId] = useState("");
+  const [isLoading, setLoading] = useState(false);
   const selectedAddress = useRecoilValue(selectedShippingAddress);
+  const selectedPayment = useRecoilValue(selectedPaymentMethod);
   console.log('selectedAddress', selectedAddress)
+  console.log('selectedPayment', selectedPayment)
   const [shippingAddressFormValidateErr, setShippingAddressFormValidateErr] =
     useState(() => {
       return {
@@ -242,7 +245,7 @@ const CheckoutMobile = (props) => {
           selectedAddress.fullName +
           ", " +
           selectedAddress.city,
-        img: <img src="assets/images/method_check.svg" alt="method_check"/>,
+        img: <img src="/assets/images/method_check.svg" alt="method_check"/>,
       };
     } else {
       return {
@@ -250,7 +253,7 @@ const CheckoutMobile = (props) => {
         text: "כתובת למשלוח",
         img: (
           <img
-            src="assets/images/form_address.svg"
+            src="/assets/images/form_address.svg"
             style={{ marginLeft: "5px" }}
             width={25}
             alt="form_address"
@@ -343,6 +346,56 @@ const CheckoutMobile = (props) => {
     getCuponData();
   }, []);
 
+  const creatOrder = async (data) => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        const res = await axios.post(`${BASE_URL}/user/createorder`, data, config);
+        if (res.data.status === 200) {
+            console.log('----success-----')
+        }
+        return res.data;
+    } catch (error) {
+        console.log(error)
+        return null;
+    }
+  }
+
+  const getCardExpDate = (month, year) => {
+    const shortYear = year % 100;
+    let shortYearStr = shortYear < 10 ? '0' + shortYear.toString() : shortYear.toString();
+    return `${month}${shortYearStr}`;
+  }
+
+  const handleTranzilarPayment = async (e) => {
+    try {
+      setLoading(true);
+      e.preventDefault();
+      const {paymentData} = await axios.post(BASE_URL+'/payment/do', {
+        card: {
+          no: selectedPayment.cardNumber.replace(/\s/g, ''),
+          expdate: getCardExpDate(selectedPayment.expiriedMonth, selectedPayment.expiriedYear),
+          cvv: selectedPayment.cvv,
+        },
+        amount: netPrice,
+      });
+      console.log(paymentData);
+      const orderData = await creatOrder({...selectedAddress, uid: localStorage.getItem('uniqueUserId')});
+      if (!orderData) {
+        throw new Error('Creating order failed.');
+      }
+      console.log(orderData);
+      setLoading(false);
+      history.push(`/payment-success/${orderData.oid}`);
+    } catch (err) {
+      setLoading(false);
+      alert(err.message);
+    }
+  }
+
   return (
     <div className="mobile-checkout-modal" style={{ ...style }}>
       <div
@@ -385,7 +438,7 @@ const CheckoutMobile = (props) => {
                     {renderAddAddressButton().text}
                   </p>
                 </span>
-                {isCardDetails ? (
+                {selectedPayment ? (
                   <>
                     <span>
                       <p
@@ -396,9 +449,9 @@ const CheckoutMobile = (props) => {
                         data-target="#addwin"
                         onClick={mySaveCardPopUp}
                       >
-                        {cardNumber.substring(0, 4)}************
+                        <img src="/assets/file/images/black_tick.png" />
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <img src="assets/file/images/black_tick.png" />
+                        {selectedPayment.cardNumber.substring(0, 4)}
                       </p>
                     </span>
                   </>
@@ -414,7 +467,7 @@ const CheckoutMobile = (props) => {
                         style={{marginBottom: "26px", fontWeight: 700}}
                       >
                         <img
-                          src="assets/file/images/mycard.svg"
+                          src="/assets/file/images/mycard.svg"
                         />
                         &nbsp;&nbsp;&nbsp;
                         אמצעי תשלום
@@ -431,7 +484,7 @@ const CheckoutMobile = (props) => {
                  
                   הננער ,ימלשורי לארשי
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  <img src="assets/file/images/mycard.svg" />
+                  <img src="/assets/file/images/mycard.svg" />
                 </p> */}
               </div>
               <div className="checkout-calculation">
@@ -443,7 +496,7 @@ const CheckoutMobile = (props) => {
                     להגיע עד 
                     <span style={{fontWeight: 500}}>יום שלישי ה29 ביולי</span>
                   </p>
-                  <img src="assets/images/checkout_check.svg" alt="check" />
+                  <img src="/assets/images/checkout_check.svg" alt="check" />
                 </div>
 
                 <div className="price__table">
@@ -515,12 +568,12 @@ const CheckoutMobile = (props) => {
         </div>
       </div>
       <div className="mobile-checkout-pay-btn-container">
-        {isCardDetails ? (
+        {selectedAddress && selectedPayment ? (
           <>
             <button
               type="button"
               className="btn cls pay-by-card-button "
-              onClick={cardPaymentProcess}
+              onClick={handleTranzilarPayment}
             >
               נזמין
             </button>
@@ -530,13 +583,34 @@ const CheckoutMobile = (props) => {
             <button
               type="button"
               className="btn cls pay-by-card-button data-not-full-field"
-              onClick={openPaymentPopupMobile}
+              // onClick={openPaymentPopupMobile}
             >
               תחילה נזין את פרטי המשלוח והתשלום
             </button>
           </>
         )}
       </div>
+      {isLoading &&
+        <div
+          className="modal loaderbg"
+          id="mainImageLoaderModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+          style={{ display: isLoading }}
+        >
+          <div className="modal-dialog review-image-loader" role="document">
+            <div className="loadingio-spinner-heart-btbrqan8295">
+              <div className="ldio-kv0ui0pfesk">
+                <div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
     </div>
   );
 };

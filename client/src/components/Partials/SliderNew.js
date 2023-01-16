@@ -14,7 +14,7 @@ import { Autoplay, Navigation, Pagination } from "swiper";
 import axios from "axios";
 
 const review = {
-  image: 'assets/file/images/istockphoto.png',
+  image: '/assets/file/images/istockphoto.png',
   customerName: 'ירון ברלד',
   review: 'אין על סטיקבל קיבלתי שירות מצוין והתמונות הגיעו בזמן זה בול מה שרציתי',
 

@@ -205,7 +205,7 @@ const ReviewImages = () => {
             <div className={`content-overlay ${frameChoose}`}>
               <div className="content-details fadeIn-bottom">
                 <img
-                  src="assets/file/images/edit_image.svg"
+                  src="/assets/file/images/edit_image.svg"
                   className="edit"
                   data-toggle="modal"
                   data-target="#myModal"
@@ -213,7 +213,7 @@ const ReviewImages = () => {
                   alt="edit"
                 />
                 <img
-                  src="assets/file/images/Delete_icon.svg"
+                  src="/assets/file/images/Delete_icon.svg"
                   className="edit"
                   alt="remove"
                   onClick={() => deleteImage(im)}
@@ -247,11 +247,34 @@ const ReviewImages = () => {
         {width > 767 && (
           <div className="checkout-wrapper">
             <div className="aside-checkout">
-              <h1>תמונות {imagecount} יש לנו כאן</h1>
-              <p>וודאו שהכל נראה טוב ונמשיך</p>
-              <button className="checkout-btn" onClick={openCheckoutDrawer}>
-                קליק וממשיכים
-              </button>
+              {imagecount >= 2 && 
+                <>
+                  <h1>יש לנו כאן {imagecount} תמונות</h1>
+                  <p>וודאו שהכל נראה טוב ונמשיך</p>
+                </>
+              }
+              {imagecount === 1 && 
+                <>
+                  <h1>יש לנו כאן רק תמונה אחת</h1>
+                  <p>על קירות כאלה נאמר, איפה כולם?</p>
+                </>
+              }
+              {imagecount === 0 &&
+                <>
+                  <h1>אין לנו כאן תמונות</h1>
+                  <p>נסו לחזור אחורה ולהתחיל שוב או דווחו לנו</p>
+                </>
+              }
+              {imagecount === 0 &&
+                <button className="checkout-btn" onClick={showUploadOptions} style={{width: "auto"}}>
+                  בחירת תמונות חדשות
+                </button>
+              }
+              {imagecount >=1 &&
+                <button className="checkout-btn" onClick={openCheckoutDrawer}>
+                  קליק וממשיכים
+                </button>
+              }
               <div className="gift">
                 <h2 className="">:בהזמנה זו תקבלו</h2>
 
@@ -260,18 +283,18 @@ const ReviewImages = () => {
                     משלוח עד 7 ימים אל הבית
                     <img
                       style={{ width: "23px" }}
-                      src="assets/file/images/gift_1.svg"
+                      src="/assets/file/images/gift_1.svg"
                       alt="gift"
                     />
                   </li>
                   <li>
                    לא מרוצים? עד 14 ימים החזרה בקלות
-                    <img src="assets/file/images/gift_2.svg" alt="gift" />
+                    <img src="/assets/file/images/gift_2.svg" alt="gift" />
                   </li>
 
                   <li>
                     אריזת מתנה לשמירה על התמונות
-                    <img src="assets/file/images/gift_3.svg" alt="gift" />
+                    <img src="/assets/file/images/gift_3.svg" alt="gift" />
                   </li>
                 </ul>
               </div>
@@ -297,7 +320,7 @@ const ReviewImages = () => {
 
           {width <= 767 && (
             <div className="additional-info-mobile">
-              <img src="assets/file/images/red_check.svg" alt="check" />
+              <img src="/assets/file/images/red_check.svg" alt="check" />
               <p>החלצהב ולע תונומתה לכ</p>
               <p>תוודאו שהכל נראה טוב ונמשיך</p>
             </div>
@@ -310,26 +333,41 @@ const ReviewImages = () => {
         <div className="mobile-checkout">
           <img
             onClick={() => showUploadOptions()}
-            src="assets/file/images/file.png"
+            src="/assets/file/images/file.png"
             className="file"
             alt="file-icon"
           />
           <div className="mobile-checkout-info">
             <p>
-              <img src="assets/file/images/green_check.svg" alt="check" /> םניח
+              <img src="/assets/file/images/green_check.svg" alt="check" /> םניח
               חולשמל תיאכז רבכ ךלש הנמזהה
             </p>
           </div>
           <div className="mobile-checkout-button">
-            <a
-              href="#"
-              className="site-btn"
-              data-toggle="modal"
-              data-target="#rescart"
-              onClick={openCheckoutDrawerMobile}
-            >
-              המשך לרכישה ({imagecount} תמונות)
-            </a>
+            {imagecount === 0 &&
+              <a
+                href="#"
+                className="site-btn"
+                data-toggle="modal"
+                data-target="#rescart"
+                onClick={showUploadOptions}
+                style={{padding: "10px 20px"}}
+              >
+                בחירת תמונות חדשות
+              </a>
+            }
+            {imagecount >= 1 &&
+              <a
+                href="#"
+                className="site-btn"
+                data-toggle="modal"
+                data-target="#rescart"
+                onClick={openCheckoutDrawerMobile}
+                style={{padding: "10px 20px"}}
+              >
+                יש לנו כאן {imagecount} תמונות
+              </a>
+            }
           </div>
         </div>
       )}

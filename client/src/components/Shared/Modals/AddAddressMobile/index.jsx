@@ -67,7 +67,7 @@ const AddAddressModalMobile = () => {
         setLoading(true);
         setAddress(values);
         console.log(values);
-        await postData({...values, uid:localStorage.getItem('uniqueUserId')});
+        // await postData({...values, uid:localStorage.getItem('uniqueUserId')});
         setLoading(false);
         handleCloseModal();
       }
@@ -83,7 +83,7 @@ const AddAddressModalMobile = () => {
           <span>נא להזין את פרטי המשלוח</span>
           <img
             onClick={() => handleCloseModal()}
-            src="assets/file/images/cross.svg"
+            src="/assets/file/images/cross.svg"
             alt="cross"
           />
         </div>

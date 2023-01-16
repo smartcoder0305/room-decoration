@@ -186,8 +186,8 @@ const mdigit = /[0-1]/;
                 </div>
               </form>
               <div className="abwrap">
-                <img src="assets/file/images/pay-mini.png" />
-                <img src="assets/file/images/shild.png" />
+                <img src="/assets/file/images/pay-mini.png" />
+                <img src="/assets/file/images/shild.png" />
               </div>
             </div>
 

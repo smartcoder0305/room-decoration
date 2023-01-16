@@ -143,7 +143,7 @@ const UploadOptions = ({
   return (
     <div className={cn("upload-options", { open: isOpen })} style={{...style }} >
   <div className="upload-options__item">
-    העלאת תמונות <img src="assets/file/images/upload-file.svg" alt="file" />
+    העלאת תמונות <img src="/assets/file/images/upload-file.svg" alt="file" />
     {isOpen && <input
       className="file-input"
       type="file"
@@ -153,10 +153,10 @@ const UploadOptions = ({
     />}
   </div>
   <button onClick={() => facebookPhotoImport()} className="upload-options__item">
-    ייבוא מהפייסבוק <img src="assets/file/images/upload-fb.svg" alt="facebook" />
+    ייבוא מהפייסבוק <img src="/assets/file/images/upload-fb.svg" alt="facebook" />
   </button>
   <button onClick={() => instagramPhotoImport()} className="upload-options__item">
-    ייבוא מהאינסטגרם <img src="assets/file/images/upload-inst.svg" alt="instagram" />
+    ייבוא מהאינסטגרם <img src="/assets/file/images/upload-inst.svg" alt="instagram" />
   </button>
 </div>
   );

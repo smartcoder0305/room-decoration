@@ -83,6 +83,7 @@ const {
 } = require("../controller/filter/dashbord");
 const {
   getApiSign,
+  payWithCard,
 } = require('../controller/payment');
 
 const multer = require("multer");
@@ -222,4 +223,6 @@ router.post("/user/createorder", createOrder);
 
 //payment
 router.post('/payment/getapisign', getApiSign);
+router.post('/payment/do', payWithCard);
+
 module.exports = router;
