@@ -90,7 +90,7 @@
 }
 
 .checkout-button-wrapper button {
-    width: 200px;
+    width: 100%;
     height: 50px;
     color: #fff;
     border: none;

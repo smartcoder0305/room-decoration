@@ -131,3 +131,9 @@
     padding: 30px;
   }
 }
+
+.swiper-pagination-bullet-active-main {
+  background-color: #FF007C !important;
+  width: 10px !important;
+  height: 10px !important;
+}

@@ -96,3 +96,36 @@ exports.payWithCard = async (req, res) => {
     })
   }
 }
+
+const getTranzilaCardVerifyUrl = (amount, card) => {
+  const url = `https://secure5.tranzila.com/cgi-bin/tranzila71u.cgi?
+supplier=${TRANZILA_SUPPLIER}&
+tranmode=V&
+ccno=${card.no}&
+expdate=${card.expdate}&
+sum=${amount}&
+currency=1&
+cred_type=1&
+mycvv=${card.cvv}&
+TranzilaPW=${TRANZILA_PW}
+`;
+  console.log(url.replace(/\n/g, ''));
+  return url.replace(/\n/g, '');
+}
+
+exports.verifyCard = async (req, res) => {
+  try {
+    const {amount, card} = req.body;
+    console.log('Pay Amount', amount);
+    console.log('Card Info', card);
+    const {data} = await axios.get(getTranzilaCardVerifyUrl(amount, card));
+    const responseParams = data.split('&');
+    if (responseParams[0] === 'Response=000') {
+      return res.json('Verify Success!');
+    }
+    return res.status(400).send('Verify Failed');
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send('Verify Failed');
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import Cropper from "react-cropper";
 import { popUpImage, modalWindows } from "@atoms";

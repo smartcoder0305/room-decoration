@@ -84,6 +84,7 @@ const {
 const {
   getApiSign,
   payWithCard,
+  verifyCard,
 } = require('../controller/payment');
 
 const multer = require("multer");
@@ -224,5 +225,6 @@ router.post("/user/createorder", createOrder);
 //payment
 router.post('/payment/getapisign', getApiSign);
 router.post('/payment/do', payWithCard);
+router.post('/payment/cardverify', verifyCard)
 
 module.exports = router;

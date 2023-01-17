@@ -3,17 +3,20 @@ import { secondaryModals, secondOverlayState } from "@atoms";
 import cn from "classnames";
 import { Transition, CSSTransition } from "react-transition-group";
 import { useRecoilState } from "recoil";
+import useWindowDimensions from "@helpers/hooks/windowDemensions";
 import SelectCardModal from "@modals/SelectCard";
 import SelectCardModalMobile from "@modals/SelectCardMobile";
 import AddAddressModal from "@modals/AddAddress";
 import AddAddressModalMobile from "@modals/AddAddressMobile";
 import AddCardForm from '@modals/AddCardForm';
 import AddCardFormMobile from '@modals/AddCardFormMobile';
+import ErrorCart from '@modals/ErrorCart';
 import './style.css';
 
 const SecondaryModals = () => {
   const [modals, setModals] = useRecoilState(secondaryModals);
   const [_, setOverlay] = useRecoilState(secondOverlayState);
+  const { height, width } = useWindowDimensions();
 
   const handleCloseModal = (name) => {
     setModals((modal) => ({
@@ -32,6 +35,7 @@ const SecondaryModals = () => {
         addCardMobile: { visible: false },
         selectCardMobile: { visible: false },
         addAddressMobile: { visible: false },
+        errorCart: {visible: false},
       }));
       setOverlay(false);
     }
@@ -58,6 +62,23 @@ const SecondaryModals = () => {
     exiting: { bottom: "-150%" },
     exited: { bottom: "-150%" },
   };
+
+  const transitionErrorStyles = {
+    entering: { bottom: "470x" },
+    entered: { bottom: "47px" },
+    exiting: { bottom: "-150%" },
+    exited: { bottom: "-150%" },
+  };
+
+  const transitionErrorStylesMobile = {
+    entering: { bottom: "479px" },
+    entered: { bottom: "479px" },
+    exiting: { bottom: "-150%" },
+    exited: { bottom: "-150%" },
+  };
+
+  let errorTransition = transitionErrorStyles;
+  if (width < 767) errorTransition = transitionErrorStylesMobile;
 
   return (
     <div
@@ -99,6 +120,21 @@ const SecondaryModals = () => {
             style={{
               ...defaultStyle,
               ...transitionStyles[state],
+            }}
+            isOpen={modals.selectCard.visible}
+          />
+        )}
+      </Transition>
+      <Transition
+        classNames="bounce-down"
+        timeout={duration}
+        in={modals.errorCart.visible}
+      >
+        {(state) => (
+          <ErrorCart
+            style={{
+              ...defaultStyle,
+              ...errorTransition[state],
             }}
             isOpen={modals.selectCard.visible}
           />

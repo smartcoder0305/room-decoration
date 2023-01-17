@@ -36,7 +36,7 @@ const SelectCardModal = ({ style }) => {
         יארשא סיטרכב םולשת
         <img src="/assets/images/plus.svg" alt="add-new-card" />
       </button>
-      {payments.length > 0 && (
+      {/* {payments.length > 0 && (
       <ul>
       {payments.map(item => (
         <li key={item.cardNumber}>
@@ -44,7 +44,7 @@ const SelectCardModal = ({ style }) => {
         </li>
       ))}
       </ul>
-      )}
+      )} */}
     </div>
   );
 };

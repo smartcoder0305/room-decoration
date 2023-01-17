@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import useWindowDimensions from "@helpers/hooks/windowDemensions";
 
 // Import Swiper styles
 import "swiper/css";
@@ -25,6 +26,7 @@ const SliderNew = () => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const [reviews, setReviews] = useState([]);
+  const { height, width } = useWindowDimensions();
   const getAllReviews = async () => {
     // try {
     //   const config = {
@@ -52,7 +54,7 @@ const SliderNew = () => {
   //   'next': () => sliderRef.current.swiper.slideNext(),
   // }[to]), [])
   return (
-    <div style={{height: "450px"}}>
+    <div style={{height: `${width / 4 + 200}px`}}>
       {/* <div className="slider-section--titles">
         <h2 className="slider-section--title">דברים שהלקוחות שלנו אומרים</h2>
         <p className="slider-section--description">
@@ -95,7 +97,7 @@ const SliderNew = () => {
           {reviews.map((data, index) => {
             return (
               <SwiperSlide key={index}>
-                <div className="imgBox">
+                <div className="imgBox" style={{width: `${width / 4}px`, height: `${width / 4}px`}}>
                   <a className="boxLink" href="#">
                     <img src={`${data.image}`} alt="" />
                     <div className="bgOverlay">

@@ -18,6 +18,18 @@ import { useModal } from "@helpers/hooks/useModal";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
+const convertToDate = () => {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1; // Months start at 0!
+  let dd = today.getDate();
+
+  if (dd < 10) dd = '0' + dd;
+  if (mm < 10) mm = '0' + mm;
+
+  return mm + '/' + dd + '/' + yyyy;
+}
+
 const PaymentSuccess = () => {
   const history = useHistory();
   console.log("hi from sucess");
@@ -107,13 +119,13 @@ const PaymentSuccess = () => {
         <div className="row">
           <div className="col-md-12">
             <div className="success_img">
+              <h2 className="success_text xy">התשלום הצליח</h2>
               <img
-                src="/assets/file/images/sucess-page-main-icon.svg"
+                src="/assets/file/images/success-mark.PNG"
                 alt="payment-success-icon"
                 style={{ width: "80px" }}
               />
             </div>
-            <h2 className="success_text xy">ההזמנה שלכם עברה בהצלחה</h2>
           </div>
         </div>
       </div>
@@ -122,12 +134,15 @@ const PaymentSuccess = () => {
           <div className="col-md-5">
             <div className="success_des">
               <div className="date_time">
-                {new Date().toLocaleString()} :תאריך
+                {convertToDate()}:ךיראת
               </div>
 
               <div className="success_card_txt">
-                <p>₪{price}:סה”כ </p>
-                <p>{orderid}:מס‘ הזמנה </p>
+                <p>
+                סה”כ:
+                ₪{price}</p>
+                <p>מס‘ הזמנה:
+                  {orderid} </p>
               </div>
               <div className="success_other">
                 {/* <p>בחרתם 2 תמונות ואנחנו כבר מתחילים להכין את החבילה למשלוח </p>
@@ -193,6 +208,9 @@ const PaymentSuccess = () => {
           </div>
         </div>
       </div>
+      <br/>
+      <br/>
+       
       <SliderNew />
       <div className="container xy">
         <div className="row justify-content-center">
@@ -200,13 +218,14 @@ const PaymentSuccess = () => {
             <br />
             <button
               className="btn succ_btn"
+              style={{fontSize: "15px"}}
               onClick={() => {
                 againShoping();
               }}
             >
               ביצוע הזמנה נוספת
             </button>
-            <p>חזרה לדף הבית </p>
+            <p>עיצבתם קיר מושלם? תייגו אותנו!</p>
             <br />
           </div>
         </div>
@@ -413,7 +432,7 @@ const PaymentSuccess = () => {
               Stickable
             </span>
           </div> */}
-          <div className="col-md-2 col-3 text-md-left text-center py-md-3 sucesspage-social-links-main">
+          <div className="col-md-2 col-3 text-md-left text-center py-md-3 sucesspage-social-links-main" style={{maxWidth: "150px"}}>
             <img
               src="/assets/file/images/sucess-page-insta-icon.svg"
               className="xp bb"
@@ -426,7 +445,7 @@ const PaymentSuccess = () => {
             />
             <div className="sucesspage-social-links-heading">stickable.il</div>
           </div>
-          <div className="col-md-2 col-3 text-md-left text-center py-md-3 sucesspage-social-links-main">
+          <div className="col-md-2 col-3 text-md-left text-center py-md-3 sucesspage-social-links-main" style={{maxWidth: "150px"}}>
             <img
               src="/assets/file/images/sucess-page-fb-icon.svg"
               className="xp bb"

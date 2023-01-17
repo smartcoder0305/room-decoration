@@ -81,8 +81,8 @@ const Checkout = (props) => {
       setLoading(false);
       history.push(`/payment-success/${orderData.oid}`);
     } catch (err) {
+      modal("open", 'errorCart');
       setLoading(false);
-      alert(err.message);
     }
   }
 
@@ -216,7 +216,7 @@ const Checkout = (props) => {
               className={cn("", { checked: selectedPayment })}
               onClick={() => openAddCard("selectCard")}
             >
-              {selectedPayment ? selectedPayment.cardNumber.substring(0, 4) : 'םולשת יעצמא'}
+              {selectedPayment ? selectedPayment.hebrewType + ' ' + selectedPayment.cardNumber.substring(0, 4) : 'םולשת יעצמא'}
               <img
                 src={
                   selectedPayment

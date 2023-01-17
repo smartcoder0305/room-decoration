@@ -392,7 +392,7 @@ const CheckoutMobile = (props) => {
       history.push(`/payment-success/${orderData.oid}`);
     } catch (err) {
       setLoading(false);
-      alert(err.message);
+      modal("open", 'errorCart');
     }
   }
 
@@ -451,7 +451,7 @@ const CheckoutMobile = (props) => {
                       >
                         <img src="/assets/file/images/black_tick.png" />
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        {selectedPayment.cardNumber.substring(0, 4)}
+                        {selectedPayment.hebrewType + ' ' +selectedPayment.cardNumber.substring(0, 4)}
                       </p>
                     </span>
                   </>
