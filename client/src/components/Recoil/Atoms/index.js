@@ -51,7 +51,7 @@ export const secondaryModals = atom({
         selectCardMobile: { visible: false, },
         addAddress: { visible: false, data: {}},
         addAddressMobile: { visible: false, data: {}},
-        errorCart: {visible: true,},
+        errorCart: {visible: false,},
     }
 })
 export const imagesData = atom({
