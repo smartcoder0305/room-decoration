@@ -76,7 +76,7 @@
     font-weight: 600;
 }
 .form__fields--row input {
-    direction: rtl;
+    direction: ltr;
 }
 .form__fields--row .selects {
     display: flex;

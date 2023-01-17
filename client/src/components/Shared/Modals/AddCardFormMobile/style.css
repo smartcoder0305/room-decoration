@@ -73,7 +73,7 @@
     font-weight: 600;
 }
 .form__fields-mobile--row input {
-    direction: rtl;
+    direction: ltr;
 }
 .form__fields-mobile--row .selects {
     display: flex;

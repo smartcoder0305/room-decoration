@@ -116,11 +116,11 @@ const AddCardFormMobile = () => {
   });
 
   const generateArrayOfYears = () => {
-    const max = new Date().getFullYear()
-    const min = max - 100
+    const min = new Date().getFullYear()
+    const max = min + 10
     const years = []
   
-    for (var i = max; i >= min; i--) {
+    for (var i = min; i <= max; i++) {
       years.push({ value: i, label: i })
     }
     return years
