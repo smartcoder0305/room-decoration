@@ -141,7 +141,7 @@ const AddCardForm = () => {
         <div className="form__description rtl">
           בלנדס מאשרת את כל סוגי שיטות התשלום וכרטיסי האשראי הגדולים:
           <div className="card__examples" style={{paddingLeft: "30px", paddingTop: "15px"}}>
-            <img src="/assets/file/images/card-brands.png" width="100%" />
+            <img src="/assets/file/images/card-brands.PNG" width="100%" />
           </div>
         </div>
         <div className="form__fields">
