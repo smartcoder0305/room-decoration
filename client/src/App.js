@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Header from "./components/Partials/Header";
@@ -27,6 +27,7 @@ import SecondaryModals from "@shared/SecondaryModals";
 // import history from "@core/history";
 import { RecoilRoot } from 'recoil';
 import RecoilNexus from "recoil-nexus";
+import { getUserImages } from "@api";
 
 function App() {
   // window.addEventListener("beforeunload", async (e) => {
@@ -110,6 +111,14 @@ function App() {
   // });
   // // var allowPrompt = true;
   // // window.onbeforeunload = areYouSure;
+  const [existData, setExistData] = useState(false);
+
+  useEffect(() => {
+    getUserImages().then(({data}) => {
+      console.log(data);
+      if (data.data.length) setExistData(true);
+    });
+  })
 
   return (
     <RecoilRoot>
@@ -118,8 +127,8 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/">
-            <Home />
-            <Footer />
+            <Home existData={existData}/>
+            <Footer existData={existData}/>
           </Route>
           <Route path="/upload-your-image" component={UploadImage} />
           <Route path="/review-your-images" component={ReviewImages} />

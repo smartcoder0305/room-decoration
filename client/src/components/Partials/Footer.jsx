@@ -4,7 +4,7 @@ import { NavLink, Link } from "react-router-dom";
 import useWindowDimensions from "@helpers/hooks/windowDemensions";
 import "./footer.css";
 
-const Footer = () => {
+const Footer = ({existData}) => {
   const [reviewData, setReviewData] = useState([]);
   const { width } = useWindowDimensions();
 
@@ -268,9 +268,16 @@ const Footer = () => {
             זמני המשלוח מהירים במיוחד השבוע 
            
           </p>
-          <NavLink to="/upload-your-image" className="site-btn">
-            בואו נתחיל
-          </NavLink>
+          {existData ? (
+            <NavLink to="/review-your-images" className="site-btn">
+              בואו נמשיך
+            </NavLink>
+            ) : (
+            <NavLink to="/upload-your-image" className="site-btn">
+              בואו נתחיל
+            </NavLink>
+            )
+          }
         </div>
       )}
     </React.Fragment>

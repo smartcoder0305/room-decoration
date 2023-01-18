@@ -97,7 +97,7 @@ const SliderNew = () => {
           {reviews.map((data, index) => {
             return (
               <SwiperSlide key={index}>
-                <div className="imgBox" style={{width: `${width / 4}px`, height: `${width / 4}px`}}>
+                <div className="imgBox" style={{width: `${width > 767 ? width / 4 : ''}px`, height: `${width > 767 ? width / 4 : ''}px`}}>
                   <a className="boxLink" href="#">
                     <img src={`${data.image}`} alt="" />
                     <div className="bgOverlay">

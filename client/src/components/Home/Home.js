@@ -8,7 +8,7 @@ import useWindowDimensions from "@helpers/hooks/windowDemensions";
 import Coupon from "./Coupon";
 import "./home.css";
 
-const Home = () => {
+const Home = ({existData}) => {
   const [skeleton, setSkeleton] = useState(true);
   const { height, width } = useWindowDimensions();
   useEffect(() => {
@@ -40,10 +40,16 @@ const Home = () => {
                 </div>
 
                 <div className="col-12 order-md-2 order-3 text-center text-md-right">
-                  <NavLink to="/upload-your-image" className="site-btn gg1">
-                    בואו נתחיל
-                  </NavLink>
-
+                  {existData ? (
+                    <NavLink to="/review-your-images" className="site-btn gg1">
+                      בואו נמשיך
+                    </NavLink>
+                    ) : (
+                    <NavLink to="/upload-your-image" className="site-btn gg1">
+                      בואו נתחיל
+                    </NavLink>
+                    )
+                  }
                   <NavLink
                     to="/upload-your-image"
                     className="site-btn kk forhover"
