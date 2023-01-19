@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import Cropper from "react-cropper";
 import { popUpImage, modalWindows } from "@atoms";
@@ -120,6 +120,12 @@ const EditModal = ({ handleCloseModal, modalData }) => {
     cropper?.zoomTo(+e.target.value);
   };
 
+  const isZoomable = useMemo(() => {
+     if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) return false;
+     if (zoomvalue >= 0.125) return false;
+     return true;
+  }, [imageonpopup.imagewidth, imageonpopup.imageheight ,zoomvalue]);
+
   const zoomvalueplus = () => {
     if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) return;
     if (zoomvalue >= 0.125) {
@@ -156,15 +162,12 @@ const EditModal = ({ handleCloseModal, modalData }) => {
           <img src="/assets/file/images/cross.svg" alt="close" />
         </button>
       </div>)
-      : (
-        <div className="edit-modal__header--mobile">
-          <button onClick={() => getCropData()}>חזור <img src="/assets/file/images/arrow.png" alt="arrow"/></button>
-        </div>
-      )}
+      : (<div className="edit-modal__header"></div>)
+    }
       <div className="edit-modal__content">
-        <h2>התאמת תמונה</h2>
-        <p>הזיזו או הגדילו את התמונה בתוך המסגרת</p>
-        <div className={`${modalData?.frame} cropper-frame`}>
+        <p style={{fontWeight: "600", fontSize: "18px"}}>התאמת תמונה</p>
+        <p style={{fontWeight: "600", fontSize: "14px"}}>הזיזו או הגדילו את התמונה בתוך המסגרת</p>
+        <div className={`${modalData?.frame} cropper-frame`} style={{marginTop: "24px"}}>
           <Cropper
             ref={cropperRef}
             style={{
@@ -190,6 +193,9 @@ const EditModal = ({ handleCloseModal, modalData }) => {
             responsive
             checkOrientation={false}
             zoom={handleOnZoom}
+            center={false}
+            zoomOnTouch={isZoomable}
+            zoomOnWheel={isZoomable}
           />
         </div>
         <div className="rang_container">

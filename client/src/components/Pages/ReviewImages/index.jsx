@@ -321,7 +321,7 @@ const ReviewImages = () => {
           {width <= 767 && (
             <div className="additional-info-mobile">
               <img src="/assets/file/images/red_check.svg" alt="check" />
-              <p>החלצהב ולע תונומתה לכ</p>
+              <p>כל התמונות עלו בהצלחה</p>
               <p>תוודאו שהכל נראה טוב ונמשיך</p>
             </div>
           )}
@@ -339,8 +339,7 @@ const ReviewImages = () => {
           />
           <div className="mobile-checkout-info">
             <p>
-              <img src="/assets/file/images/green_check.svg" alt="check" /> םניח
-              חולשמל תיאכז רבכ ךלש הנמזהה
+              <img src="/assets/file/images/green_check.svg" alt="check" style={{width: "20px"}}/>&nbsp;&nbsp; ההזמנה שלך זכאית למשלוח חינם
             </p>
           </div>
           <div className="mobile-checkout-button">
@@ -351,7 +350,7 @@ const ReviewImages = () => {
                 data-toggle="modal"
                 data-target="#rescart"
                 onClick={showUploadOptions}
-                style={{padding: "10px 20px"}}
+                style={{padding: "10px 20px", width: "92%"}}
               >
                 בחירת תמונות חדשות
               </a>
@@ -363,7 +362,7 @@ const ReviewImages = () => {
                 data-toggle="modal"
                 data-target="#rescart"
                 onClick={openCheckoutDrawerMobile}
-                style={{padding: "10px 20px"}}
+                style={{padding: "10px 20px", width: "92%"}}
               >
                 יש לנו כאן {imagecount} תמונות
               </a>
