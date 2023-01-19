@@ -14,6 +14,13 @@
 /* .upload-options.open {
     bottom: 15px;
 } */
+
+@media screen and (min-width: 768px) {
+  .upload-options {
+    max-width: 335px;
+  }
+}
+
 .upload-options__item {
     border: none;
     outline: none!important;

@@ -12,3 +12,9 @@ code {
     monospace;
 }
 
+@media screen and (max-width: 767px) {
+  #mainBody{
+    overflow: hidden;
+    position: relative;
+  }
+}
