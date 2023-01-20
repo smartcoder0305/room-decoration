@@ -342,7 +342,7 @@ const ReviewImages = () => {
               <img src="/assets/file/images/green_check.svg" alt="check" style={{width: "20px"}}/>&nbsp;&nbsp; ההזמנה שלך זכאית למשלוח חינם
             </p>
           </div>
-          <div className="mobile-checkout-button">
+          <div className="mobile-checkout-button" style={{margin: "0", width: "100%"}}>
             {imagecount === 0 &&
               <a
                 href="#"
@@ -350,7 +350,7 @@ const ReviewImages = () => {
                 data-toggle="modal"
                 data-target="#rescart"
                 onClick={showUploadOptions}
-                style={{padding: "10px 20px", width: "92%"}}
+                style={{padding: "10px 20px", width: "92%", margin: "0"}}
               >
                 בחירת תמונות חדשות
               </a>
@@ -362,7 +362,7 @@ const ReviewImages = () => {
                 data-toggle="modal"
                 data-target="#rescart"
                 onClick={openCheckoutDrawerMobile}
-                style={{padding: "10px 20px", width: "92%"}}
+                style={{padding: "10px 20px", width: "92%", margin: "auto"}}
               >
                 יש לנו כאן {imagecount} תמונות
               </a>

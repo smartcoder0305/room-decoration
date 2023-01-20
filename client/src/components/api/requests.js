@@ -61,15 +61,11 @@ export const addUserCount = async () => {
 };
 
 export async function addImageFromSocial(response) {
-  const rep = await axios
-    .post(`${BASE_URL}/social-photo-import`, response, {
-      headers: {
-        "content-type": "application/json",
-      },
-    })
-    .then((res) => {
-      setTimeout(() => getImagesDB(), 500);
-    });
+  const rep = await axios.post(`${BASE_URL}/social-photo-import`, response, {
+    headers: {
+      "content-type": "application/json",
+    },
+  })
   return rep;
 }
 

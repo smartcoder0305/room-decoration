@@ -113,9 +113,10 @@ const UploadOptions = ({
     accept: ["image/*"],
     maxFiles: 20,
     uploadInBackground: false,
-    onUploadDone: (res) => {
+    onUploadDone: async (res) => {
       res.uid = uid;
-      addImageFromSocial(res);
+      modal('open', 'imageLoader');
+      await addImageFromSocial(res);
       modal('hide', 'imageLoader');
       hideUploadOptions();
       history.push("/review-your-images");
