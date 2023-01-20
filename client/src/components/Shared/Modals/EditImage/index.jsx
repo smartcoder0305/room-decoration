@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import Cropper from "react-cropper";
 import { popUpImage, modalWindows } from "@atoms";
@@ -22,9 +22,11 @@ const EditModal = ({ handleCloseModal, modalData }) => {
   const imageonpopup = useRecoilValue(popUpImage);
   const modalsData = useRecoilValue(modalWindows);
   const [zoomvalue, setzoomvalue] = useState(0.0);
-  const [isLoading, setLoading] = useState(true)
+  const [isLoading, setLoading] = useState(true);
+  const isInitial = useRef(true);
 
   useEffect(() => {
+    console.log(imageonpopup)
     cropper?.zoomTo(+imageonpopup.zoomvalue);
     cropper?.rotate(+imageonpopup.rotate);
   }, []);
@@ -52,9 +54,10 @@ const EditModal = ({ handleCloseModal, modalData }) => {
     }
   }
   const InitialSets = (target) => {
+    console.log(imageonpopup)
     target?.zoomTo(+imageonpopup.zoomvalue);
     target?.rotate(+imageonpopup.rotate);
-    setzoomvalue(+imageonpopup.zoomvalue === 0.0 ? 0.1 : +imageonpopup.zoomvalue);
+    // setzoomvalue(-1000);
     const cropData = calCropData(imageonpopup);
     target.moveTo(cropData.left, cropData.top)
     setLoading(false)
@@ -105,14 +108,19 @@ const EditModal = ({ handleCloseModal, modalData }) => {
   };
 
   const handleOnZoom = (e) => {
-    console.log('detail', e.detail);
-    console.log('zoomvalue', zoomvalue);
-    if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) {
-      e.preventDefault();
-     }
-     if (e.detail.ratio >= 0.125) {
-      e.preventDefault();
-     }
+    console.log('isInitial', isInitial);
+    if (isInitial.current) {
+      isInitial.current = false;
+    } else {
+      console.log('detail', e.detail);
+      console.log('zoomvalue', zoomvalue);
+      if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) {
+        e.preventDefault();
+       }
+       if (e.detail.ratio >= 0.125) {
+        e.preventDefault();
+       }
+    }
      setzoomvalue(e.detail.ratio)
     // const zoom = +(detail.ratio);
     // if (zoom > 1) {
