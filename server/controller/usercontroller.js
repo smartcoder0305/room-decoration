@@ -52,7 +52,7 @@ exports.imageuploadsing = upload.single("image");
 exports.uploadSocialPhoto = upload.array("image", 20);
 
 exports.imageupload = async (req, res) => {
-  console.log('imageUpload')
+ console.log('imageUpload')
  let newBuffer, newWid, newHei;
  newBuffer = req.file.buffer;
  newWid = req.body.imagewidth;
@@ -236,25 +236,41 @@ exports.socialPhotoImport = async (req, res) => {
 
   for (var i = 0; i < req.body.filesUploaded.length; i++) {
       const handle =  req.body.filesUploaded[i].handle;
+      const aresp = await axios.get(`${cdnBaseUrl}/imagesize/${handle}`);
+
+      console.log('Social Image Upload')
       const input = (await axios({ url: req.body.filesUploaded[i].url, responseType: "arraybuffer" })).data;
-     
+      let newBuffer, newWid, newHei;
+      newBuffer = input;
+      newWid = aresp.data.width;
+      newHei = aresp.data.height;
+      if (newHei > maxOriginSize && newWid > maxOriginSize) {
+        if (newHei > newWid) {
+          newWid = maxOriginSize;
+          newHei = Math.floor(newHei / newWid * maxOriginSize);
+        } else {
+          newHei = maxOriginSize;
+          newWid = Math.floor(newWid / newHei * maxOriginSize);
+        }
+        newBuffer = await sharp(input)
+        .resize({ width: newWid, height: newHei })
+        .withMetadata()
+        .toBuffer();
+      }
 
-      const smartCropRes = await smartcrop.crop(input, { width: minImgSize, height: minImgSize });
-
+      const smartCropRes = await smartcrop.crop(newBuffer, { width: minImgSize, height: minImgSize });
       var cropbox_data = {
         height: smartCropRes.topCrop.height,
         width: smartCropRes.topCrop.width,
         top: smartCropRes.topCrop.y,
         left: smartCropRes.topCrop.x,
       };
-   
-      const aresp = await axios.get(`${cdnBaseUrl}/imagesize/${handle}`);
       console.log(aresp,"aresp");
-      const cropBuffer = await sharp(input)
+      const cropBuffer = await sharp(newBuffer)
         .extract(cropbox_data)
         .withMetadata()
         .toBuffer();
-      const thumbBuffer = await sharp(input)
+      const thumbBuffer = await sharp(newBuffer)
         .extract(cropbox_data)
         .withMetadata()
         .resize(thumbSize)
@@ -263,12 +279,13 @@ exports.socialPhotoImport = async (req, res) => {
     
       const filestackCropPromiseResponse = await filestackClient.upload(cropBuffer);
       const filestackThumbPromiseResponse = await filestackClient.upload(thumbBuffer);
-       
+      const filestackResponse = await filestackClient.upload(newBuffer);
+      
       var new_ar = {
         uid: req.body.uid,
-        image: req.body.filesUploaded[i].url,
-        imageheight: aresp.data.height,
-        imagewidth: aresp.data.width,
+        image: filestackResponse.url,
+        imageheight: newHei,
+        imagewidth: newWid,
         imageext: 0,
         crop_image: filestackCropPromiseResponse.url,
         view_image:  filestackThumbPromiseResponse.url,

@@ -104,15 +104,21 @@ const EditModal = ({ handleCloseModal, modalData }) => {
     }
   };
 
-  const handleOnZoom = ({ detail }) => {
-    console.log('detail', detail);
+  const handleOnZoom = (e) => {
+    console.log('detail', e.detail);
     console.log('zoomvalue', zoomvalue);
-    const zoom = +(detail.ratio);
-    if (zoom > 1) {
-      return;
-    } else {
-      setzoomvalue(+(detail.ratio));
-    }
+    if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) {
+      e.preventDefault();
+     }
+     if (e.detail.ratio >= 0.125) {
+      e.preventDefault();
+     }
+     setzoomvalue(e.detail.ratio)
+    // const zoom = +(detail.ratio);
+    // if (zoom > 1) {
+    //   return;
+    // } else {
+    // }
   };
 
   const handleZoomTo = (e) => {
@@ -120,11 +126,15 @@ const EditModal = ({ handleCloseModal, modalData }) => {
     cropper?.zoomTo(+e.target.value);
   };
 
-  const isZoomable = useMemo(() => {
-     if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) return false;
-     if (zoomvalue >= 0.125) return false;
-     return true;
-  }, [imageonpopup.imagewidth, imageonpopup.imageheight ,zoomvalue]);
+  // useEffect(() => {
+  //   console.log('Hello', zoomvalue)
+  //    if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) {
+  //     cropper?.disable(true)
+  //    }
+  //    if (zoomvalue >= 0.125) {
+  //     cropper?.disable(true)
+  //    }
+  // }, [imageonpopup.imagewidth, imageonpopup.imageheight ,zoomvalue]);
 
   const zoomvalueplus = () => {
     if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) return;
@@ -151,6 +161,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
     bold: 330,
     ever: 325,
   }[modalData.frame])
+  console.log('isZoomable');
   return (
     <div id="edit-modal">
     {width > 767 ?
@@ -194,8 +205,6 @@ const EditModal = ({ handleCloseModal, modalData }) => {
             checkOrientation={false}
             zoom={handleOnZoom}
             center={false}
-            zoomOnTouch={isZoomable}
-            zoomOnWheel={isZoomable}
           />
         </div>
         <div className="rang_container">
