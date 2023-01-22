@@ -363,12 +363,20 @@ exports.cropped_img = async (req, res) => {
     const imgBuffer = (await axios({ url: img.image, responseType: "arraybuffer" })).data;
     let imageSize = img.imagewidth;
     if (img.imagewidth > img.imageheight) imageSize = img.imageheight;
+    let top, left;
+    if (parseInt(img.imagewidth) !== cropbox_data.naturalWidth) {
+      top = Math.round(-cropbox_data.left * (img.imagewidth / cropbox_data.width));
+      left = Math.round(-cropbox_data.top * (img.imageheight / cropbox_data.height));
+    } else {
+      top = Math.round(-cropbox_data.top * (img.imageheight / cropbox_data.height));
+      left = Math.round(-cropbox_data.left * (img.imagewidth / cropbox_data.width));
+    }
     const buffer = await sharp(imgBuffer)
       .extract({
         width: Math.floor(imageSize / rate),
         height: Math.floor(imageSize / rate),
-        top: Math.round(-cropbox_data.top * (img.imageheight / cropbox_data.height)),
-        left: Math.round(-cropbox_data.left * (img.imagewidth / cropbox_data.width)),
+        top: top,
+        left: left,
       })
       .withMetadata()
       .toBuffer();
