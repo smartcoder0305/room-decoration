@@ -66,14 +66,14 @@ exports.imageupload = async (req, res) => {
     newWid = Math.floor(req.body.imagewidth / req.body.imageheight * maxOriginSize);
   }
   newBuffer = await sharp(req.file.buffer)
-  .resize({ width: newWid, height: newHei })
+  .resize(newWid)
   .withMetadata()
   .toBuffer();
  }
 
  const smartCropRes = await smartcrop.crop(newBuffer, { width: minImgSize, height: minImgSize });
   console.log('smartsharpResult', smartCropRes)
- var cropbox_data = {
+  const cropbox_data = {
     height: smartCropRes.topCrop.height,
     width: smartCropRes.topCrop.width,
     top: smartCropRes.topCrop.y,
@@ -110,7 +110,7 @@ exports.imageupload = async (req, res) => {
 
   console.log("cropbox_data", cropbox_data);
 
-  var new_ar = {
+  let new_ar = {
     uid: req.body.uid,
     //image: req.file.filename,
     image: filestackResponse.url,
@@ -137,29 +137,29 @@ exports.imageupload = async (req, res) => {
 
 exports.upload = async (req, res) => {
   let newBuffer, newWid, newHei;
-  for (var i = 0; i < req.files.length; i++) {
+  for (let i = 0; i < req.files.length; i++) {
     img = req.files[i];
 
     newBuffer = img.buffer;
     newWid = req.body.imagewidth[i];
     newHei = req.body.imageheight[i];
     if (req.body.imageheight[i] > maxOriginSize && req.body.imagewidth[i] > maxOriginSize) {
-    if (req.body.imageheight[i] > req.body.imagewidth[i]) {
-      newWid = maxOriginSize;
-      newHei = Math.floor(req.body.imageheight[i] / req.body.imagewidth[i] * maxOriginSize);
-    } else {
-      newHei = maxOriginSize;
-      newWid = Math.floor(req.body.imagewidth[i] / req.body.imageheight[i] * maxOriginSize);
-    }
-    newBuffer = await sharp(img.buffer)
-    .resize({ width: newWid, height: newHei })
-    .withMetadata()
-    .toBuffer();
+      if (req.body.imageheight[i] > req.body.imagewidth[i]) {
+        newWid = maxOriginSize;
+        newHei = Math.floor(req.body.imageheight[i] / req.body.imagewidth[i] * maxOriginSize);
+      } else {
+        newHei = maxOriginSize;
+        newWid = Math.floor(req.body.imagewidth[i] / req.body.imageheight[i] * maxOriginSize);
+      }
+      newBuffer = await sharp(img.buffer)
+      .resize(newWid)
+      .withMetadata()
+      .toBuffer();
     }
 
     const smartCropRes = await smartcrop.crop(newBuffer, { width: minImgSize, height: minImgSize });
 
-    var cropbox_data = {
+    const cropbox_data = {
        height: smartCropRes.topCrop.height,
        width: smartCropRes.topCrop.width,
        top: smartCropRes.topCrop.y,
@@ -190,7 +190,7 @@ exports.upload = async (req, res) => {
    
    const [filestackCropPromiseResponse, filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackCropPromise, filestackThumbPromise,filestackPromise]);
     console.log("body", req.body);
-    var new_ar;
+    let new_ar;
     if (req.body.frametype) {
       new_ar = {
         uid: req.body.uid[i],
@@ -234,7 +234,7 @@ exports.upload = async (req, res) => {
 
 exports.socialPhotoImport = async (req, res) => {
 
-  for (var i = 0; i < req.body.filesUploaded.length; i++) {
+  for (let i = 0; i < req.body.filesUploaded.length; i++) {
       const handle =  req.body.filesUploaded[i].handle;
       const aresp = await axios.get(`${cdnBaseUrl}/imagesize/${handle}`);
 
@@ -253,13 +253,13 @@ exports.socialPhotoImport = async (req, res) => {
           newWid = Math.floor(newWid / newHei * maxOriginSize);
         }
         newBuffer = await sharp(input)
-        .resize({ width: newWid, height: newHei })
+        .resize(newWid)
         .withMetadata()
         .toBuffer();
       }
 
       const smartCropRes = await smartcrop.crop(newBuffer, { width: minImgSize, height: minImgSize });
-      var cropbox_data = {
+      let cropbox_data = {
         height: smartCropRes.topCrop.height,
         width: smartCropRes.topCrop.width,
         top: smartCropRes.topCrop.y,
@@ -281,7 +281,7 @@ exports.socialPhotoImport = async (req, res) => {
       const filestackThumbPromiseResponse = await filestackClient.upload(thumbBuffer);
       const filestackResponse = await filestackClient.upload(newBuffer);
       
-      var new_ar = {
+      const new_ar = {
         uid: req.body.uid,
         image: filestackResponse.url,
         imageheight: newHei,
@@ -347,7 +347,7 @@ exports.cropped_img = async (req, res) => {
     // let data = splitBase64Str[1];
     // // console.log('base64 Data', data);
     // let buffer = Buffer.from(data, 'base64');
-    var query = { _id: req.body.id };
+    let query = { _id: req.body.id };
     const img = await Uploadimg.findOne(query)
     console.log('imgData', img)
     const cropbox_data = req.body.cropbox_data;
@@ -402,7 +402,7 @@ exports.cropped_img = async (req, res) => {
       //image:cropeImage
      };
   
-    var response = await Uploadimg.findOneAndUpdate(query, updated, {
+    let response = await Uploadimg.findOneAndUpdate(query, updated, {
       upsert: true,
     });
     if (response) {
@@ -531,7 +531,7 @@ exports.paymentProcessing = async (req, res) => {
 };
 
 function sendOrderSMS(price, amount, oid) {
-  var data = JSON.stringify({
+  let data = JSON.stringify({
     Data: {
       Message: `New order in Stickable, Price: ${price} , Amount: ${amount} , Order ID: ${oid} , Date: ${moment().format(
         "L"
@@ -547,7 +547,7 @@ function sendOrderSMS(price, amount, oid) {
     },
   });
 
-  var config = {
+  let config = {
     method: "post",
     url: "https://capi.inforu.co.il/api/v2/SMS/SendSms",
     headers: {
@@ -572,7 +572,7 @@ exports.paymentProcessingInformation = async (req, res) => {
   const processToken = req.body.processToken;
   const uniqueUserId = req.body.uniqueUserId;
 
-  var options = {
+  let options = {
     method: "POST",
     url: "https://sandbox.meshulam.co.il/api/light/server/1.0/getPaymentProcessInfo",
     headers: {
@@ -588,10 +588,10 @@ exports.paymentProcessingInformation = async (req, res) => {
 
   request(options, async function (error, response, body) {
     if (error) throw new Error(error);
-    var body = JSON.parse(body);
+    let body = JSON.parse(body);
     console.log(body);
 
-    var query = {
+    let query = {
       uid: uniqueUserId,
       processId: processId,
       processToken: processToken,
@@ -599,7 +599,7 @@ exports.paymentProcessingInformation = async (req, res) => {
     updated = {
       paymentProcessInfo: body,
     };
-    var response_payment_process = await paymentProcessModel.findOneAndUpdate(
+    let response_payment_process = await paymentProcessModel.findOneAndUpdate(
       query,
       updated,
       { upsert: true },
@@ -630,7 +630,7 @@ exports.addShippingAddress = async (req, res) => {
   const getipresponse = await fetch("https://api.ipify.org/?format=json");
   const ipAddress = await getipresponse.json();
 
-  var userData = {
+  let userData = {
     uid: userId,
     fullName: userShippingData.fullName,
     address1: userShippingData.address1,
@@ -684,7 +684,7 @@ exports.countUser = async (req, res) => {
       status: 400,
     });
   }
-  // var response_payment_process = await userCountModel.findOneAndUpdate({})
+  // let response_payment_process = await userCountModel.findOneAndUpdate({})
 };
 
 exports.countOrder = async (req, res) => {
