@@ -247,7 +247,7 @@ const CheckoutMobile = (props) => {
           selectedAddress.fullName +
           ", " +
           selectedAddress.city,
-        img: <img src="/assets/images/method_check.svg" alt="method_check"/>,
+        img: <img src="/assets/file/images/Check.png" style={{marginBottom: "2px"}}/>,
       };
     } else {
       return {
@@ -256,8 +256,7 @@ const CheckoutMobile = (props) => {
         img: (
           <img
             src="/assets/images/form_address.svg"
-            style={{ marginLeft: "5px" }}
-            width={25}
+            style={{ marginLeft: "5px", width: "25px", height: "25px"}}
             alt="form_address"
           />
         ),
@@ -398,6 +397,10 @@ const CheckoutMobile = (props) => {
     }
   }
 
+  const renderCounts = () => {
+    return <><span>{imagecount} </span>בלנדס בגודל<span> 20x20</span></> 
+  }
+
   return (
     <div className="mobile-checkout-modal" style={{ ...style }}>
       <div
@@ -407,53 +410,69 @@ const CheckoutMobile = (props) => {
         <div className="">
           <div className="" id="myCartMobileContent">
             <div className="" style={{ paddingBottom: "0px" }}>
-              <div className="van-wrap">
+              <div className="van-wrap" style={{verticalAligh: "middle"}}>
                 <span
                   style={{
                     marginRight: "5px",
-                    fontSize: "16px",
                     color: "#000000",
-                    fontWeight: "500",
+                    fontWeight: "400",
                     fontFamily: "rubik",
+                    fontSize: "14px",
+                    lineHeight: "25px",
                   }}
                 >
-                  בהזמנה זו תקבלו משלוח חינם
-                </span>
-                <input type="checkbox" style={{width: "14px"}}/>
+                  אני רוצה שתארזו לי את המשלוח כמתנה
+                </span>&nbsp;
+                <input type="checkbox" style={{width: "14px", height: "25px"}}/>
+                <img src="/assets/file/images/gift.png" style={{width: "25px", height: "25px"}}/>
               </div>
             </div>
 
             <div className="modal-body">
               <div className="checkout-name-credit-main-div">
                 <span>
-                  {" "}
-                  <p
-                    className={renderAddAddressButton().class.toString()}
-                    data-dismiss="modal"
-                    data-toggle="modal"
-                    data-target="#addwin"
-                    onClick={openAddressPopupMobile}
-                    style={{paddingTop: "26px", fontWeight: 700}}
-                  >
-                    {renderAddAddressButton().img}
-                    &nbsp;&nbsp;&nbsp;
-                    {renderAddAddressButton().text}
-                  </p>
+                  {selectedAddress ? (
+                    <p
+                      className={renderAddAddressButton().class.toString()}
+                      data-dismiss="modal"
+                      data-toggle="modal"
+                      data-target="#addwin"
+                      onClick={openAddressPopupMobile}
+                      style={{paddingTop: "26px", fontWeight: 400, fontSize: "14px", verticalAlign: "middle"}}
+                    >&nbsp;&nbsp;
+                      {renderAddAddressButton().img}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      {renderAddAddressButton().text}
+                    </p>
+                  ) : (
+                    <p
+                      className={renderAddAddressButton().class.toString()}
+                      data-dismiss="modal"
+                      data-toggle="modal"
+                      data-target="#addwin"
+                      onClick={openAddressPopupMobile}
+                      style={{paddingTop: "26px", fontWeight: 700, fontSize: "14px"}}
+                    >
+                      {renderAddAddressButton().img}
+                      &nbsp;&nbsp;&nbsp;
+                      {renderAddAddressButton().text}
+                    </p>
+                  )}
                 </span>
                 {selectedPayment ? (
                   <>
                     <span>
                       <p
                         className="new-link add-padd text-black-color"
-                        style={{ color: "black", paddingTop: "26px", fontWeight: 700}}
+                        style={{ color: "black", paddingTop: "26px", fontWeight: 400, fontSize: "14px"}}
                         data-dismiss="modal"
                         data-toggle="modal"
                         data-target="#addwin"
                         onClick={mySaveCardPopUp}
-                      >
-                        <img src="/assets/file/images/black_tick.png" />
+                      > &nbsp;&nbsp;
+                        <img src="/assets/file/images/Check.png" style={{marginBottom: "2px"}}/>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        {selectedPayment.hebrewType + ' ' +selectedPayment.cardNumber.substring(0, 4)}
+                        {selectedPayment.hebrewType + ' ' +selectedPayment.cardNumber.substring(15, 19)}
                       </p>
                     </span>
                   </>
@@ -466,10 +485,11 @@ const CheckoutMobile = (props) => {
                         data-toggle="modal"
                         data-target="#addwin"
                         onClick={mySaveCardPopUp}
-                        style={{marginBottom: "26px", fontWeight: 700}}
+                        style={{marginBottom: "26px", fontWeight: 700, fontSize: "14px"}}
                       >
                         <img
                           src="/assets/file/images/mycard.svg"
+                          style={{width: "25px", height: "16.42px"}}
                         />
                         &nbsp;&nbsp;&nbsp;
                         תשלום באשראי
@@ -477,40 +497,29 @@ const CheckoutMobile = (props) => {
                     </span>
                   </>
                 )}
-                {/* <p
-                  className='new-link add-padd'
-                  data-dismiss="modal"
-                  data-toggle="modal"
-                  data-target="#addwin"
-                >
-                 
-                  הננער ,ימלשורי לארשי
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <img src="/assets/file/images/mycard.svg" />
-                </p> */}
               </div>
               <div className="checkout-calculation">
-                <div className="checkout-calculation__info" style={{fontWeight: 400}}>
+                <div className="checkout-calculation__info" style={{fontWeight: 400, marginBottom: "22px", justifyContent:"flex-end"}}>
                   <p>
                     ההזמנה שלכם זכאית ל
-                    <span style={{fontWeight: 500}}>משלוח חינם,</span>
-                     המשלוח צפוי
-                    להגיע עד 
+                    <span style={{fontWeight: 500}}>משלוח חינם,&nbsp;</span>
+                    המשלוח צפוי
+                    <br />להגיע אליכם עד
                     <span style={{fontWeight: 500}}>{nextTuesday()}</span>
                   </p>
                   <img src="/assets/images/checkout_check.svg" alt="check" />
                 </div>
 
                 <div className="price__table">
-                  <div className="price__table--row">
+                  <div className="price__table--row" style={{fontSize: "14px", fontWeight: 400}}>
                     <div>₪ {netPrice}</div>
-                    <div>20*20,בלנדס בגודל {imagecount}</div>
+                    <div style={{direction: "rtl"}}>{renderCounts()}</div>
                   </div>
-                  <div className="price__table--row">
-                    <div>₪ חינם</div>
+                  <div className="price__table--row" style={{fontSize: "14px",  fontWeight: 400}}>
+                    <div>חינם</div>
                     <div>משלוח</div>
                   </div>
-                  <div className="price__table--row" style={{fontWeight: "bold"}}>
+                  <div className="price__table--row" style={{fontWeight: "700", fontSize: "14px"}}>
                     <div>
                       ₪&nbsp;
                       {isDisplay
@@ -569,7 +578,7 @@ const CheckoutMobile = (props) => {
           </div>
         </div>
       </div>
-      <div className="mobile-checkout-pay-btn-container">
+      <div className="mobile-checkout-pay-btn-container" style={{fontSize: "14px"}}>
         {selectedAddress && selectedPayment ? (
           <>
             <button
@@ -577,7 +586,7 @@ const CheckoutMobile = (props) => {
               className="btn cls pay-by-card-button "
               onClick={handleTranzilarPayment}
             >
-              נזמין
+              המשך לאישור הזמנה
             </button>
           </>
         ) : (
@@ -586,6 +595,7 @@ const CheckoutMobile = (props) => {
               type="button"
               className="btn cls pay-by-card-button data-not-full-field"
               // onClick={openPaymentPopupMobile}
+              style={{fontWeight: 400, color: "FF1F84"}}
             >
               הזינו את פרטי המשלוח והתשלום כדי להמשיך
             </button>

@@ -184,6 +184,11 @@ const Checkout = (props) => {
   const openAddCard = (name) => {
     modal("open", name);
   };
+
+  const renderCounts = () => {
+    return <><span>{imagecount} </span>בלנדס בגודל<span> 20x20</span></> 
+  }
+
   return (
     <div>
       <div
@@ -201,53 +206,44 @@ const Checkout = (props) => {
           <div className="card-and-address-buttons">
             <button
               className={cn("", { checked: selectedAddress })}
+              style={{fontSize: "16px", fontWeight: selectedAddress ? 400 : 700,}}
               onClick={() => openAddCard("addAddress")}
             >
-              {selectedAddress ? selectedAddress.fullName + ", " + selectedAddress.city : "פרטים אישיים" }
-              <img
-                src={
-                  selectedAddress
-                    ? "assets/images/method_check.svg"
-                    : "assets/images/form_address.svg"
-                }
-                alt="address"
-              />
+              {selectedAddress ? selectedAddress.city + " ," + selectedAddress.fullName: "פרטים אישיים" }
+              {selectedAddress ? (
+                <img src="/assets/file/images/Check.png" style={{marginBottom: "2px", marginRight: "8px"}}/> 
+              ) : (
+                <img src={"/assets/images/form_address.svg"} style={{width: "25px", height: "25px"}} />
+              )}
             </button>
             <button
               className={cn("", { checked: selectedPayment })}
+              style={{fontSize: "16px", fontWeight: selectedPayment ? 400 : 700}}
               onClick={() => openAddCard("selectCard")}
             >
-              {selectedPayment ? selectedPayment.hebrewType + ' ' + selectedPayment.cardNumber.substring(0, 4) : 'תשלום באשראי'}
-              <img
-                src={
-                  selectedPayment
-                    ? "assets/images/method_check.svg"
-                    : "assets/images/form_card.svg"
-                }
-                alt="card"
-              />
+              {selectedPayment ? selectedPayment.hebrewType + ' ' + selectedPayment.cardNumber.substring(15, 19) : 'תשלום באשראי'}
+              {selectedPayment ? (
+                <img src="/assets/file/images/Check.png" style={{marginBottom: "2px", marginRight: "8px"}}/> 
+              ) : (
+                <img src={"/assets/images/form_card.svg"} style={{width: "25px", height: "25px"}} />
+              )}
             </button>
           </div>
 
           <div className="checkout-calculation">
-            <div className="checkout-calculation__info">
-              <p style={{fontWeight: 400}}>
-                ההזמנה שלכם זכאית ל
-                <span style={{fontWeight: 500}}>משלוח חינם,</span>
-                  המשלוח צפוי
-                להגיע עד 
-                <span style={{fontWeight: 500}}>{nextTuesday()}</span>
+            <div className="checkout-calculation__info" style={{marginBottom: "30px"}}>
+              <p style={{fontWeight: 400, fontSize: "16px"}}>ההזמנה שלכם זכאית ל<span style={{fontWeight: 500}}>משלוח חינם,&nbsp;<br/></span>
+                המשלוח צפוי
+                להגיע אליכם עד 
+                <span style={{fontWeight: 500, direction: "ltr !important"}}>{nextTuesday()}</span>
               </p>
-              <img src="/assets/images/checkout_check.svg" alt="check" />
+              <img src="/assets/images/checkout_check.svg" alt="check" style={{width: "25px", height: "25px"}}/>
             </div>
 
             <div className="price__table">
               <div className="price__table--row"  style={{fontWeight: "400"}}>
                 <div>{netPrice}</div>
-                <div>
-                  20x20,
-                  <span>&nbsp;בלנדס בגודל&nbsp;4</span>
-                </div>
+                <div style={{direction: "rtl"}}>{renderCounts()}</div>
               </div>
               <div className="price__table--row"  style={{fontWeight: "400"}}>
                 <div>35</div>
@@ -258,7 +254,7 @@ const Checkout = (props) => {
                 <div>הטבת כמות</div>
               </div>
               <div className="price__table--row total">
-                <div style={{fontSize: "16px", fontWeight: "700"}}>
+                <div style={{fontSize: "16px", fontWeight: "700 !important"}}>
                   ₪
                   {isDisplay
                     ? imagecount >= numberOfImages
@@ -266,7 +262,7 @@ const Checkout = (props) => {
                       : netPrice
                     : netPrice}
                 </div>
-                <div>כ”הס</div>
+                <div style={{fontSize: "16px", fontWeight: "700 !important"}}>סה”כ</div>
               </div>
             </div>
           </div>
@@ -276,12 +272,13 @@ const Checkout = (props) => {
               className="checkout-button"
               disabled={!selectedAddress || !selectedPayment}
               onClick={handleTranzilarPayment}
+              style={{width: "199.91px", fontSize: "14px", fontWeight: "700"}}
             >
-              נזמין
+              המשך לאישור הזמנה
             </button>
             {(!selectedAddress || !selectedPayment) && (
-              <p className="checkout-button-description">
-                הזינו את פרטי המשלוח והתשלום כדי להמשיך  
+              <p className="checkout-button-description" style={{fontWeight: "400", fontSize: "14px"}}>
+                הזינו את פרטי המשלוח והתשלום כדי להמשיך
               </p>
             )}
           </div>

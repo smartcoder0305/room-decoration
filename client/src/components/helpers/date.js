@@ -4,7 +4,7 @@ const hebrewMonths = ['ינואר' ,'פברואר', 'מרץ', 'אפריל', 'י�
 
 export function hebrewFormat (month, day, weekday) {
 	// const hebrewMonth = hebrewDate((new Date()).getFullYear(), month, day).month_name;
-	return hebrewMonths[month] + ' ' + day + 'ה ' + weekdays[weekday];
+	return ' ' + weekdays[weekday] + ' ה' + day + ' ב' + hebrewMonths[month] + ' ';
 }
 
 export function nextTuesday (weekday = 2) {
