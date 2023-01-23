@@ -202,7 +202,7 @@ const Checkout = (props) => {
               className={cn("", { checked: selectedAddress })}
               onClick={() => openAddCard("addAddress")}
             >
-              {selectedAddress ? selectedAddress.fullName + ", " + selectedAddress.city : "חולשמל תבותכ" }
+              {selectedAddress ? selectedAddress.fullName + ", " + selectedAddress.city : "פרטים אישיים" }
               <img
                 src={
                   selectedAddress
@@ -216,7 +216,7 @@ const Checkout = (props) => {
               className={cn("", { checked: selectedPayment })}
               onClick={() => openAddCard("selectCard")}
             >
-              {selectedPayment ? selectedPayment.hebrewType + ' ' + selectedPayment.cardNumber.substring(0, 4) : 'םולשת יעצמא'}
+              {selectedPayment ? selectedPayment.hebrewType + ' ' + selectedPayment.cardNumber.substring(0, 4) : 'תשלום באשראי'}
               <img
                 src={
                   selectedPayment
@@ -241,27 +241,23 @@ const Checkout = (props) => {
             </div>
 
             <div className="price__table">
-              <div className="price__table--row">
-                <div>{imagecount}</div>
-                <div>21x21, {imagecount} </div>
-              </div>
-              <div className="price__table--row">
+              <div className="price__table--row"  style={{fontWeight: "400"}}>
                 <div>{netPrice}</div>
+                <div>
+                  20x20,
+                  <span>&nbsp;בלנדס בגודל&nbsp;4</span>
+                </div>
+              </div>
+              <div className="price__table--row"  style={{fontWeight: "400"}}>
+                <div>35</div>
                 <div>משלוח</div>
               </div>
-              <div className="price__table--row">
-                <div>
-                  -
-                  {isDisplay
-                    ? imagecount >= numberOfImages
-                      ? ((netPrice / 100) * percentages).toFixed(2)
-                      : 0
-                    : 0}
-                </div>
-                <div>משלוח חינם</div>
+              <div className="price__table--row"  style={{fontWeight: "400"}}>
+                <div>-35</div>
+                <div>הטבת כמות</div>
               </div>
               <div className="price__table--row total">
-                <div>
+                <div style={{fontSize: "16px", fontWeight: "700"}}>
                   ₪
                   {isDisplay
                     ? imagecount >= numberOfImages
@@ -269,7 +265,7 @@ const Checkout = (props) => {
                       : netPrice
                     : netPrice}
                 </div>
-                <div>:כ”הס</div>
+                <div>כ”הס</div>
               </div>
             </div>
           </div>
@@ -284,8 +280,8 @@ const Checkout = (props) => {
             </button>
             {(!selectedAddress || !selectedPayment) && (
               <p className="checkout-button-description">
-              תחילה נזין את פרטי המשלוח והתשלום
-            </p>
+                הזינו את פרטי המשלוח והתשלום כדי להמשיך  
+              </p>
             )}
           </div>
         </div>

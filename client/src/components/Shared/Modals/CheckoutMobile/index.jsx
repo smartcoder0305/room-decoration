@@ -5,6 +5,7 @@ import cn from "classnames";
 
 import "./style.css";
 
+import moment from "moment";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import CardPayment from "./components/CardPayment";
 import PaymentOptions from "./components/PaymentOptions";
@@ -250,7 +251,7 @@ const CheckoutMobile = (props) => {
     } else {
       return {
         class: "new-link",
-        text: "כתובת למשלוח",
+        text: "פרטים אישיים",
         img: (
           <img
             src="/assets/images/form_address.svg"
@@ -470,7 +471,7 @@ const CheckoutMobile = (props) => {
                           src="/assets/file/images/mycard.svg"
                         />
                         &nbsp;&nbsp;&nbsp;
-                        אמצעי תשלום
+                        תשלום באשראי
                       </p>
                     </span>
                   </>
@@ -494,7 +495,7 @@ const CheckoutMobile = (props) => {
                     <span style={{fontWeight: 500}}>משלוח חינם,</span>
                      המשלוח צפוי
                     להגיע עד 
-                    <span style={{fontWeight: 500}}>יום שלישי ה29 ביולי</span>
+                    <span style={{fontWeight: 500}}>{moment(new Date(), 'LLLL', 'he').format('D בMMM')}</span>
                   </p>
                   <img src="/assets/images/checkout_check.svg" alt="check" />
                 </div>
@@ -502,7 +503,7 @@ const CheckoutMobile = (props) => {
                 <div className="price__table">
                   <div className="price__table--row">
                     <div>₪ {netPrice}</div>
-                    <div>21*21, {imagecount}</div>
+                    <div>20*20,בלנדס בגודל {imagecount}</div>
                   </div>
                   <div className="price__table--row">
                     <div>₪ חינם</div>
@@ -517,7 +518,7 @@ const CheckoutMobile = (props) => {
                           : netPrice
                         : netPrice}
                     </div>
-                    <div>כ”הס</div>
+                    <div>סה”כ</div>
                   </div>
                 </div>
               </div>

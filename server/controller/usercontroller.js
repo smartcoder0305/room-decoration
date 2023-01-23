@@ -66,6 +66,7 @@ exports.imageupload = async (req, res) => {
     newWid = Math.floor(req.body.imagewidth / req.body.imageheight * maxOriginSize);
   }
   newBuffer = await sharp(req.file.buffer)
+  .rotate()
   .resize(newWid)
   .withMetadata()
   .toBuffer();
@@ -152,6 +153,7 @@ exports.upload = async (req, res) => {
         newWid = Math.floor(req.body.imagewidth[i] / req.body.imageheight[i] * maxOriginSize);
       }
       newBuffer = await sharp(img.buffer)
+      .rotate()
       .resize(newWid)
       .withMetadata()
       .toBuffer();
@@ -253,6 +255,7 @@ exports.socialPhotoImport = async (req, res) => {
           newWid = Math.floor(newWid / newHei * maxOriginSize);
         }
         newBuffer = await sharp(input)
+        .rotate()
         .resize(newWid)
         .withMetadata()
         .toBuffer();
