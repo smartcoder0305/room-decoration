@@ -1,4 +1,3 @@
-import hebrewDate from "hebrew-date";
 import moment from "moment";
 const weekdays = ['יום ראשון', 'יום שני', 'יום שלישי', 'רביעי', 'יום חמישי', 'יום שישי', 'יום שבת'];
 const hebrewMonths = ['ינואר' ,'פברואר', 'מרץ', 'אפריל', 'יוני', 'יולי', 'אוֹגוּסט', 'ספטמבר', 'אוקטובר', 'נובמבר' ,'דצמבר'];
