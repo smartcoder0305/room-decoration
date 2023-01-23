@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import cn from "classnames";
+import { nextTuesday } from "@helpers/date";
 
 import "./style.css";
 
@@ -495,7 +496,7 @@ const CheckoutMobile = (props) => {
                     <span style={{fontWeight: 500}}>משלוח חינם,</span>
                      המשלוח צפוי
                     להגיע עד 
-                    <span style={{fontWeight: 500}}>{moment(new Date(), 'LLLL', 'he').format('D בMMM')}</span>
+                    <span style={{fontWeight: 500}}>{nextTuesday()}</span>
                   </p>
                   <img src="/assets/images/checkout_check.svg" alt="check" />
                 </div>
@@ -586,7 +587,7 @@ const CheckoutMobile = (props) => {
               className="btn cls pay-by-card-button data-not-full-field"
               // onClick={openPaymentPopupMobile}
             >
-              תחילה נזין את פרטי המשלוח והתשלום
+              הזינו את פרטי המשלוח והתשלום כדי להמשיך
             </button>
           </>
         )}

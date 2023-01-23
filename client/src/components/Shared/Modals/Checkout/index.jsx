@@ -14,6 +14,7 @@ import {
 import { selectedPaymentMethod, selectedShippingAddress } from "@atoms";
 import { useSecondModal } from "@helpers/hooks/useSecondModal";
 import "./style.css";
+import { nextTuesday } from "@helpers/date";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -235,7 +236,7 @@ const Checkout = (props) => {
                 <span style={{fontWeight: 500}}>משלוח חינם,</span>
                   המשלוח צפוי
                 להגיע עד 
-                <span style={{fontWeight: 500}}>יום שלישי ה29 ביולי</span>
+                <span style={{fontWeight: 500}}>{nextTuesday()}</span>
               </p>
               <img src="/assets/images/checkout_check.svg" alt="check" />
             </div>
