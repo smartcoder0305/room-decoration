@@ -586,9 +586,9 @@ exports.paymentProcessingInformation = async (req, res) => {
     },
   };
 
-  request(options, async function (error, response, body) {
+  request(options, async function (error, response, pBody) {
     if (error) throw new Error(error);
-    let body = JSON.parse(body);
+    let body = JSON.parse(pBody);
     console.log(body);
 
     let query = {
