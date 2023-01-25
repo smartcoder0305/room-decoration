@@ -848,7 +848,7 @@ exports.createOrder = async (req, res) => {
 exports.getOrder = async (req, res) => {
   try {
     const order = await orderAddModel.findOne({oid: req.params.oid});
-    const images = await Uploadimg.findOne({uid: order.uid});
+    const images = await Uploadimg.find({uid: order.uid});
     res.json({
       order: order,
       imageCount: images.length,
