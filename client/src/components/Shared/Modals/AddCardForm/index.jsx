@@ -169,6 +169,7 @@ const AddCardForm = () => {
                 }
                 placeholder="0000 0000 0000 0000"
                 value={formik.values.cardNumber}
+                autoFocus={true}
               />
             </div>
             <span>מספר כרטיס</span>

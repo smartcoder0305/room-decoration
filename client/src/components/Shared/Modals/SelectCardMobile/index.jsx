@@ -33,7 +33,7 @@ const SelectCardModalMobile = ({ style }) => {
   return (
     <div className="add-card-modal-mobile" style={{ ...style }}>
       <button onClick={() => handleOpenNewCardForm()} style={{color: "black", fontWeight: "700"}}>
-        נוסיף כרטיס אשראי
+      תשלום בכרטיס אשרא
         <img src="/assets/images/plus.svg" alt="add-new-card" />
       </button>
       {/* {payments.length > 0 && (

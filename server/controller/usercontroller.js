@@ -839,9 +839,9 @@ exports.createOrder = async (req, res) => {
     console.log('orderText:::::::::', orderText);
     await s3Upload(orderText, `${dropboxPathPrefix}/order.txt`);
 
-    res.json(orderCreate);
+    return res.json(orderCreate);
   } catch (error) {
-    res.status(400).send('Verify Failed');
+    return res.status(400).send('Verify Failed');
   }  
 }
 
@@ -849,7 +849,7 @@ exports.getOrder = async (req, res) => {
   try {
     const order = await orderAddModel.findOne({oid: req.params.oid});
     const images = await Uploadimg.find({uid: order.uid});
-    res.json({
+    return res.json({
       order: order,
       imageCount: images.length,
     })

@@ -33,7 +33,7 @@ const SelectCardModal = ({ style }) => {
   return (
     <div className="add-card-modal" style={{ ...style }}>
       <button onClick={() => handleOpenNewCardForm()}>
-        יארשא סיטרכב םולשת
+        תשלום בכרטיס אשרא
         <img src="/assets/images/plus.svg" alt="add-new-card" />
       </button>
       {/* {payments.length > 0 && (

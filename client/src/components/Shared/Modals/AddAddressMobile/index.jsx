@@ -90,9 +90,9 @@ const AddAddressModalMobile = () => {
         <div className="add-address-modal-mobile__content rtl">
           <div className="form__row">
             <Input
-              label="אלמ םש"
+              label="שם מלא"
               name="fullName"
-              placeholder="החפשמ םשו יטרפ םש"
+              placeholder="שם פרטי ושם משפחה"
               onChange={formik.handleChange}
               value={formik.values.fullName}
               error={formik.errors.fullName}
@@ -104,7 +104,7 @@ const AddAddressModalMobile = () => {
               name="phoneNumber"
               type="tel"
               mask="999-999-9999"
-              label="ןופלט ‘סמ"
+              label="מספר טלפון"
               value={formik.values.phoneNumber}
               onChange={formik.handleChange}
               error={formik.errors.phoneNumber}
@@ -114,7 +114,7 @@ const AddAddressModalMobile = () => {
             <Input
               name="email"
               type="email"
-              label="ליימיא"
+              label="כתובת אימייל"
               value={formik.values.email}
               onChange={formik.handleChange}
               error={formik.errors.email}
@@ -123,7 +123,7 @@ const AddAddressModalMobile = () => {
           <div className="form__row">
             <Input
               name="address"
-              label="תבותכ"
+              label="כתובת מגורים למשלוח"
               placeholder="רחוב ומספר בית או תא דואר"
               value={formik.values.address}
               onChange={formik.handleChange}
@@ -139,7 +139,7 @@ const AddAddressModalMobile = () => {
           </div>
           <div className="form__row column">
             <StyledSelect
-              label="ריע"
+              label="עיר"
               name="city"
               placeholder={false}
               search
@@ -154,7 +154,7 @@ const AddAddressModalMobile = () => {
             <Input
               name="zipCode"
               onChange={formik.handleChange}
-              label="דוקימ"
+              label="מיקוד"
               value={formik.values.zipCode}
               error={formik.errors.zipCode}
               maxLength={7}
@@ -173,7 +173,7 @@ const AddAddressModalMobile = () => {
           </div>
           <div className="form_row">
             <button type="submit" className="submit">
-              רושיא
+            אישור 
             </button>
           </div>
         </div>

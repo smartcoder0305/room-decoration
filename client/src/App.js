@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import Header from "./components/Partials/Header";
 // import Header from "@shared/Header";
@@ -17,9 +17,6 @@ import Faq from "./components/FooterPages/Faq";
 import Window1 from "./components/FooterPages/Window1";
 import Window2 from "./components/FooterPages/Window2";
 import Window3 from "./components/FooterPages/Window3";
-import uniqid from "uniqid";
-import Window from "./components/FooterPages/Window";
-import FooterPage from "./components/FooterPages/FooterPage";
 import Overlay from "@shared/Overlay";
 import SecondOverlay from "@shared/SecondOverlay";
 import WindowModals from "@shared/WindowModals";
@@ -130,23 +127,23 @@ function App() {
             <Home existData={existData}/>
             <Footer existData={existData}/>
           </Route>
-          <Route path="/upload-your-image" component={UploadImage} />
-          <Route path="/review-your-images" component={ReviewImages} />
-          <Route path="/payment-success/:orderId" component={PaymentSuccess} />
-          <Route path="/payment-cancel" component={PaymentCancel} />
-          <Route path="/faq" component={Faq} />
-          <Route path="/termsofUse" component={Window1} />
-          <Route path="/privacypolicy" component={Window2} />
-          <Route path="/commonquestions" component={Window3} />
-          <Route path="/page/:pid" component={Window} />
-          <Route path="/privacy-policy">
+          <Route path="/upload-your-image" component={UploadImage} exact/>
+          <Route path="/review-your-images" component={ReviewImages} exact/>
+          <Route path="/payment-success/:orderId" component={PaymentSuccess} exact/>
+          <Route path="/payment-cancel" component={PaymentCancel} exact/>
+          <Route path="/faq" component={Faq} exact/>
+          <Route path="/termsofUse" component={Window1} exact/>
+          <Route path="/privacypolicy" component={Window2} exact/>
+          <Route path="/commonquestions" component={Window3} exact/>
+          <Route path="/privacy-policy" exact>
             {/* <Header /> */}
             <PrivacyPolicy />
             <Footer />
           </Route>
+          <Redirect to="/" />
         </Switch>
-        <WindowModals />
-        <SecondaryModals />
+      <WindowModals />
+      <SecondaryModals />
       </Router>
       <Overlay />
       <SecondOverlay />

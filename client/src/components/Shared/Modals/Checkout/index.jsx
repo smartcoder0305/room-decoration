@@ -48,6 +48,7 @@ const Checkout = (props) => {
           if (res.data.status === 200) {
               console.log('----success-----')
           }
+          console.log('####################', res);
           return res.data;
       } catch (error) {
           console.log(error)
@@ -75,6 +76,7 @@ const Checkout = (props) => {
       });
       console.log(paymentData);
       const orderData = await creatOrder({...selectedAddress, uid: localStorage.getItem('uniqueUserId')});
+      console.log('orderData', orderData);
       if (!orderData) {
         throw new Error('Creating order failed.');
       }
@@ -82,81 +84,11 @@ const Checkout = (props) => {
       setLoading(false);
       history.push(`/payment-success/${orderData.oid}`);
     } catch (err) {
+      console.log(err);
       modal("open", 'errorCart');
       setLoading(false);
     }
   }
-
-  const handlePaymentFormSubmit = async (event) => {
-    event.preventDefault();
-    const uniqueUserId = localStorage.getItem('uniqueUserId');
-    const frameQuantity = imagecount;
-    const oid = `${Math.floor(Math.random() * 100000000 + 1)}`;
-    const cardInfo = JSON.parse(localStorage.getItem("cardNumber"));
-    let totalPrice;
-
-    // console.log(totalPrice)
-    if (isDisplay) {
-      if (frameQuantity >= numberOfImages) {
-        totalPrice =
-          45 * frameQuantity - ((45 * frameQuantity) / 100) * percentages;
-      } else {
-        totalPrice = 45 * frameQuantity;
-      }
-    } else {
-      totalPrice = 45 * frameQuantity;
-    }
-    const paymentData = {
-      uniqueUserId: uniqueUserId,
-      frameQuantity: frameQuantity,
-      shippingAddressFormValues: "ADD_SHIPPING_ADDRESS",
-      oid,
-      cardInfo,
-      totalPrice: totalPrice,
-    };
-
-    const config = {
-      headers: {
-        "content-type": "application/json",
-      },
-    };
-
-    await axios.post(BASE_URL + "/user/addordercount");
-    const paymentResponse = await await axios.post(
-      BASE_URL + "/payment-processing",
-      paymentData,
-      config
-    );
-    if (paymentResponse.status) {
-      let response = await axios.get(
-        `${BASE_URL}/user/addnewordercount`,
-        config
-      );
-
-      if (response.data.status === 200) {
-        localStorage.setItem("userCount", "no");
-        localStorage.clear();
-        localStorage.setItem(
-          "order-details",
-          JSON.stringify(paymentResponse.data.odata)
-        );
-        history.push(paymentResponse.data.sucessUrl);
-      }
-    }
-  };
-
-  const addShippingAddress = async () => {
-    const userId = localStorage.getItem("uniqueUserId");
-    const userShippingData = JSON.parse(
-      localStorage.getItem("userShippingAddress")
-    );
-    console.log(userShippingData);
-    const response = await axios.post(BASE_URL + "/addshippingaddress", {
-      userId,
-      userShippingData,
-    });
-    console.log(response);
-  };
 
   const getCuponData = async () => {
     try {

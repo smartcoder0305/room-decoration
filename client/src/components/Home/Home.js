@@ -120,24 +120,6 @@ const Home = ({existData}) => {
             </div>
           </div>
         </div>
-        <div>
-          <div className="res-offer">
-            {/* <img src="/assets/images/ofr-mob.jpg" alt="" /> */}
-            <img src="/assets/images/cpl.jpg" alt="" />
-            <div className="ofr-wrap">
-              <h4>מסגרות שפשוט נדבקות לקיר</h4>
-              <p>
-                זה פשוט ומהיר הדפיסו תמונות על הקיר ותשדרגו כל סביבה לסביבה
-                נעימה יותר
-                <br />
-              </p>
-            </div>
-          </div>
-          <div className="sub order-md-3 order-2 col-12">
-            <img src="/assets/images/van.svg" alt="" className="xp " />
-            <p className="home-van-bottom-text">משלוחים חינם לכל הארץ</p>
-          </div>
-        </div>
       </section>
       <section className="about">
         <div className="container">
