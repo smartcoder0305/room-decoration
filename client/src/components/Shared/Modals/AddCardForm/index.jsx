@@ -119,7 +119,7 @@ const AddCardForm = () => {
     const max = min + 10
     const years = []
   
-    for (var i = min; i <= max; i++) {
+    for (var i = min - 1; i <= max; i++) {
       years.push({ value: i, label: i })
     }
     return years
@@ -152,7 +152,21 @@ const AddCardForm = () => {
                 mask="9999 9999 9999 9999"
                 type="tel"
                 alwaysShowMask={false}
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  const number = e.target.value.replace(/\s/g, '').replace(/_/g, '');
+                  if (number.startsWith('34') || number.startsWith('37') || number.startsWith('123')) {
+                    setCardErr({...cardErr, cardNumberErr: true});
+                  } else {
+                    setCardErr({...cardErr, cardNumberErr: false});
+                  }
+                  if (number.length > 8) {
+                    if (cardErr.cardNumberErr) {
+                      e.target.value = number.substr(0, 8);
+                    }
+                  }
+                  console.log(e.target.value)
+                  formik.handleChange(e)}
+                }
                 placeholder="0000 0000 0000 0000"
                 value={formik.values.cardNumber}
               />

@@ -81,7 +81,7 @@ const AddAddressModal = () => {
       <form className="add-address-modal" onSubmit={formik.handleSubmit}>
         <div className="add-address-modal__header">
           <button type="submit" className="submit">
-            רושיא
+          אישור
           </button>
           <span>נא להזין את פרטי המשלוח</span>
           <img
@@ -93,12 +93,13 @@ const AddAddressModal = () => {
         <div className="add-address-modal__content rtl">
           <div className="form__row">
             <Input
-              label="אלמ םש"
+              label="שם מלא"
               name="fullName"
-              placeholder="החפשמ םשו יטרפ םש"
+              placeholder="שם פרטי ושם משפחה"
               onChange={formik.handleChange}
               value={formik.values.fullName}
               error={formik.errors.fullName}
+              autoFocus={true}
             />
           </div>
           <div className="form__row">
@@ -106,7 +107,7 @@ const AddAddressModal = () => {
               name="phoneNumber"
               type="tel"
               mask="999-999-9999"
-              label="ןופלט ‘סמ"
+              label="מספר טלפון"
               value={formik.values.phoneNumber}
               onChange={formik.handleChange}
               error={formik.errors.phoneNumber}
@@ -116,7 +117,7 @@ const AddAddressModal = () => {
             <Input
               name="email"
               type="email"
-              label="ליימיא"
+              label="כתובת אימייל"
               value={formik.values.email}
               onChange={formik.handleChange}
               error={formik.errors.email}
@@ -125,7 +126,7 @@ const AddAddressModal = () => {
           <div className="form__row">
             <Input
               name="address"
-              label="תבותכ"
+              label="כתובת מגורים למשלוח"
               placeholder="רחוב ומספר בית או תא דואר"
               value={formik.values.address}
               onChange={formik.handleChange}
@@ -141,7 +142,7 @@ const AddAddressModal = () => {
           </div>
           <div className="form__row column">
             <StyledSelect
-              label="ריע"
+              label="עיר"
               name="city"
               placeholder={false}
               search
@@ -156,15 +157,16 @@ const AddAddressModal = () => {
             <Input
               name="zipCode"
               onChange={formik.handleChange}
-              label="דוקימ"
+              label="מיקוד"
               value={formik.values.zipCode}
               error={formik.errors.zipCode}
+              maxLength={7}
             />
           </div>
           <div className="form__row">
             <Textarea
               label="הוראות הגעה (אופציונלי)"
-              placeholder="הערות, העדפות, קוד לבניין ועוד"
+              placeholder="הערות, העדפות, קוד לבניין ועוד דברים שיעזרו לשליח"
               value={formik.values.arrivalInstructions}
               onChange={formik.handleChange}
               name="arrivalInstructions"

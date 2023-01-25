@@ -96,6 +96,7 @@ const AddAddressModalMobile = () => {
               onChange={formik.handleChange}
               value={formik.values.fullName}
               error={formik.errors.fullName}
+              autoFocus={true}
             />
           </div>
           <div className="form__row">
@@ -156,6 +157,7 @@ const AddAddressModalMobile = () => {
               label="דוקימ"
               value={formik.values.zipCode}
               error={formik.errors.zipCode}
+              maxLength={7}
             />
           </div>
           <div className="form__row">

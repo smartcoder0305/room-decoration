@@ -8,10 +8,14 @@ import {
   uploadMultipleImages,
   addImageFromSocial,
   } from '@api';
-  import {
-    imagesData,
-  } from "@atoms";
-  import { useRecoilState } from "recoil";
+import {
+  imagesData,
+} from "@atoms";
+import {
+  imageCountState
+} from "@atoms/priceCalc";
+
+import { useRecoilState, useRecoilValue} from "recoil";
 import "./style.css";
 
 const UploadOptions = ({
@@ -19,6 +23,7 @@ const UploadOptions = ({
   style
 }) => {
   const [images, setImages] = useRecoilState(imagesData);
+  const imagecount = useRecoilValue(imageCountState);
 
   const modal = useModal();
   const filestack = require("filestack-js");
@@ -39,6 +44,12 @@ const UploadOptions = ({
   }
 
   const uploadFromFile = (e) => {
+    console.log('@@@@@@@@@@@@@@@@@@@', imagecount + e.target.files.length)
+    if (imagecount + e.target.files.length > 20) {
+      alert("Image limit over. Max uploaded image 20");
+      modal('hide', 'uploadOptions');
+      return;
+    }
     modal('open', 'imageLoader');
 
     const formdata = new FormData();
@@ -70,48 +81,42 @@ const UploadOptions = ({
           .catch((err) => {});
       };
     } else {
-      // setloaderdis(true);
-
-      if (e.target.files.length > 20) {
-        alert("Image limit over. Max uploaded image 20");
-      } else {
-        // console.log(e.target);
-        let promises = [];
-        for (let i = 0; i < e.target.files.length; i++) {
-        
-          promises.push(new Promise((res, rej)=>{
-            let files = e.target.files[i];
-            let img = document.createElement("img");
-            img.src = URL.createObjectURL(files);
-              img.onload = function () {
-                formdata.append("imagewidth", img.width);
-                formdata.append("imageheight", img.height);
-                formdata.append("imageext", 0);
-                formdata.append("image", files);
-                formdata.append("uid", uid);
-                formdata.append("frametype", frametype);
-                formdata.append("source", '151122');
-                res();
-              };
-          }))       
-        }
-
-        //https://stickable-admin.yeshostings.com
-        Promise.all(promises).then(()=>uploadMultipleImages(formdata)
-          .then((res) => {
-            setTimeout(() => {
-              modal('hide', 'imageLoader')
-              hideUploadOptions();
-              history.push("/review-your-images");
-            }, 200);
-          }));
+      // console.log(e.target);
+      let promises = [];
+      for (let i = 0; i < e.target.files.length; i++) {
+      
+        promises.push(new Promise((res, rej)=>{
+          let files = e.target.files[i];
+          let img = document.createElement("img");
+          img.src = URL.createObjectURL(files);
+            img.onload = function () {
+              formdata.append("imagewidth", img.width);
+              formdata.append("imageheight", img.height);
+              formdata.append("imageext", 0);
+              formdata.append("image", files);
+              formdata.append("uid", uid);
+              formdata.append("frametype", frametype);
+              formdata.append("source", '151122');
+              res();
+            };
+        }))       
       }
+
+      //https://stickable-admin.yeshostings.com
+      Promise.all(promises).then(()=>uploadMultipleImages(formdata)
+        .then((res) => {
+          setTimeout(() => {
+            modal('hide', 'imageLoader')
+            hideUploadOptions();
+            history.push("/review-your-images");
+          }, 200);
+        }));
     }
   }; 
 
   const uploadOptions = {
     accept: ["image/*"],
-    maxFiles: 20,
+    maxFiles: 20 - imagecount,
     uploadInBackground: false,
     onUploadDone: async (res) => {
       res.uid = uid;
