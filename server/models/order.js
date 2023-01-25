@@ -12,6 +12,10 @@ const OrderSchema = new mongoose.Schema({
     uid: {
         type: String,
         required: true
+    },
+    shippingAddress: {
+        type: Object,
+        required: true
     }
 }, {
     timestamps: true

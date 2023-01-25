@@ -799,7 +799,7 @@ exports.createOrder = async (req, res) => {
     const oid = maxOid.oid ? maxOid.oid + 1 : 534410001;
 
     console.log('oid::::', oid);
-    const orderCreate = await orderAddModel.create({uid: req.body.uid, oid: oid});
+    const orderCreate = await orderAddModel.create({uid: req.body.uid, oid: oid, shippingAddress: req.body});
 
     console.log('orderCreate:::::::', orderCreate);
 
@@ -841,10 +841,19 @@ exports.createOrder = async (req, res) => {
 
     res.json(orderCreate);
   } catch (error) {
-    console.log('error:::::::::::::',error);
-    res.json({
-      success: "Something went wrong",
-      status: 400,
-    });
+    res.status(400).send('Verify Failed');
   }  
+}
+
+exports.getOrder = async (req, res) => {
+  try {
+    const order = await orderAddModel.find({oid: req.params.oid});
+    const images = await Uploadimg.find({uid: order.uid});
+    res.json({
+      order: order,
+      imageCount: images.length,
+    })
+  } catch (err) {
+    return res.status(400).send('Verify Failed');
+  }
 }

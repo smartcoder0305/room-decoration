@@ -53,6 +53,7 @@ const {
   getOrderCount,
   getUserCount,
   createOrder,
+  getOrder,
 } = require("../controller/usercontroller");
 const { authencate } = require("../middleware/middleware");
 const { addPages, getPages, getAllPages, getPageById, updatePageById, deletePageById, findPageByPageNumber } = require("../controller/page/pageController");
@@ -221,6 +222,7 @@ router.get("/user/getneworder/week", getNewOrderWeek);
 router.get("/user/getneworder/month", getNewOrderMonth);
 
 router.post("/user/createorder", createOrder);
+router.get("/user/getorder/:oid", getOrder);
 
 //payment
 router.post('/payment/getapisign', getApiSign);
