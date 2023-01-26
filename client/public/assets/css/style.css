@@ -10,6 +10,7 @@ html{
     scroll-behavior: smooth;
 }
 body{
+    touch-action: pan-y, pan-x;
     font-family: 'Rubik', sans-serif;
     text-align: right;
     height: 100vh;
