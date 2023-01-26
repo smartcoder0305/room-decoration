@@ -45,7 +45,7 @@ const UploadOptions = ({
 
   const uploadFromFile = (e) => {
     console.log('@@@@@@@@@@@@@@@@@@@', imagecount + e.target.files.length)
-    if (imagecount + e.target.files.length > 20) {
+    if (imagecount + e.target.files.length > 30) {
       alert("Image limit over. Max uploaded image 20");
       modal('hide', 'uploadOptions');
       return;
@@ -116,7 +116,7 @@ const UploadOptions = ({
 
   const uploadOptions = {
     accept: ["image/*"],
-    maxFiles: 20 - imagecount,
+    maxFiles: 30 - imagecount,
     uploadInBackground: false,
     onUploadDone: async (res) => {
       res.uid = uid;
