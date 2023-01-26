@@ -44,7 +44,7 @@ const UploadImage = () => {
     } else {
       console.log('####################', imagecount + e.target.files.length)
       if (imagecount + e.target.files.length > 30) {
-        alert("Image limit over. Max uploaded image 20");
+        alert("לא ניתן להעלות יותר מ30 תמונות");
         modal('hide', 'uploadOptions');
         return;
       }
