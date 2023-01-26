@@ -21,11 +21,10 @@ const ImageOptionsMobile = ({ isOpen, style, options }) => {
   return (
     <div className="image-options" style={{ ...style }}>
       <button className="image-options__item" onClick={() => handleOpenEditImage()} style={{color: "black", fontWeight: "700"}}>
-        הנומת רודיס <img src="/assets/file/images/edit_image.svg" alt="edit" />
+      עריכת תמונה <img src="/assets/file/images/edit_image.svg" alt="edit" />
       </button>
       <button className="image-options__item" onClick={() => handleOpenDeleteImage()} style={{color: "black", fontWeight: "700"}}>
-        הנומת תקיחמ
-        <img src="/assets/file/images/Delete_icon.svg" alt="delete" />
+      הסר תמונה <img src="/assets/file/images/Delete_icon.svg" alt="delete" />
       </button>
     </div>
   );

@@ -301,7 +301,7 @@ const ReviewImages = () => {
             </div>
           </div>
         )}
-        <div className="trx">
+        <div className="trx" style={ width < 767 ? {display: "flex", alignItems: "center", height: `calc(${height}px - 300px)`} : null}>
           <div
             className={cn("my-album", { single: images.length <= 1 })}
             style={{
@@ -318,13 +318,13 @@ const ReviewImages = () => {
             ></div>
           </div>
 
-          {width <= 767 && (
+          {/* {width <= 767 && (
             <div className="additional-info-mobile">
               <img src="/assets/file/images/red_check.svg" alt="check" />
               <p>כל התמונות עלו בהצלחה</p>
               <p>תוודאו שהכל נראה טוב ונמשיך</p>
             </div>
-          )}
+          )} */}
         </div>
       </div>
 

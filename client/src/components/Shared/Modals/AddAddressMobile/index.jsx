@@ -150,6 +150,7 @@ const AddAddressModalMobile = () => {
                 (itm) => itm.value === formik.values.city
               )}
               error={formik.errors.city}
+              menuPlacement="top"
             />
             <Input
               name="zipCode"

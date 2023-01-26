@@ -70,7 +70,8 @@ const PaymentSuccess = () => {
 
   return (
     <>
-      <div className="container">
+      {/* <HeaderEle /> */}
+      <div className="container" style={{marginTop: "60px"}}>
         <div className="row">
           <div className="col-md-12">
             <div className="success_img">
@@ -88,15 +89,16 @@ const PaymentSuccess = () => {
         <div className="row justify-content-center">
           <div className="col-md-5">
             <div className="success_des">
-              <div className="date_time">
-                {convertToDate()}:ךיראת
+              <div className="date_time" style={{direction: "rtl"}}>
+              {convertToDate()}&nbsp;
+              :תאריך
               </div>
 
               <div className="success_card_txt">
                 <p>
                 סה”כ:
                 ₪{(orderDeteils?.imageCount || 0) * 45}</p>
-                <p>מס‘ הזמנה:
+                <p>מס‘ הזמנה:&nbsp;
                   {orderid} </p>
               </div>
               <div className="success_other">
@@ -104,7 +106,7 @@ const PaymentSuccess = () => {
                   בחרתם {orderDeteils?.imageCount} תמונות ואנחנו כבר מתחילים להכין את החבילה
                   למשלוח{" "}
                 </p>
-                <p>{orderDeteils?.shippingAddress?.email} :בעוד מספר דקות תקבלו גם אישור אל </p>
+                <p style={{direction: "ltr"}}>{orderDeteils?.order?.shippingAddress?.email} :בעוד מספר דקות תקבלו גם אישור אל </p>
               </div>
             </div>
           </div>
