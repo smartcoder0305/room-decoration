@@ -2,6 +2,7 @@
 
 
 body {
+    touch-action: pan-y, pan-x;
     font-family: Rubik;
     font-family: 'Assistant', sans-serif;
     overflow-x: hidden !important;
