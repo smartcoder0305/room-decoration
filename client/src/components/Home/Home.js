@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import SliderHome from "../Partials/SliderHome";
@@ -9,10 +9,12 @@ import "./home.css";
 
 const Home = ({existData}) => {
   const [skeleton, setSkeleton] = useState(true);
+  const videoRef = useRef();
   const { height, width } = useWindowDimensions();
   useEffect(() => {
     setTimeout(() => {
       setSkeleton(false);
+      videoRef.current?.play();
     }, 1000);
   }, []);
 
@@ -226,10 +228,11 @@ const Home = ({existData}) => {
           src="/assets/file/videos/MobileHomepageVideo.mp4" alt="" 
           style={{width: "calc(100vw - 20px)", borderRadius: "8px", margin: "auto", display: "block"}} 
           loop
-          playsinline
-          autoplay
+          playsInline
+          // autoPlay
           muted
           id="mobile_home_video"
+          ref={videoRef}
           />
       </div>
        
