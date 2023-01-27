@@ -227,8 +227,10 @@ const Home = ({existData}) => {
           style={{width: "calc(100vw - 20px)", borderRadius: "8px", margin: "auto", display: "block"}} 
           loop
           playsinline
-          autoPlay={"autoplay"}
-          muted/>
+          autoplay
+          muted
+          id="mobile_home_video"
+          />
       </div>
        
         <div className="additional-block">
