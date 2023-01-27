@@ -1,0 +1,58 @@
+.whatsapp_mobile {
+    width: 100vw;
+    height: 100vh;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 18px 7px rgba(0, 0, 0, 0.15);
+    direction: rtl;
+    position: relative;
+}
+
+.whatsapp_close {
+    position: absolute;
+    padding-right: 35px;
+    height: 36px;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.whatsapp_mobile_header {
+    text-align: center;
+    line-height: 43px;
+    font-size: 36px;
+    padding-top: 31px;
+    font-weight: 400;
+}
+
+.whatsapp_mobile_content {
+    font-size: 16px;
+    font-weight: 400;
+    padding-left: 52px;
+    padding-right: 53px;
+    padding-top: 28px;
+    line-height: 19px;
+}
+
+.whatsapp_mobile_footer {
+    padding-right: 31px;
+    padding-right: 36px;
+    margin-top: 34px;
+}
+
+.whatsapp_mobile_footer .whatsapp_mobile_link {
+    display: inline-block;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 5px rgba(204, 204, 204, 0.5);
+    border-radius: 8px;
+    width: 209px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #212121;
+    font-size: 15px;
+}
+
+.whatsapp_mobile_footer .whatsapp_mobile_link img {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+}

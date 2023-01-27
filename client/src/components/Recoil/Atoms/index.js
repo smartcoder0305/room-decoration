@@ -52,6 +52,10 @@ export const secondaryModals = atom({
         addAddress: { visible: false, data: {}},
         addAddressMobile: { visible: false, data: {}},
         errorCart: {visible: false,},
+        aboutUs: { visible: false },
+        aboutUsMobile: {visible: false },
+        whatsApp: { visible: false },
+        whatsAppMobile: {visible: false },
     }
 })
 export const imagesData = atom({
@@ -66,4 +70,13 @@ export const sharedFunction = atom({
 export const popUpImage = atom({
     key: 'imageOnPopup',
     default: undefined,
+})
+
+// Accessibility statement  =>  AS
+// Privacy statement        =>  PS
+// Common questions         =>  CQ
+// Terms of Use             =>  TU
+export const aboutUs = atom({
+    key: 'aboutUs',
+    default: '',
 })

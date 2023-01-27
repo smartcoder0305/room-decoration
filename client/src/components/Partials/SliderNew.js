@@ -28,20 +28,6 @@ const SliderNew = () => {
   const [reviews, setReviews] = useState([]);
   const { height, width } = useWindowDimensions();
   const getAllReviews = async () => {
-    // try {
-    //   const config = {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   };
-    //   const response = await axios.get(
-    //     `${BASE_URL}/admin/setting/getreview`,
-    //     config
-    //   );
-    //   if (response.data.status === 200) {
-    //     setReviews(response.data.dataRes);
-    //   }
-    // } catch (error) {}
     setReviews([review, review, review, review, review, review])
   };
 
@@ -49,18 +35,8 @@ const SliderNew = () => {
     getAllReviews();
   }, []);
 
-  // const moveSlideTo = useCallback((to) => ({
-  //   'prev': () => sliderRef.current.swiper.slidePrev(),
-  //   'next': () => sliderRef.current.swiper.slideNext(),
-  // }[to]), [])
   return (
     <div style={{height: `${width / 4 + 200}px`}}>
-      {/* <div className="slider-section--titles">
-        <h2 className="slider-section--title">דברים שהלקוחות שלנו אומרים</h2>
-        <p className="slider-section--description">
-          הנה כמה ביקורות שאספנו מהזמנות של הזמן האחרון
-        </p>
-      </div> */}
       {reviews.length > 0 ? (
         <Swiper
           onInit={(swiper) => {

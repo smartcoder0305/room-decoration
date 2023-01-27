@@ -135,7 +135,7 @@ function App() {
           <Route path="/termsofUse" component={Window1} exact/>
           <Route path="/privacypolicy" component={Window2} exact/>
           <Route path="/commonquestions" component={Window3} exact/>
-          <Route path="/privacy-policy" exact>
+          <Route path="/v-policy" exact>
             {/* <Header /> */}
             <PrivacyPolicy />
             <Footer />

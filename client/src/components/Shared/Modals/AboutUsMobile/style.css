@@ -1,0 +1,53 @@
+.aboutus_mobile {
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 0.15);
+  }
+  
+  .aboutus_mobile_header {
+      text-align: center;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      box-shadow: 0px 4px 10px 4px rgba(204, 204, 204, 0.1);
+      border-radius: 10px 10px 0px 0px;
+      height: 60px;
+      vertical-align: middle;
+      line-height: 36px;
+  }
+  
+  .aboutus_mobile_content {
+      height: calc(100vh - 163px);
+      z-index: 1;
+      overflow: auto;
+      padding-left: 52px;
+      padding-right: 55px;
+      padding-top: 26px;
+      font-size: 14px;
+      font-weight: 400;
+  }
+  
+  .aboutus_mobile_footer {
+      height: 103px;
+      box-shadow: 0px -4px 6px 1px rgba(204, 204, 204, 0.1);
+      border-radius: 10px 10px 0px 0px;
+      text-align: center;
+      line-height: 103px;
+      z-index: 2;
+  }
+  
+  .aboutus_mobile_footer a {
+      cursor: pointer;
+      display: inline-block;
+      height: 45px;
+      width: 175px;
+      line-height: 45px;
+      background: #FFFFFF;
+      border: 1px solid #F2F2F2;
+      border-radius: 10px;
+      color: #FF1F84 !important;
+      font-size: 15px;
+      font-weight: 500;
+  }

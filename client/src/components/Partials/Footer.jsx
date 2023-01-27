@@ -2,11 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import useWindowDimensions from "@helpers/hooks/windowDemensions";
+import { useSecondModal } from "@helpers/hooks/useSecondModal";
 import "./footer.css";
+import { Grid } from "swiper";
 
 const Footer = ({existData}) => {
   const [reviewData, setReviewData] = useState([]);
   const { width } = useWindowDimensions();
+  const modal = useSecondModal();
 
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const getPages = async () => {
@@ -28,6 +31,14 @@ const Footer = ({existData}) => {
     getPages();
   }, []);
 
+  const handleAboutUsModal = (type) => {
+    if (width > 768) {
+      modal('open', 'aboutUs')
+    } else {
+      modal('open', 'aboutUsMobile');
+    }
+  }
+
   return (
     <React.Fragment>
       <footer className="site-footer">
@@ -36,7 +47,7 @@ const Footer = ({existData}) => {
             <div className="footer-logo">
               <img src="/assets/images/stk_logo.svg" alt="" />
             </div>
-            <div className="footer-column">
+            <div className="footer-column" style={{order: "1"}}>
               <div className="foo-content">
                 <div className="foo-wrap">
                   <h5>יש לכם שאלה? מעוניינים לדבר?</h5>
@@ -44,13 +55,20 @@ const Footer = ({existData}) => {
                 </div>
                 <img src="/assets/images/wa.png" alt="" />
                 <div className="ex-wrap">
-                  <NavLink
-                    to="https://api.whatsapp.com/send?phone=524321272&text=%D7%94%D7%99%D7%99%20%D7%91%D7%9C%D7%A0%D7%93%D7%A1%20%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%A9%D7%90%D7%95%D7%9C%20%D7%A9%D7%90%D7%9C%D7%94"
+                  <a
+                    onClick={() => {
+                      if (width > 767) {
+                        modal('open', 'whatsApp');
+                      } else {
+                        modal('open', 'whatsAppMobile');
+                      }
+                    }}
                     className="link"
                     title="leads to a Q&A screen"
+                    style={{color: "white"}}
                   >
                     דברו איתנו
-                  </NavLink>
+                  </a>
 
                   {/* <NavLink
                     to="#"
@@ -61,7 +79,21 @@ const Footer = ({existData}) => {
                 </div>
               </div>
             </div>
-            <div className="footer-column">
+            {width <= 768 && 
+            <div
+              className="footer-column" 
+              style={{order: "3", marginTop: "-20px"}}
+              onClick={() => {
+                if (width > 767) {
+                  modal('open', 'whatsApp');
+                } else {
+                  modal('open', 'whatsAppMobile');
+                }
+              }}>
+                <h6 style={{lineHeight: "31px"}}>דברו איתנו &nbsp;<img src="/assets/file/images/whatsapp_black.png" style={{width: "30px", height: "30px"}} /></h6>
+            </div>
+            }
+            <div className="footer-column" style={{order: "2", display: width <= 768 ? "grid" : null}}>
               <div
                 className="foo-menu-wrap xp"
                 style={{ marginBottom: "20px" }}
@@ -79,74 +111,50 @@ const Footer = ({existData}) => {
                       </li>
                     );
                   })}
-
-                  {/* <li>
-                    <NavLink to="/faq" title="leads to the page in instagram">
-                      שאלות נפוצות
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/termsofUse" title="leads to the page in facebook">
-                      הצהרת נגישות
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/privacypolicy" title="leads to the page in facebook">
-                      מדיניות פרטיות
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/commonquestions" title="leads to the page in facebook">
-                      תנאי שימוש
-                    </NavLink>
-                  </li> */}
                 </ul>
               </div>
-              <div className="foo-menu-wrap">
+              <div className="foo-menu-wrap" style={{order: width <= 768 ? 2 : 1 }}>
                 <h6>עקבו אחרינו</h6>
                 <ul className="footer-ul-li">
-                  <li>
-                    <NavLink to="#" title="leads to the page in instagram">
-                      אינסטגרם
-                    </NavLink>
-                  </li>
                   <li>
                     <NavLink to="#" title="leads to the page in facebook">
                       פייסבוק
                     </NavLink>
                   </li>
+                  <li>
+                    <NavLink to="#" title="leads to the page in instagram">
+                      אינסטגרם
+                    </NavLink>
+                  </li>
                 </ul>
               </div>
-              <div className="foo-menu-wrap">
+              <div className="foo-menu-wrap" style={{order: width <= 768 ? 1 : 2 }}>
                 <h6>אודותינו</h6>
-                <ul className="desk-footer-link">
-                  {/* <li>
-                    <NavLink to="#" title="leads to a Q&A screen">
-                      שאלות נפוצות11
+                <ul className="footer-ul-li">
+                  <li>
+                    <NavLink to="#" onClick={() => handleAboutUsModal('AS')}>
+                    הצהרת נגישות  
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="#" title="leads to a floating screen 1">
-                      הצהרת נגישות
+                    <NavLink to="#" onClick={() => handleAboutUsModal('PS')}>
+                    הצהרת פרטיות
                     </NavLink>
-                  </li> */}
-
-                  {reviewData.map((data, index) => {
-                    return (
-                      <li key={index}>
-                        <NavLink
-                          to={`/page/${data._id}`}
-                          title="leads to the page in facebook"
-                        >
-                          {data.pname}
-                        </NavLink>
-                      </li>
-                    );
-                  })}
+                  </li>
+                  <li>
+                    <NavLink to="#" onClick={() => handleAboutUsModal('CQ')}>
+                    שאלות נפוצות 
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="#" onClick={() => handleAboutUsModal('TU')}>
+                    תנאי שימוש 
+                    </NavLink>
+                  </li>
                 </ul>
               </div>
             </div>
-            <div className="footer-column">
+            <div className="footer-column" style={{order: "3"}}>
               <h6>אנחנו עובדים עם</h6>
               <ul className="payment">
                 <li>
@@ -170,7 +178,7 @@ const Footer = ({existData}) => {
         </div>
       </footer>
       <section className="footer-btm">
-        <p> &copy; Blends {new Date().getFullYear()}</p>
+        <p>Copyright Blends 2021-{new Date().getFullYear()} &copy;</p>
         <div className="btm-wrap">
           <NavLink
             to="/privacy-policy"

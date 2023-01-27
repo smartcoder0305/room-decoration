@@ -136,9 +136,7 @@ section::before, footer:before{
 .about{
     padding: 1px 0 65px;
 }
-.about .container{
-    background: rgba(248,192,215,0.15);
-}
+
 .banner{
     padding: 110px 0 30px;
 }
@@ -247,7 +245,7 @@ section::before, footer:before{
 }
 .slider-section--wrapper {
     background-color: #F3F6F4;
-    padding: 38px 0 25px;
+    padding: 33px 0 25px;
 }
 .homepage-container {
     max-width: 1300px;

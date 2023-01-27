@@ -11,6 +11,10 @@ import AddAddressModalMobile from "@modals/AddAddressMobile";
 import AddCardForm from '@modals/AddCardForm';
 import AddCardFormMobile from '@modals/AddCardFormMobile';
 import ErrorCart from '@modals/ErrorCart';
+import AboutUs from '@modals/AboutUs';
+import AboutUsMobile from '@modals/AboutUsMobile';
+import WhatsApp from '@modals/WhatsApp';
+import WhatsAppMobile from '@modals/WhatsAppMobile';
 import './style.css';
 
 const SecondaryModals = () => {
@@ -36,6 +40,10 @@ const SecondaryModals = () => {
         selectCardMobile: { visible: false },
         addAddressMobile: { visible: false },
         errorCart: {visible: false},
+        aboutUs: {visible: false},
+        aboutUsMobile: {visible: false},
+        whatsApp: {visible: false},
+        whatsAppMobile: {visible: false},
       }));
       setOverlay(false);
     }
@@ -172,6 +180,46 @@ const SecondaryModals = () => {
         unmountOnExit
       >
         <AddAddressModalMobile
+          handleCloseModal={handleCloseModal}
+        />
+      </CSSTransition>
+      <CSSTransition
+        in={modals.aboutUs.visible}
+        timeout={duration}
+        classNames="css-transition"
+        unmountOnExit
+      >
+        <AboutUs
+          handleCloseModal={handleCloseModal}
+        />
+      </CSSTransition>
+      <CSSTransition
+        in={modals.aboutUsMobile.visible}
+        timeout={duration}
+        classNames="css-transition"
+        unmountOnExit
+      >
+        <AboutUsMobile
+          handleCloseModal={handleCloseModal}
+        />
+      </CSSTransition>
+      <CSSTransition
+        in={modals.whatsApp.visible}
+        timeout={duration}
+        classNames="css-transition"
+        unmountOnExit
+      >
+        <WhatsApp
+          handleCloseModal={handleCloseModal}
+        />
+      </CSSTransition>
+      <CSSTransition
+        in={modals.whatsAppMobile.visible}
+        timeout={duration}
+        classNames="css-transition"
+        unmountOnExit
+      >
+        <WhatsAppMobile
           handleCloseModal={handleCloseModal}
         />
       </CSSTransition>

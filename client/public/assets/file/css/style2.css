@@ -3216,12 +3216,21 @@ footer:before {
     .mobile-banner {
         height: 100%;
         padding-top: 48px;
-        padding-bottom: 60px;
+        padding-bottom: 2px;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
         text-align: center;
         align-items: center;
+        position: relative;
+    }
+
+    .mobile-banner img {
+        position: absolute;
+        height: calc((100vh - 300px) / 2);
+        width: 100vw;
+        z-index: 1;
+        bottom: -1px;
     }
     .mobile-banner h1 {
         font-size: 30px;
@@ -3245,6 +3254,8 @@ footer:before {
         max-width: 300px;
         /* margin: 0 auto; */
         text-align: center;
+        z-index: 2;
+        color: #304036;
     }
     .mobile-banner p {
         font-weight: 400;
