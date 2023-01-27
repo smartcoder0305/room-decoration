@@ -117,14 +117,14 @@ const Footer = ({existData}) => {
                 <h6>עקבו אחרינו</h6>
                 <ul className="footer-ul-li">
                   <li>
-                    <NavLink to="#" title="leads to the page in facebook">
+                    <a href="https://www.facebook.com/profile.php?id=100086212847385">
                       פייסבוק
-                    </NavLink>
+                    </a>
                   </li>
                   <li>
-                    <NavLink to="#" title="leads to the page in instagram">
+                    <a href="https://www.instagram.com/blends_il/">
                       אינסטגרם
-                    </NavLink>
+                    </a>
                   </li>
                 </ul>
               </div>
