@@ -226,6 +226,7 @@ const Home = ({existData}) => {
           src="/assets/file/videos/MobileHomepageVideo.mp4" alt="" 
           style={{width: "calc(100vw - 20px)", borderRadius: "8px", margin: "auto", display: "block"}} 
           loop
+          playsinline
           autoPlay={"autoplay"}
           muted/>
       </div>
