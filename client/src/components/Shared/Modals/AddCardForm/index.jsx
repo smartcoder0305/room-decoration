@@ -153,7 +153,7 @@ const AddCardForm = () => {
                 type="tel"
                 alwaysShowMask={false}
                 onChange={(e) => {
-                  const number = e.target.value.replace(/\s/g, '').replace(/_/g, '');
+                  let number = e.target.value.replace(/\s/g, '').replace(/_/g, '');
                   if (number.startsWith('34') || number.startsWith('37') || number.startsWith('123')) {
                     setCardErr({...cardErr, cardNumberErr: true});
                   } else {
@@ -162,15 +162,18 @@ const AddCardForm = () => {
                   if (number.length > 8) {
                     if (cardErr.cardNumberErr) {
                       e.target.value = number.substr(0, 8);
+                      number = number.substr(0, 8);
                     }
                   }
-                  console.log(e.target.value)
+                  const joy = number.match(/.{1,4}/g);
+                  if (joy) e.target.value = joy.join(' ');
+                  console.log('target value', e.target.value);
                   formik.handleChange(e)}
                 }
                 placeholder=""
                 value={formik.values.cardNumber}
                 autoFocus={true}
-                maxLength={16}
+                maxLength={19}
               />
             </div>
             <span>מספר כרטיס</span>

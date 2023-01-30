@@ -169,14 +169,17 @@ const AddCardFormMobile = () => {
                   if (number.length > 8) {
                     if (cardErr.cardNumberErr) {
                       e.target.value = number.substr(0, 8);
+                      number = number.substr(0, 8);
                     }
                   }
-                  console.log(e.target.value)
+                  const joy = number.match(/.{1,4}/g);
+                  if (joy) e.target.value = joy.join(' ');
+                  console.log('target value', e.target.value);
                   formik.handleChange(e)}
                 }
                 placeholder="מספר כרטיס"
                 value={formik.values.cardNumber}
-                maxLength={16}
+                maxLength={19}
               />
             </div>
           </div>

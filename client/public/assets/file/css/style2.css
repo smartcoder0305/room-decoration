@@ -978,6 +978,8 @@ button.checkout-btn {
     border-radius: 5px;
     /*width: 212.9px;*/
     height: 50px;
+    /* border-color: #FF007C; */
+    outline-color: #FF007C;
 }
 
 .cart_item tr td {
