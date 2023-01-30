@@ -8,6 +8,7 @@ import Coupon from "./Coupon";
 import "./home.css";
 
 const Home = ({existData}) => {
+  console.log('existsData-----------------------', existData)
   const [skeleton, setSkeleton] = useState(true);
   const videoRef = useRef();
   const { height, width } = useWindowDimensions();
@@ -166,9 +167,16 @@ const Home = ({existData}) => {
             <SliderHome />
           </div>
           <div style={{textAlign: "center", marginTop: "25px", marginBottom: "5px"}}>
-            <NavLink to="/upload-your-image" className="site-btn gg1" style={{backgroundColor: "#60806B"}}>
-              בואו נתחיל עם תמונות
+          {existData ? (
+            <NavLink to="/review-your-images" className="site-btn gg1" style={{backgroundColor: "#60806B"}}>
+              בואו נמשיך
             </NavLink>
+            ) : (
+              <NavLink to="/upload-your-image" className="site-btn gg1" style={{backgroundColor: "#60806B"}}>
+                בואו נתחיל עם תמונות
+              </NavLink>
+            )
+          }
           </div>
         </div>
       </section>
@@ -259,7 +267,7 @@ const Home = ({existData}) => {
   );
   const renderHomePage = useCallback(() => {
     return width >= 767 ? renderDesktop() : renderMobile();
-  }, [width]);
+  }, [width, existData]);
 
   return <>{skeleton ? <SkeletonLoader /> : renderHomePage()}</>;
 };

@@ -115,7 +115,7 @@ function App() {
       console.log(data);
       if (data.data.length) setExistData(true);
     });
-  })
+  }, [])
 
   return (
     <RecoilRoot>
