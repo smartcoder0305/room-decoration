@@ -66,7 +66,7 @@ const AddCardForm = () => {
     onSubmit: async (values) => {
       setLoading(true);
       console.log('values------------------------', values);
-      const numberValidation = valid.number(values.cardNumber.replace(/s/g, '')).isPotentiallyValid && !!values.cardNumber;
+      const numberValidation = valid.number(values.cardNumber.replace(/s/g, '').replace(/_/g, '')).isPotentiallyValid && !!values.cardNumber;
       const holderValidation = valid.cardholderName(values.cardHolder).isPotentiallyValid && !!values.cardHolder;
       const expMonValidation = valid.expirationMonth(values.expiriedMonth).isPotentiallyValid && !!values.expiriedMonth;
       const expYearValidation = valid.expirationYear(values.expiriedYear.toString()).isPotentiallyValid && !!values.expiriedYear.toString();
