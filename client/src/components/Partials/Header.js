@@ -29,7 +29,8 @@ export default function Header() {
   };
 
   const handelHeaderLinkToHome = () => {
-    localStorage.clear();
+    // localStorage.clear();
+    window.location.href = '/';
   };
 
   return (
@@ -50,7 +51,7 @@ export default function Header() {
                 </div>
 
                 <div className="col-8 col-md-4 text-center text-md-center order-md-2">
-                  <NavLink onClick={()=>handelHeaderLinkToHome()} to="/">
+                  <NavLink onClick={()=>handelHeaderLinkToHome()} to='/'>
                     <img src="/assets/images/betaSVG.svg" alt="" style={{marginTop: "5px"}}/>
                     &nbsp;&nbsp;
                     <img src="/assets/images/stk_logo.svg" alt="" />

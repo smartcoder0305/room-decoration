@@ -110,10 +110,14 @@ function App() {
   // // window.onbeforeunload = areYouSure;
   const [existData, setExistData] = useState(false);
 
+  console.log('refresh-------------------------fellow')
   useEffect(() => {
+    console.log('refresh-------------------------useEffect')
     getUserImages().then(({data}) => {
+      setExistData(false);
       console.log(data);
       if (data.data.length) setExistData(true);
+      else setExistData(false);
     });
   }, [])
 

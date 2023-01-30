@@ -32,7 +32,8 @@ const UploadOptions = ({
   const filestack_client = filestack.init(FILESTACK_APIKEY); // Client
   let uid;
   const userId = localStorage.getItem('uniqueUserId');
-  if (typeof userId === 'object') { 
+  console.log('userid__________', userId);
+  if (!userId) { 
     uid = uniqid();
     localStorage.setItem("uniqueUserId", uid);
   } else {
