@@ -125,7 +125,7 @@ const UploadImage = () => {
               <button>
                 <img src="/assets/file/images/plus.svg" alt="plus" />
               </button>
-              <h2>גררו את התמונות לכאן</h2>
+              <h2>בואו נתחיל עם כמה תמונות</h2>
               <p>הזמנה ממוצעת מכילה כ8 תמונות</p>
             </div>
           </div>
