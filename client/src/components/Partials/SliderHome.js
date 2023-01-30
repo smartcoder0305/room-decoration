@@ -96,6 +96,7 @@ const SliderHome = () => {
                 position:"absolute", 
                 top: "10px", 
                 width: "145px",
+                left: "37.5px",
                 zIndex: "50",
 								display: width <= 768 ? "none" : "",
 							}
@@ -121,7 +122,7 @@ const SliderHome = () => {
                 height: "303px", 
                 position:"absolute", 
                 top: "10px",
-								right: "0px",
+								right: "37.5px",
                 width: "145px",
                 zIndex: "50",
 								display: width <= 768 ? "none" : "",

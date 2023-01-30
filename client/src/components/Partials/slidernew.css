@@ -110,15 +110,15 @@
   height: 70px;
   border-radius: 100%;
   position: absolute;
-  top: 45%;
+  top: 50%;
   transform: translateY(-50%);
   z-index: 100;
 }
 .next-slide {
-    right: 0;
+    right: 0px;
 }
 .prev-slide {
-    left: 0;
+    left: 0px;
 }
 @media screen and (max-width: 480px) {
   .swiper-slide {
@@ -169,13 +169,13 @@
   z-index: 50;
 }
 
-.mySwiperHome .prev-slide {
+/* .mySwiperHome .prev-slide {
   left: 35px;
-}
+} */
 
-.mySwiperHome .next-slide {
+/* .mySwiperHome .next-slide {
   right: 35px;
-}
+} */
 
 @media screen and (max-width: 768px) {
 
