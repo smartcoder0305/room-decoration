@@ -156,7 +156,7 @@ const AddCardFormMobile = () => {
             <div style={cardErr.cardNumberErr ? {border: "1px solid red", borderRadius: "6px"} : {}}>
               <Input
                 name="cardNumber"
-                mask="9999 9999 9999 9999"
+                mask=""
                 type="tel"
                 alwaysShowMask={false}
                 onChange={(e) => {
@@ -176,6 +176,7 @@ const AddCardFormMobile = () => {
                 }
                 placeholder="מספר כרטיס"
                 value={formik.values.cardNumber}
+                maxLength={16}
               />
             </div>
           </div>

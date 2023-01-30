@@ -138,7 +138,7 @@ const AddCardForm = () => {
     <form className="add-new-card-form" onSubmit={formik.handleSubmit}>
       <div className="add-new-card-form__header">הקלד את פרטי הכרטיס שלך</div>
       <div className="add-new-card-form__content">
-        <div className="form__description rtl">
+        <div className="form__description rtl" style={{fontSize: "14px"}}>
           בלנדס מאשרת את כל סוגי שיטות התשלום וכרטיסי האשראי הגדולים:
           <div className="card__examples" style={{paddingLeft: "30px", paddingTop: "15px"}}>
             <img src="/assets/file/images/card-brands.PNG" width="100%" />
@@ -149,7 +149,7 @@ const AddCardForm = () => {
             <div style={cardErr.cardNumberErr ? {border: "1px solid red", borderRadius: "6px"} : {}}>
               <Input
                 name="cardNumber"
-                mask="9999 9999 9999 9999"
+                mask=""
                 type="tel"
                 alwaysShowMask={false}
                 onChange={(e) => {
@@ -167,9 +167,10 @@ const AddCardForm = () => {
                   console.log(e.target.value)
                   formik.handleChange(e)}
                 }
-                placeholder="0000 0000 0000 0000"
+                placeholder=""
                 value={formik.values.cardNumber}
                 autoFocus={true}
+                maxLength={16}
               />
             </div>
             <span>מספר כרטיס</span>
