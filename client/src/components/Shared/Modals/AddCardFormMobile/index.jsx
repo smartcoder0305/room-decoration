@@ -149,6 +149,7 @@ const AddCardFormMobile = () => {
                 value={formik.values.cardHolder}
                 placeholder="שם בעל הכרטיס"
                 autoFocus={true}
+                style={{direction: "rtl"}}
               /> 
             </div>
           </div>
@@ -191,9 +192,10 @@ const AddCardFormMobile = () => {
                   name="cvv"
                   onChange={formik.handleChange}
                   value={formik.values.cvv}
-                  mask="999"
+                  mask=""
                   type="tel"
                   placeholder="קוד בטחון (CVV)"
+                  maxLength={3}
                 />
               </div>
             </div>

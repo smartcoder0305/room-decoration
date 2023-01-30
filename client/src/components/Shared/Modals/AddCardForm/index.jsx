@@ -184,6 +184,7 @@ const AddCardForm = () => {
                 name="cardHolder"
                 onChange={formik.handleChange}
                 value={formik.values.cardHolder}
+                style={{direction: "rtl"}}
               />
             </div>
             <span>שם בעל הכרטיס</span>
@@ -213,8 +214,8 @@ const AddCardForm = () => {
                 name="cvv"
                 onChange={formik.handleChange}
                 value={formik.values.cvv}
-                mask="999"
-                type="tel"
+                mask=""
+                maxLength={3}
               />
             </div>
             <span>קוד בטחון (CVV)</span>
