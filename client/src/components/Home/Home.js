@@ -226,7 +226,7 @@ const Home = ({existData}) => {
       </section>
       <section id="offer">
       <div className="content">
-      <h2>מסגרות שפשוט נדבקות לקיר</h2>
+      <h2 style={{maxWidth: "90%"}}>מסגרות שפשוט נדבקות לקיר</h2>
       <br></br>
         <p>
             זה פשוט ומהיר הדפיסו תמונות על היקרים
