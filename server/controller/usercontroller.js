@@ -832,7 +832,7 @@ const sendSMS = async (smsInfo) => {
   try {
     const data = JSON.stringify({
       "Data": {
-        "Message": `נקלטה הזמנה חדשה: ${smsInfo.name}, ${smsInfo.price}, ${smsInfo.dateAndTime}, ${smsInfo.oid}, ${smsInfo.tof}, ${smsInfo.nof}`,
+        "Message": `נקלטה הזמנה חדשה: ${smsInfo.name}, ₪${smsInfo.price}, ${smsInfo.dateAndTime}, ${smsInfo.oid}, ${smsInfo.tof}, ${smsInfo.nof}`,
         "Recipients": [
           {
             "Phone": SMS_ADMIN_NUMBER
@@ -890,7 +890,7 @@ exports.createOrder = async (req, res) => {
 (6) Postal Code : ${req.body.zipCode}
 (7) Notes : ${req.body.arrivalInstructions}
 (8) Total number of frames : ${images.length}
-(9) Date and time of order : ${moment(new Date()).format("MM/DD/YYYY")}
+(9) Date and time of order : ${moment(new Date()).format("MM/DD/YYYY HH:mm:ss")}
 (10) Order ID : ${oid}`;
     
     console.log('orderText:::::::::', orderText);
@@ -898,7 +898,7 @@ exports.createOrder = async (req, res) => {
     await sendSMS({
       name: req.body.fullName,
       price: images.length * 45,
-      dateAndTime: moment(new Date()).format("MM/DD/YYYY"),
+      dateAndTime: moment(new Date()).format("MM/DD/YYYY HH:mm:ss"),
       oid: oid,
       tof: images.length,
       nof: frameName,
