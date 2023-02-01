@@ -25,7 +25,11 @@ const Input = (props) => {
   return (
     <div {...props} style={{position: "relative"}}>
       {props.label && (
-          <label className={classNames("blends-input-label2", {'blends-input-label2-filled': isActive})} htmlFor={props.name} style={{ right: !props.icon ? "16px" : "55px"}}>
+          <label 
+            className={classNames("blends-input-label2", {'blends-input-label2-filled': isActive})} 
+            htmlFor={props.name} 
+            style={{ right: !props.icon ? "16px" : props.name === 'zipCode'? '57px' : "68px"}}
+          >
             {(inputRef.current?.value || isActive) && props.label}
           </label>
         )}
@@ -41,12 +45,12 @@ const Input = (props) => {
             <span className="blends-input2-icon">
               {props.icon}
             </span>
-            <span className={classNames('blends-input2-divider', {'blends-input-divider-active': inputRef.current?.value})}></span>
+            <span className={classNames('blends-input2-divider', {'blends-input-divider-filled': inputRef.current?.value})}></span>
           </>
         }
         <input 
           id={props.name} 
-          className="blends-input2" 
+          className={classNames('blends-input2', {'blends-input2-center': props.name === 'zipCode'})} 
           style={{maxWidth: "calc(100% - 50px)"}} 
           placeholder={props.placeholder} 
           ref={inputRef} 

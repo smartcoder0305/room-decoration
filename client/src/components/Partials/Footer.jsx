@@ -277,11 +277,11 @@ const Footer = ({existData}) => {
            
           </p>
           {existData ? (
-            <NavLink to="/review-your-images" className="site-btn">
+            <NavLink to="/review-your-images" className="site-btn" style={{fontWeight: "700"}}>
               בואו נמשיך
             </NavLink>
             ) : (
-            <NavLink to="/upload-your-image" className="site-btn">
+            <NavLink to="/upload-your-image" className="site-btn" style={{fontWeight: "700"}}>
               בואו נתחיל
             </NavLink>
             )

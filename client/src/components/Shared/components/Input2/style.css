@@ -11,13 +11,14 @@
 }
 .blends-input2 {
   height: 50px;
-  padding-top: 6px;
+  padding-top: 8px;
   padding-bottom: 8px;
   outline: none;
   line-height: 36px;
   border: 0px !important;
-  padding-right: 16px;
+  padding-right: 15px;
   direction: rtl;
+  font-size: 14px;
 }
 
 .blends-input-label2 {
@@ -26,7 +27,7 @@
   line-height: 36px;
   font-weight: 400;
   color: #C8C8C8;
-  top: -25px;
+  top: -6px;
 }
 
 .blends-input2-divider {
@@ -41,8 +42,8 @@
 .blends-input2-icon {
   display: inline-block;
   line-height: 50px;
-  margin-left: 17px;
-  margin-right: 17px;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 
 .blends-input2::placeholder {
@@ -68,10 +69,6 @@
   border-color: #00FFDE !important;
 }
 
-.blends-input-active .blends-input2-divider {
-  border-color: #00FFDE;
-}
-
 .blends-input-active svg path {
   stroke: #00FFDE;
 }
@@ -81,10 +78,20 @@
   fill: #00FFDE;
 }
 
-.blends-input-divider-active {
+.blends-input-divider-filled {
   border-color: #00FFDE;
 }
 
+.blends-input-active .blends-input2-divider {
+  border-color: #858585;
+}
+
 .blends-input-label2-filled {
-  color: #00FFDE;
+  color: #C8C8C8;
+}
+
+.blends-input2-center {
+  text-align: center;
+  padding-left: 8px;
+  padding-right: 8px;
 }

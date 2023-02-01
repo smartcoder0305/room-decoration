@@ -148,7 +148,6 @@ const AddCardFormMobile = () => {
                 onChange={formik.handleChange}
                 value={formik.values.cardHolder}
                 placeholder="שם בעל הכרטיס"
-                autoFocus={true}
                 style={{direction: "rtl"}}
               /> 
             </div>

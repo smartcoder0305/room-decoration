@@ -37,3 +37,7 @@ form .blends-select__indicator {
   transform: translateY(-50%);
   left: 10px;
 }
+
+.blends-select__input {
+  margin-left: 25px !important;
+}

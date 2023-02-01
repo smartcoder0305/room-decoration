@@ -54,7 +54,7 @@ const AddAddressModalMobile = () => {
     validateOnBlur: true,
     validationSchema: object({
       fullName: string().required("Required"),
-      phoneNumber: string().required("Required"),
+      phoneNumber: number().required("Required"),
       email: string().required("Required"),
       address: string().required("Required"),
       addressDetails: string().required("Required"),
@@ -103,11 +103,11 @@ const AddAddressModalMobile = () => {
             <Input
               name="phoneNumber"
               type="tel"
-              mask="999-999-9999"
               label="מספר טלפון"
               value={formik.values.phoneNumber}
               onChange={formik.handleChange}
               error={formik.errors.phoneNumber}
+              maxLength={10}
             />
           </div>
           <div className="form__row">
