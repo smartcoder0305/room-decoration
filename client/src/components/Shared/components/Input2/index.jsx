@@ -25,8 +25,8 @@ const Input = (props) => {
   return (
     <div {...props} style={{position: "relative"}}>
       {props.label && (
-          <label className="blends-input-label2" htmlFor={props.name}>
-            {isActive && props.label}
+          <label className={classNames("blends-input-label2", {'blends-input-label2-filled': isActive})} htmlFor={props.name}>
+            {(inputRef.current?.value || isActive) && props.label}
           </label>
         )}
       <div 
