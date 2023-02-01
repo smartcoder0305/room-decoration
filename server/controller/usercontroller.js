@@ -790,33 +790,90 @@ const s3Upload = async (fileData, filePath) => {
   }
 }
 
+const SMS_BASE_CREDENTIAL = 'Basic c2tpcG91dDpmZjVkOTlhYy00NDdlLTQyMjgtOTU2YS04MWQ5YTZlYTczNzI=';
+const SMS_ADMIN_NUMBER = '972548057015';
+const SMS_CUSTOMER_MSG = `איזה כיף, ההזמנה שלכם נקלטה!
+בקרוב נתחיל לעבוד עליה בקפדנות ודגש על הפרטים הקטנים,
+נעדכן אתכם כשההזמנה תצא :)
+`;
+
+const sendSMS = async (smsInfo) => {
+  try {
+    const data = JSON.stringify({
+      "Data": {
+        "Message": SMS_CUSTOMER_MSG,
+        "Recipients": [
+          {
+            "Phone": smsInfo.phone
+          }
+        ],
+        "Settings": {
+          "Sender": "Blends"
+        }
+      }
+    });
+    
+    const config = {
+      method: 'post',
+      url: 'https://capi.inforu.co.il/api/v2/SMS/SendSms',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'Authorization': SMS_BASE_CREDENTIAL
+      },
+      data : data
+    };
+    
+    await axios(config)
+  } catch (err) {
+    console.log(err)
+    throw new Error(err.message)
+  }
+
+  try {
+    const data = JSON.stringify({
+      "Data": {
+        "Message": `נקלטה הזמנה חדשה: ${smsInfo.name}, ${smsInfo.price}, ${smsInfo.dateAndTime}, ${smsInfo.oid}, ${smsInfo.tof}, ${smsInfo.nof}`,
+        "Recipients": [
+          {
+            "Phone": SMS_ADMIN_NUMBER
+          }
+        ],
+        "Settings": {
+          "Sender": "Blends"
+        }
+      }
+    });
+    
+    const config = {
+      method: 'post',
+      url: 'https://capi.inforu.co.il/api/v2/SMS/SendSms',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'Authorization': SMS_BASE_CREDENTIAL
+      },
+      data : data
+    };
+    
+    await axios(config)
+  } catch (err) {
+    console.log(err)
+    throw new Error(err.message)
+  }
+}
+
 exports.createOrder = async (req, res) => {
   console.log(req.body);
   try {
     const maxOid = await orderAddModel.findOne({}).sort({ oid: -1 }).limit(1);
     console.log('max::::', maxOid.oid);
-
     const oid = maxOid.oid ? maxOid.oid + 1 : 534410001;
-
     console.log('oid::::', oid);
     const orderCreate = await orderAddModel.create({uid: req.body.uid, oid: oid, shippingAddress: req.body});
-
     console.log('orderCreate:::::::', orderCreate);
-
     const images = await Uploadimg.find({uid: req.body.uid});
-    
     console.log('images::::::::::::::', images);
-
-    
     const dropboxPathPrefix = `${oid}-${moment(new Date()).format("YYYYMMDD")}-${req.body.fullName}`;
     const refreshToken = 'RtDd-LHLoDMAAAAAAAAAAb-5hg4ej83o08Qtdc-oV9SyAuHVH_4s7VGMD3ZQItM-';
-
-    const config = {
-      fetch,
-      refreshToken,
-      clientId: 'nl6j3bv23jotwxo',
-      clientSecret: 'qvl1k1yywokz6d8'
-    };
 
     for(let index = 0 ; index < images.length ; index++) {
       const destinationPath = `${dropboxPathPrefix}/${oid}-${index}.png`
@@ -838,10 +895,19 @@ exports.createOrder = async (req, res) => {
     
     console.log('orderText:::::::::', orderText);
     await s3Upload(orderText, `${dropboxPathPrefix}/order.txt`);
-
+    await sendSMS({
+      name: req.body.fullName,
+      price: images.length * 45,
+      dateAndTime: moment(new Date()).format("MM/DD/YYYY"),
+      oid: oid,
+      tof: images.length,
+      nof: frameName,
+      phone: req.body.phoneNumber,
+    })
     return res.json(orderCreate);
   } catch (error) {
-    return res.status(400).send('Verify Failed');
+    console.log(error)
+    return res.status(400).send('Creat Order Failed');
   }  
 }
 

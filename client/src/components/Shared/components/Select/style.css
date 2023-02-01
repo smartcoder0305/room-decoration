@@ -4,7 +4,7 @@
   width: 100%;
 }
 .select-wrapper.error .blends-select__control {
-  border-color: #FF1F84!important;
+  border-color: #FF9494!important;
 }
 form .blends-select__control {
   background: #f2f2f2;

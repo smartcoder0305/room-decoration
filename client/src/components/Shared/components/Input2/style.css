@@ -1,0 +1,87 @@
+.blends-input-wrapper2 {
+  background: #FFFFFF;
+  border: 0.5px solid #CCCCCC;
+  box-shadow: 0px 0px 3px rgba(204, 204, 204, 0.25);
+  border-radius: 5px;
+  display: flex;
+}
+
+.blends-input-wrapper2.error {
+  border-color: #FF9494;
+}
+.blends-input2 {
+  height: 50px;
+  padding-top: 6px;
+  padding-bottom: 8px;
+  outline: none;
+  line-height: 36px;
+  border: 0px !important;
+  padding-right: 16px;
+  direction: rtl;
+}
+
+.blends-input-label2 {
+  position: absolute;
+  font-size: 10px;
+  line-height: 36px;
+  font-weight: 400;
+  color: #C8C8C8;
+  top: -25px;
+  right: 55px;
+}
+
+.blends-input2-divider {
+  display: inline-block;
+  width: 0px;
+  height: 20px;
+  border: 1px solid #858585;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.blends-input2-icon {
+  display: inline-block;
+  line-height: 50px;
+  margin-left: 17px;
+  margin-right: 17px;
+}
+
+.blends-input2::placeholder {
+  color: #C8C8C8;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.blends-input-wrapper2.error .blends-input2-divider {
+  border-color: #FF9494;
+}
+
+.blends-input-wrapper2.error svg path {
+  stroke: #FF9494;
+}
+
+.blends-input-error-phone svg path {
+  stroke: #FF9494;
+  fill: #FF9494;
+}
+
+.blends-input-active {
+  border-color: #00FFDE !important;
+}
+
+.blends-input-active .blends-input2-divider {
+  border-color: #00FFDE;
+}
+
+.blends-input-active svg path {
+  stroke: #00FFDE;
+}
+
+.blends-input-active-phone svg path {
+  stroke: #00FFDE;
+  fill: #00FFDE;
+}
+
+.blends-input-divider-active {
+  border-color: #00FFDE;
+}

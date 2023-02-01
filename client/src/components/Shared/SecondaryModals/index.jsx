@@ -6,7 +6,7 @@ import { useRecoilState } from "recoil";
 import useWindowDimensions from "@helpers/hooks/windowDemensions";
 import SelectCardModal from "@modals/SelectCard";
 import SelectCardModalMobile from "@modals/SelectCardMobile";
-import AddAddressModal from "@modals/AddAddress";
+import AddAddressModal from "@modals/AddAddress2";
 import AddAddressModalMobile from "@modals/AddAddressMobile";
 import AddCardForm from '@modals/AddCardForm';
 import AddCardFormMobile from '@modals/AddCardFormMobile';
