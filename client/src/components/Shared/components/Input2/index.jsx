@@ -52,7 +52,7 @@ const Input = (props) => {
           id={props.name} 
           className={classNames('blends-input2', {'blends-input2-center': props.name === 'zipCode'})} 
           style={{maxWidth: "calc(100% - 50px)"}} 
-          placeholder={props.placeholder} 
+          placeholder={ isActive ? '' : props.placeholder} 
           ref={inputRef} 
           autoFocus={props.autoFocus}
           onFocus={handleActive}
