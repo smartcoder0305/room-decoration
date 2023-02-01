@@ -792,16 +792,16 @@ const s3Upload = async (fileData, filePath) => {
 
 const SMS_BASE_CREDENTIAL = 'Basic c2tpcG91dDpmZjVkOTlhYy00NDdlLTQyMjgtOTU2YS04MWQ5YTZlYTczNzI=';
 const SMS_ADMIN_NUMBER = '972548057015';
-const SMS_CUSTOMER_MSG = `איזה כיף, ההזמנה שלכם נקלטה!
-בקרוב נתחיל לעבוד עליה בקפדנות ודגש על הפרטים הקטנים,
+const SMS_CUSTOMER_MSG = `איזה כיף, ההזמנה שלכם בבלנדס נקלטה!
+בקרוב נתחיל לעבוד עליה בקפדנות עם דגש על הפרטים הקטנים,
 נעדכן אתכם כשההזמנה תצא :)
-`;
+מס' הזמנה: `;
 
 const sendSMS = async (smsInfo) => {
   try {
     const data = JSON.stringify({
       "Data": {
-        "Message": SMS_CUSTOMER_MSG,
+        "Message": SMS_CUSTOMER_MSG + smsInfo.oid,
         "Recipients": [
           {
             "Phone": smsInfo.phone
@@ -890,7 +890,7 @@ exports.createOrder = async (req, res) => {
 (6) Postal Code : ${req.body.zipCode}
 (7) Notes : ${req.body.arrivalInstructions}
 (8) Total number of frames : ${images.length}
-(9) Date and time of order : ${moment(new Date()).format("MM/DD/YYYY HH:mm:ss")}
+(9) Date and time of order : ${moment(new Date()).format("DD/MM/YYYY HH:mm:ss")}
 (10) Order ID : ${oid}`;
     
     console.log('orderText:::::::::', orderText);

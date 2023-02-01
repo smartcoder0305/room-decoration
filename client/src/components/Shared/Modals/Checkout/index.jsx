@@ -82,6 +82,7 @@ const Checkout = (props) => {
       }
       console.log(orderData);
       setLoading(false);
+      localStorage.clear();
       history.push(`/payment-success/${orderData.oid}`);
     } catch (err) {
       console.log(err);

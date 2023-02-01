@@ -55,7 +55,7 @@ const AddAddressModal = () => {
     validateOnBlur: true,
     validationSchema: object({
       fullName: string().required("Required"),
-      phoneNumber: string().required("Required"),
+      phoneNumber: number().required("Required"),
       email: string().required("Required"),
       address: string().required("Required"),
       addressDetails: string().required("Required"),
@@ -115,6 +115,7 @@ const AddAddressModal = () => {
                   <path d="M3.89513 9.7937C3.36338 9.26194 2.43422 9.26194 1.90247 9.7937L0.412436 11.2837C0.14656 11.5505 0 11.9047 0 12.2805C0 12.6563 0.146561 13.0105 0.414315 13.2783L0.824873 13.6841L4.30381 10.2052L3.89513 9.7937Z" fill="#727272"/>
                   <path d="M14.9727 2.08047L14.6401 1.74789L11.1564 5.23153L11.7671 5.84126C11.8564 5.93051 11.9043 6.04795 11.9043 6.17384C11.9043 6.29973 11.8554 6.41716 11.7671 6.50642L6.51912 11.7544C6.34156 11.931 6.03246 11.932 5.8549 11.7544L5.24423 11.1437L1.76624 14.6293L2.09882 14.9618C2.34308 15.2061 3.26942 16 4.9699 16C6.48812 16 8.96837 15.3311 12.157 12.1434C18.5202 5.77831 15.1239 2.23173 14.9727 2.08047Z" fill="#727272"/>
                 </svg>}
+                maxLength={10}
               />
             </div>
             <div className="form__row">

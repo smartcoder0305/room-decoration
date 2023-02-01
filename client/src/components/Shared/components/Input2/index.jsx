@@ -25,7 +25,7 @@ const Input = (props) => {
   return (
     <div {...props} style={{position: "relative"}}>
       {props.label && (
-          <label className={classNames("blends-input-label2", {'blends-input-label2-filled': isActive})} htmlFor={props.name}>
+          <label className={classNames("blends-input-label2", {'blends-input-label2-filled': isActive})} htmlFor={props.name} style={{ right: !props.icon ? "16px" : "55px"}}>
             {(inputRef.current?.value || isActive) && props.label}
           </label>
         )}
@@ -53,6 +53,7 @@ const Input = (props) => {
           autoFocus={props.autoFocus}
           onFocus={handleActive}
           onBlur={handleBlur}
+          maxLength={props.maxLength}
           />
       </div>
     </div>

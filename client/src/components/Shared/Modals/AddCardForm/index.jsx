@@ -197,6 +197,7 @@ const AddCardForm = () => {
                 placeholder={false}
                 onChange={(i) => formik.setFieldValue('expiriedMonth', i.value)}
                 defaultValue={monthArray.find(itm => itm.value === formik.values.expiriedMonth)}
+                
               />
               <StyledSelect
                 name="expiriedYear"
@@ -204,6 +205,7 @@ const AddCardForm = () => {
                 placeholder={false}
                 onChange={(i) => formik.setFieldValue('expiriedYear', i.value)}
                 defaultValue={generateArrayOfYears().find(itm => itm.value === formik.values.expiriedYear)}
+                isSearchable={false}
               />
             </div>
             <span>תוקף</span>

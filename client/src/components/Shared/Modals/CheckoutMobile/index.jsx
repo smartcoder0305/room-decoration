@@ -390,6 +390,7 @@ const CheckoutMobile = (props) => {
       }
       console.log(orderData);
       setLoading(false);
+      localStorage.clear();
       history.push(`/payment-success/${orderData.oid}`);
     } catch (err) {
       setLoading(false);

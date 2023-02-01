@@ -210,6 +210,7 @@ const AddCardFormMobile = () => {
                   placeholder={false}
                   onChange={(i) => formik.setFieldValue('expiriedMonth', i.value)}
                   defaultValue={monthArray.find(itm => itm.value === formik.values.expiriedMonth)}
+                  isSearchable={false}
                 />
                 <StyledSelect
                   name="expiriedYear"
@@ -217,6 +218,7 @@ const AddCardFormMobile = () => {
                   placeholder={false}
                   onChange={(i) => formik.setFieldValue('expiriedYear', i.value)}
                   defaultValue={generateArrayOfYears().find(itm => itm.value === formik.values.expiriedYear)}
+                  isSearchable={false}
                 />
               </div>
             </div>
