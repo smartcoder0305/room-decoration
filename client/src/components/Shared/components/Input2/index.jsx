@@ -64,6 +64,7 @@ const Input = (props) => {
           type={inputType}
           maxLength={props.maxLength}
           max={props.maxValue}
+          inputmode={props.name === "phoneNumber" ? "numeric" : null}
           />
       </div>
     </div>
