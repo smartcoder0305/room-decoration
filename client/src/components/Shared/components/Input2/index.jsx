@@ -23,7 +23,7 @@ const Input = (props) => {
   }
 
   const inputType = useMemo(() => {
-    if (props.name === "phoneNumber") return "number";
+    if (props.name === "phoneNumber") return "tel";
     else if (props.name === "email") return "email";
     return "text";
   }, [props.name]);
