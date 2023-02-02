@@ -27,7 +27,11 @@
   line-height: 36px;
   font-weight: 400;
   color: #C8C8C8;
-  top: -6px;
+  /* top: -6px; */
+  top: 20px;
+  right: 0px;
+  transition: top 0.12s ease-out;
+  opacity: 0;
 }
 
 .blends-input2-divider {

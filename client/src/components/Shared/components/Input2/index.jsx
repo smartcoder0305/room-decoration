@@ -24,15 +24,13 @@ const Input = (props) => {
 
   return (
     <div {...props} style={{position: "relative"}}>
-      {props.label && (
-          <label 
-            className={classNames("blends-input-label2", {'blends-input-label2-filled': isActive})} 
-            htmlFor={props.name} 
-            style={{ right: !props.icon ? "16px" : props.name === 'zipCode'? '57px' : "68px"}}
-          >
-            {(inputRef.current?.value || isActive) && props.label}
-          </label>
-        )}
+      <label 
+        className={classNames("blends-input-label2", {'blends-input-label2-filled': isActive})} 
+        htmlFor={props.name} 
+        style={{ right: !props.icon && isActive ? "16px" : props.name === 'zipCode'? '57px' : "68px", top: isActive ? "-6px" : "25px", opacity: isActive ? 1 : 0}}
+      >
+        {props.label}
+      </label>
       <div 
         className={classNames('blends-input-wrapper2', 
             {error: props.error}, 
