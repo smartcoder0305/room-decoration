@@ -18,6 +18,7 @@ const AddAddressModalMobile = () => {
   const selectedAddress = useRecoilValue(selectedShippingAddress);
   const [isLoading, setLoading] = useState(false);
   const [cityPlaceholder, setCityPlaceholder] = useState(true);
+  const [selectInputValue, setSelectInputValue] = useState('יישוב');
 
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const postData = async (data) => {
@@ -175,10 +176,15 @@ const AddAddressModalMobile = () => {
                 )}
                 error={formik.errors.city}
                 menuPlacement="top"
-                onFocus={() => {
+                inputValue={selectInputValue}
+                onFocus={(e) => {
                   console.log('hehehehe')
+                  console.log(formik.values.city)
+                  setSelectInputValue(formik.values.city)
                   setCityPlaceholder(false)
+                  // e.target.value = formik.values
                 }}
+                onInputChange={setSelectInputValue}
               />
             </div>
             <div style={{maxWidth: "40%"}}>
