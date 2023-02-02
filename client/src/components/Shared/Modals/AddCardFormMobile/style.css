@@ -1,7 +1,7 @@
 .add-new-card-form-mobile {
   max-width: 750px;
   width: 100%;
-  background-color: #fff;
+  background: rgb(248, 248, 248);
   box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 0.15);
   height: 100%;
   color: black !important;
@@ -15,12 +15,17 @@
 }
 .add-new-card-form-mobile input::placeholder {
     font-size: 14px;
+    color: #C8C8C8;
+    font-weight: 14px;
 }
 .add-new-card-form-mobile__header {
     padding: 20px 38px;
     box-shadow: 0px 4px 4px rgba(204, 204, 204, 0.25);
     font-weight: 600;
     font-size: 14px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
 }
 
 .add-new-card-form-mobile__content {
@@ -35,7 +40,7 @@
     border-right: 1px solid #F1F1F1;
 }
 .add-new-card-form-mobile__footer {
-    padding: 30px 20px;
+    padding: 1px 20px;
     display: flex;
     justify-content: flex-start;
     gap: 19px;
@@ -99,4 +104,8 @@
 
 .form__fields-mobile--row .blends-select__value-container {
     height: 50px !important;
+}
+
+.cvv_content {
+    position: relative;
 }

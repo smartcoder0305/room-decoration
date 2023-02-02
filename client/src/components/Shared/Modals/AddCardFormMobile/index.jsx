@@ -137,10 +137,12 @@ const AddCardFormMobile = () => {
   
   return (
     <form className="add-new-card-form-mobile" onSubmit={formik.handleSubmit}>
-      <div className="add-new-card-form-mobile__header" onClick={() => handleCloseCardForm()}>חזור &nbsp;&nbsp;&nbsp;&gt;</div>
+      <div className="add-new-card-form-mobile__header">
+        <span onClick={() => handleCloseCardForm()}>&gt;</span>
+        <span>תשלום מאובטח</span>
+      </div>
       <div className="add-new-card-form-mobile__content">
         <div className="form__fields-mobile">
-          <span style={{lineHeight: "36px", marginRight: "6px", marginBottom: "5px"}}>נזין את פרטי הכרטיס </span>
           <div className="form__fields-mobile--row no-bottom-radius">
             <div style={cardErr.cardHolderErr ? {border: "1px solid red", borderRadius: "6px"} : {}}>
               <Input
@@ -180,6 +182,7 @@ const AddCardFormMobile = () => {
                 placeholder="מספר כרטיס"
                 value={formik.values.cardNumber}
                 maxLength={19}
+                style={{direction: "rtl"}}
               />
             </div>
           </div>
@@ -195,6 +198,11 @@ const AddCardFormMobile = () => {
                   type="tel"
                   placeholder="קוד בטחון (CVV)"
                   maxLength={3}
+                  style={{direction: "rtl"}}
+                />
+                <img 
+                  src="/assets/file/images/CVV_icon.png" 
+                  style={{position: "absolute", top: "50%", left: "15px", transform: "translate(0%, -50%)"}}
                 />
               </div>
             </div>
@@ -232,12 +240,12 @@ const AddCardFormMobile = () => {
       </div>
       <div className="add-new-card-form-mobile__footer">
         <button className="submit" type="submit">
-          נוסיף
+        אישור
         </button>
       </div>
       <div style={{display: "flex", padding: "20px", alignItems: "center", justifyContent: "space-between"}}>
         <div style={{width: "135px", height: "0px", border: "1px solid #CECECE"}}></div>
-        <img src="/assets/file/images/pci_compliance_logo.png" />
+        <img src="/assets/file/images/mobile-card-footer-img.PNG" width="100%"/>
         <div style={{width: "135px", height: "0px", border: "1px solid #CECECE"}}></div>
       </div>
       <HeartLoader isLoading={isLoading}/>
