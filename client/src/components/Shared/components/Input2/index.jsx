@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useRef, useState, useMemo} from "react";
 import classNames from "classnames";
 import "./style.css";
 import { useEffect } from "react";
@@ -21,6 +21,12 @@ const Input = (props) => {
   const handleBlur = (e) => {
     setActive(false)
   }
+
+  const inputType = useMemo(() => {
+    if (props.name === "phoneNumber") return "number";
+    else if (props.name === "email") return "email";
+    return "text";
+  }, [props.name]);
 
   return (
     <div {...props} style={{position: "relative"}}>
@@ -55,7 +61,9 @@ const Input = (props) => {
           autoFocus={props.autoFocus}
           onFocus={handleActive}
           onBlur={handleBlur}
+          type={inputType}
           maxLength={props.maxLength}
+          max={props.maxValue}
           />
       </div>
     </div>

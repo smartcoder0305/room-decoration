@@ -54,7 +54,7 @@ const AddAddressModalMobile = () => {
     validateOnBlur: true,
     validationSchema: object({
       fullName: string().required("Required"),
-      phoneNumber: number().required("Required"),
+      phoneNumber: number().max(9999999999).required("Required"),
       email: string().required("Required"),
       address: string().required("Required"),
       addressDetails: string().required("Required"),
@@ -92,7 +92,6 @@ const AddAddressModalMobile = () => {
               onChange={formik.handleChange}
               value={formik.values.fullName}
               error={formik.errors.fullName}
-              autoFocus={true}
               icon={<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="#727272" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/>
                   <path d="M14.3333 14.8667C14.3333 11.9211 11.9456 9.53334 8.99996 9.53334C6.05436 9.53334 3.66663 11.9211 3.66663 14.8667" stroke="#727272" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/>
@@ -107,13 +106,20 @@ const AddAddressModalMobile = () => {
               label="מספר טלפון"
               placeholder="מספר טלפון"
               value={formik.values.phoneNumber}
-              onChange={formik.handleChange}
+              onChange={(e) => {
+                if (e.target.value > 9999999999) {
+                  e.target.value = Math.floor(e.target.value / 10);
+                  return;
+                }
+                formik.handleChange(e);
+              }}
               error={formik.errors.phoneNumber}
               icon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10.216 4.29206L13.7025 0.806553L13.h291 0.398814C12.7592 -0.132938 11.8301 -0.132938 11.2983 0.398814L9.80827 1.88885C9.54146 2.15566 9.3949 2.50985 9.3949 2.88565C9.3949 3.26144 9.54146 3.61563 9.80639 3.88151L10.216 4.29206Z" fill="#727272"/>
                   <path d="M3.89513 9.7937C3.36338 9.26194 2.43422 9.26194 1.90247 9.7937L0.412436 11.2837C0.14656 11.5505 0 11.9047 0 12.2805C0 12.6563 0.146561 13.0105 0.414315 13.2783L0.824873 13.6841L4.30381 10.2052L3.89513 9.7937Z" fill="#727272"/>
                   <path d="M14.9727 2.08047L14.6401 1.74789L11.1564 5.23153L11.7671 5.84126C11.8564 5.93051 11.9043 6.04795 11.9043 6.17384C11.9043 6.29973 11.8554 6.41716 11.7671 6.50642L6.51912 11.7544C6.34156 11.931 6.03246 11.932 5.8549 11.7544L5.24423 11.1437L1.76624 14.6293L2.09882 14.9618C2.34308 15.2061 3.26942 16 4.9699 16C6.48812 16 8.96837 15.3311 12.157 12.1434C18.5202 5.77831 15.1239 2.23173 14.9727 2.08047Z" fill="#727272"/>
                 </svg>}
+              maxValue={9999999999}
               maxLength={10}
             />
           </div>
@@ -121,8 +127,8 @@ const AddAddressModalMobile = () => {
             <Input
               name="email"
               type="email"
-              label="ליימיא"
-              placeholder="ליימיא"
+              label="אימייל"
+              placeholder="אימייל"
               value={formik.values.email}
               onChange={formik.handleChange}
               error={formik.errors.email}
@@ -158,7 +164,7 @@ const AddAddressModalMobile = () => {
             <div style={{minWidth: "50%"}}>
               <StyledSelect
                 name="city"
-                placeholder={false}
+                placeholder={'יישוב'}
                 search
                 options={cityData}
                 onChange={(i) => formik.setFieldValue("city", i.value)}
