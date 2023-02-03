@@ -14,9 +14,9 @@ const AboutUs = ({style}) => {
 
 	let title = () => {
 		if (aboutStatus === 'SR') return 'משלוחים והחזרות';
-		if (aboutStatus === 'CQ') return 'תושיגנ תרהצה';
+		if (aboutStatus === 'CQ') return 'שאלות נפוצות';
 		if (aboutStatus === 'PP') return 'מדיניות פרטיות';
-		if (aboutStatus === 'AS') return 'תושיגנ תרהצה';
+		if (aboutStatus === 'AS') return 'תושיגנ תרהצה'.split("").reverse().join("");
 		return '';
 	}
 	return (
