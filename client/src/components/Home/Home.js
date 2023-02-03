@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 import SliderHome from "../Partials/SliderHome";
 import SkeletonLoader from "../SkeletonLoader/index";
 import useWindowDimensions from "@helpers/hooks/windowDemensions";
-import Coupon from "./Coupon";
 import "./home.css";
 
 const Home = ({existData}) => {

@@ -25,6 +25,7 @@ const SliderHome = () => {
   const nextRef = useRef(null);
   const [reviews, setReviews] = useState([]);
   const { height, width } = useWindowDimensions();
+  // alert(width);
   const getAllReviews = async () => {
     setReviews([review, review, review, review, review, review])
   };
