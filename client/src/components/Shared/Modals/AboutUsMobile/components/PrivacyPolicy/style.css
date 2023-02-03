@@ -1,0 +1,10 @@
+.aboutus_privacy_mobile {
+  line-height: 21px;
+  font-family: 'Rubik';
+  font-style: normal;
+  direction: rtl;
+}
+
+.aboutus_privacy_mobile li {
+  font-size: 14px;
+}

@@ -5,11 +5,14 @@ import useWindowDimensions from "@helpers/hooks/windowDemensions";
 import { useSecondModal } from "@helpers/hooks/useSecondModal";
 import "./footer.css";
 import { Grid } from "swiper";
+import { useRecoilState } from 'recoil'
+import { aboutUs } from '@atoms';
 
 const Footer = ({existData}) => {
   const [reviewData, setReviewData] = useState([]);
   const { width } = useWindowDimensions();
   const modal = useSecondModal();
+  const [aboutStatus, setAboutUs] = useRecoilState(aboutUs);
 
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const getPages = async () => {
@@ -32,6 +35,7 @@ const Footer = ({existData}) => {
   }, []);
 
   const handleAboutUsModal = (type) => {
+    setAboutUs(type)
     if (width > 768) {
       modal('open', 'aboutUs')
     } else {
@@ -65,7 +69,7 @@ const Footer = ({existData}) => {
                     }}
                     className="link"
                     title="leads to a Q&A screen"
-                    style={{color: "white"}}
+                    style={{color: "white", cursor: "pointer"}}
                   >
                     דברו איתנו
                   </a>
@@ -137,7 +141,7 @@ const Footer = ({existData}) => {
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="#" onClick={() => handleAboutUsModal('PS')}>
+                    <NavLink to="#" onClick={() => handleAboutUsModal('PP')}>
                     הצהרת פרטיות
                     </NavLink>
                   </li>
@@ -147,7 +151,7 @@ const Footer = ({existData}) => {
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="#" onClick={() => handleAboutUsModal('TU')}>
+                    <NavLink to="#" onClick={() => handleAboutUsModal('SR')}>
                     תנאי שימוש 
                     </NavLink>
                   </li>
@@ -177,27 +181,31 @@ const Footer = ({existData}) => {
           </div>
         </div>
       </footer>
-      <section className="footer-btm">
-        <p>Copyright Blends 2021-{new Date().getFullYear()} &copy;</p>
-        <div className="btm-wrap">
-          <NavLink
-            to="/privacy-policy"
-            title="leads to a floating screen 2"
-            data-target="#float2"
-            data-toggle="modal"
-          >
-            {" "}
-            מדיניות פרטיות
-          </NavLink>
-          <NavLink
-            to="#"
-            title="leads to a floating screen 3"
-            data-target="#float3"
-            data-toggle="modal"
-          >
-            {" "}
-            תנאי שימוש{" "}
-          </NavLink>
+      <section className="footer-btm" style={{justifyContent: "center"}}>
+        <div style={{display: "flex", maxWidth: "1110px", justifyContent: "space-between", width: "100%"}}>
+          <p style={{lineHeight: "36px", margin: "0"}}>Copyright Blends 2021-{new Date().getFullYear()} &copy;</p>
+          <div className="btm-wrap">
+            <NavLink
+              to="#"
+              title="leads to a floating screen 2"
+              data-target="#float2"
+              data-toggle="modal"
+              style={{fontSize: "14px", color: "#C8C8C8", fontWeight: "300", lineHeight: "36px", textDecorationLine: "underline"}}
+              onClick={() => handleAboutUsModal('PP')}
+            >
+              מדיניות פרטיות
+            </NavLink>
+            <NavLink
+              to="#"
+              title="leads to a floating screen 3"
+              data-target="#float3"
+              data-toggle="modal"
+              style={{fontSize: "14px", color: "#C8C8C8", fontWeight: "300", lineHeight: "36px", textDecorationLine: "underline"}}
+              onClick={() => handleAboutUsModal('AS')}
+            >
+              הצהרת נגישות
+            </NavLink>
+          </div>
         </div>
       </section>
       <div className="modal fade" id="float3">

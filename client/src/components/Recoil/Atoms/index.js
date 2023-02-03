@@ -73,9 +73,9 @@ export const popUpImage = atom({
 })
 
 // Accessibility statement  =>  AS
-// Privacy statement        =>  PS
+// Privacy Policy           =>  PP
 // Common questions         =>  CQ
-// Terms of Use             =>  TU
+// Shipments and returns    =>  SR
 export const aboutUs = atom({
     key: 'aboutUs',
     default: '',

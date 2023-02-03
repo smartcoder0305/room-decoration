@@ -2,26 +2,25 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import HeaderSkeleton from "../SkeletonLoader/HeaderSkeleton";
 import { useRecoilState } from 'recoil'
-import { overlayState, showMenu } from '@atoms';
+import { overlayState, showMenu, aboutUs } from '@atoms';
+import { useSecondModal } from "@helpers/hooks/useSecondModal";
+import useWindowDimensions from "@helpers/hooks/windowDemensions";
 
 export default function Header() {
   const [_, setOverlay] = useRecoilState(overlayState);
   const [menuShow, setMenuShow] = useRecoilState(showMenu);
   const [skeleton, setSkeleton] = useState(true);
+  const [aboutStatus, setAboutUs] = useRecoilState(aboutUs);
+  const modal = useSecondModal();
+  const { width } = useWindowDimensions();
+  
   const menushow = () => {
     setMenuShow(true);
     setOverlay(true);
   };
-  // console.log('jojojojojohhhhhhhhhhhhhh')
   setTimeout(() => {
     setSkeleton(false);
   }, 1000);
-  // document.onreadystatechange = function () {
-
-  //   if (document.readyState === 'complete') {
-
-  //   }
-  // }
 
   const menuhide = () => {
     setMenuShow(false);
@@ -32,6 +31,15 @@ export default function Header() {
     // localStorage.clear();
     window.location.href = '/';
   };
+
+  const handleAboutUsModal = (type) => {
+    setAboutUs(type)
+    if (width > 768) {
+      modal('open', 'aboutUs')
+    } else {
+      modal('open', 'aboutUsMobile');
+    }
+  }
 
   return (
     <>
@@ -72,36 +80,49 @@ export default function Header() {
             </div>
           </header>
           <div className="menu" style={{ right: menuShow ? '0' : '-100%' }}>
-                <div className="menu-head text-center">
-                  <img
-                    src="/assets/images/menu-crs.png"
-                    alt=""
-                    className="crs"
-                    onClick={() => {
-                      menuhide();
-                    }}
-                  />
-                  <img src="/assets/images/stk_logo.svg" alt="" />
-                </div>
-                <ul style={{ display: "grid" }}>
-                  <li>
-                    <b><a href="/upload-your-image">התחלת הזמנה</a></b>
-                    <img src="/assets/images/arr.svg" alt="תמונות קיר ללא מסמרים"/>
-                  </li>
-                  <li>
-                    <span>דברו איתנו במסנג’ר</span>
-                    <img src="/assets/images/mcon1.svg" alt="" />
-                  </li>
-                  <li>
-                    <span>דברו איתנו בוואצאפ</span>
-                    <img src="/assets/images/mcon2.svg" alt="" />
-                  </li>
-                  <li>
-                    <span>שאלות נפוצות</span>
-                  </li>
-                </ul>
-              </div>
-              </>
+            <div className="menu-head text-center">
+              <img
+                src="/assets/images/menu-crs.png"
+                alt=""
+                className="crs"
+                onClick={() => {
+                  menuhide();
+                }}
+              />
+              <img src="/assets/images/stk_logo.svg" alt="" />
+            </div>
+            <ul style={{ display: "grid" }}>
+              <li style={{marginBottom: "0px"}}>
+                <NavLink to='upload-your-image'><b>התחל הזמנה</b></NavLink>
+                <img src="/assets/images/arr.svg" alt="תמונות קיר ללא מסמרים"/>
+              </li>
+              <li style={{marginBottom: "0px"}}>
+                <span>דברו איתנו במסנג’ר</span>
+                <img src="/assets/images/mcon1.svg" alt="" />
+              </li>
+              <li style={{marginBottom: "0px"}}>
+                <span>דברו איתנו בוואצאפ</span>
+                <img src="/assets/images/mcon2.svg" alt="" />
+              </li>
+              <li style={{marginBottom: "0px"}} onClick={() => handleAboutUsModal('CQ')}>
+                <span>שאלות נפוצות</span>
+              </li>
+            </ul>
+            <div
+              style={{
+                position: "absolute",
+                bottom: "20.5px",
+                textAlign: "center",
+                width: "360px",
+                paddingRight: "55px"
+              }}
+            >
+              <span style={{fontSize: "14px", color: "#C8C8C8", fontWeight: "300", lineHeight: "36px", textDecorationLine: "underline"}} onClick={() => handleAboutUsModal('AS')}>הצהרת נגישות</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <span style={{fontSize: "14px", color: "#C8C8C8", fontWeight: "300", lineHeight: "36px", textDecorationLine: "underline"}} onClick={() => handleAboutUsModal('PP')}>מדיניות פרטיות</span>
+            </div>
+          </div>
+          </>
         )}
       </React.Fragment>
     </>
