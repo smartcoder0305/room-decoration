@@ -1,22 +1,22 @@
-.aboutus_cq {
+.aboutus_cq_mobile {
   direction: rtl;
 }
 
-.aboutus_cq_title {
+.aboutus_cq_mobile_title {
   font-size: 14px;
   color: #FF1F84;
   line-height: 36px;
   font-weight: 700;
 }
 
-.aboutus_cq_content {
+.aboutus_cq_mobile_content {
   font-size: 14px;
   line-height: 17px;
   font-weight: 400;
 }
 
 @media screen and (max-width: 768px) {
-  .aboutus_cq_content{
+  .aboutus_cq_mobile_content{
     margin-bottom: 17px;
   } 
 }

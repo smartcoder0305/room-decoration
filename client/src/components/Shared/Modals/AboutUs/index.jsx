@@ -11,10 +11,18 @@ import './style.css'
 const AboutUs = ({style}) => {
 	const modal = useSecondModal();
   const [aboutStatus, setAboutUs] = useRecoilState(aboutUs);
+
+	let title = () => {
+		if (aboutStatus === 'SR') return 'משלוחים והחזרות';
+		if (aboutStatus === 'CQ') return 'תושיגנ תרהצה';
+		if (aboutStatus === 'PP') return 'מדיניות פרטיות';
+		if (aboutStatus === 'AS') return 'תושיגנ תרהצה';
+		return '';
+	}
 	return (
 		<div className="aboutus">
 			<div className="aboutus_header">
-			תושיגנ תרהצה
+				{title()}
 			</div>
 			<div className="aboutus_content">
 				{ aboutStatus === 'AS' && <AccessState />}

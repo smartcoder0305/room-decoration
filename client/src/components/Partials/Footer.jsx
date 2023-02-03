@@ -137,22 +137,22 @@ const Footer = ({existData}) => {
                 <ul className="footer-ul-li">
                   <li>
                     <NavLink to="#" onClick={() => handleAboutUsModal('AS')}>
-                    הצהרת נגישות  
+                    הצהרת נגישות
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="#" onClick={() => handleAboutUsModal('PP')}>
-                    הצהרת פרטיות
+                    מדיניות פרטיות
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="#" onClick={() => handleAboutUsModal('CQ')}>
-                    שאלות נפוצות 
+                    שאלות נפוצות
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="#" onClick={() => handleAboutUsModal('SR')}>
-                    תנאי שימוש 
+                    משלוחים והחזרות
                     </NavLink>
                   </li>
                 </ul>

@@ -1,16 +1,16 @@
-.aboutus_shipreturn{
+.aboutus_shipreturn_mobile{
   font-size: 14px;
 }
 
-.aboutus_shipreturn_table {
+.aboutus_shipreturn_mobile_table {
   margin-top: 20px;
 }
 
-.aboutus_shipreturn_table_row {
+.aboutus_shipreturn_mobile_table_row {
   height: 56px;
 }
 
-.aboutus_shipreturn_table_row_item {
+.aboutus_shipreturn_mobile_table_row_item {
   /* line-height: px; */
   vertical-align: middle;
   text-align: center;
@@ -25,6 +25,6 @@
   font-size: 14px;
 }
 
-.aboutus_shipreturn_table_row_item.shipreturn_bold {
+.aboutus_shipreturn_mobile_table_row_item.shipreturn_bold {
   font-weight: 700;
 }

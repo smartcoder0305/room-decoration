@@ -1,9 +1,12 @@
 
 import { useSecondModal } from "@helpers/hooks/useSecondModal";
+import { useRecoilState } from 'recoil'
+import { aboutUs } from '@atoms';
 import './style.css'
 
 const WhatsAppMobile = ({style}) => {
 	const modal = useSecondModal();
+	const [aboutStatus, setAboutUs] = useRecoilState(aboutUs);
 	return (
 		<div className="whatsapp_mobile">
 			<div className="whatsapp_close" onClick={() => modal('close', 'whatsAppMobile')}>
@@ -19,6 +22,7 @@ const WhatsAppMobile = ({style}) => {
 			<div className="whatsapp_mobile_footer">
 				<span 
 					onClick={() => {
+						setAboutUs('CQ')
 						modal('close', 'whatsAppMobile');
 						modal('open', 'aboutUsMobile')
 					}}
