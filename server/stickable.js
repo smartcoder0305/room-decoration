@@ -11,7 +11,7 @@ process.on('unhandledRejection', (reason, promise) => {
   console.log('Unhandled Rejection at:', reason.stack || reason)
 })
 
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 
 mongoose.connect(process.env.MONGO_URI);
 app.use(cors());
