@@ -76,7 +76,9 @@ ul.gift-list li {
 .album-item-wrapper {
   position: relative;
   height: 260px;
-    width: 260px;
+  width: 260px;
+  box-shadow: -10px 10px 30px rgba(33, 33, 33, 0.25);;
+
 }
 
 .album-item-wrapper .img-con {
