@@ -5,8 +5,8 @@ yarn &&
 yarn build && 
 cd .. &&
 mkdir -p ./server/public &&
-cp -r ./client/build ./server/public/ &&
-mv ./server/public/build ./server/public/
+mv ./client/build ./server/public/
+# mv ./server/public/build ./server/public/
 # cd admin
 # rm -rf build && 
 # yarn &&
