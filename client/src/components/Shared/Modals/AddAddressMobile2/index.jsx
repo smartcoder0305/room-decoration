@@ -8,8 +8,6 @@ import { object, string, number } from "yup";
 import { useSecondModal } from "@helpers/hooks/useSecondModal";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { selectedShippingAddress } from "@atoms";
-import axios from 'axios';
-
 import "./style.css";
 
 const AddAddressModalMobile = () => {
@@ -19,23 +17,6 @@ const AddAddressModalMobile = () => {
   const [isLoading, setLoading] = useState(false);
   const [cityPlaceholder, setCityPlaceholder] = useState(true);
   const [selectInputValue, setSelectInputValue] = useState('יישוב');
-
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-  const postData = async (data) => {
-      try {
-          const config = {
-              headers: {
-                  'Content-Type': 'application/json'
-              }
-          }
-          const res = await axios.post(`${BASE_URL}/user/createorder`, data, config);
-          if (res.data.status === 200) {
-              console.log('----success-----')
-          }
-      } catch (error) {
-          console.log(error)
-      }
-  }
 
   useEffect(() => {
     selectedAddress && formik.setValues(selectedAddress);
@@ -69,7 +50,6 @@ const AddAddressModalMobile = () => {
         setLoading(true);
         setAddress(values);
         console.log(values);
-        // await postData({...values, uid:localStorage.getItem('uniqueUserId')});
         setLoading(false);
         handleCloseModal();
       }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, memo, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import cn from "classnames";
 import axios from "axios";
@@ -7,11 +7,7 @@ import "cropperjs/dist/cropper.css";
 import { popUpImage, imagesData } from "@atoms";
 import {
   countState,
-  netPriceState,
   imageCountState,
-  totalPriceState,
-  discountPriceState,
-  discountPercentageState,
 } from "@atoms/priceCalc";
 import { useRecoilState } from "recoil";
 import { useModal } from "@helpers/hooks/useModal";
@@ -25,13 +21,6 @@ import FrameSelector from "./components/FrameSelector";
 import ImageLoader from "@shared/ImageLoader";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const MAIN_URL = process.env.REACT_APP_MAIN_URL;
-const FILESTACK_APIKEY = process.env.REACT_APP_FILESTACK_APIKEY;
-
-const filestack = require("filestack-js");
-
-//const filestack_client = filestack.init("AbUWMKsQDSg2HbtzgqaQhz"); // Champ
-const filestack_client = filestack.init(FILESTACK_APIKEY); // Client
 
 function getFrameSelected() {
   const frameSelected = localStorage.getItem("frameSelected");
@@ -40,31 +29,20 @@ function getFrameSelected() {
 }
 
 const ReviewImages = () => {
-
-  const localstr = localStorage.getItem("uniqueUserId");
   const [imageonpopup, setimageonpopup] = useRecoilState(popUpImage);
   const [images, setImages] = useRecoilState(imagesData);
   const [firstLoader, setfirstLoader] = useState("block");
 
   const [transac, settransac] = useState();
   const [loaderdis, setloaderdis] = useState(false);
-  const [facebook_modal, setfacebook_modal] = useState("none");
-  const [fbsavebtn, setfbsavebtn] = useState("none");
   const [socialopc, setsocialopc] = useState("none");
 
-  const [facebookpic, setfacebookpic] = useState(null);
-  const [fbbuttonhide, setfbbuttonhide] = useState("block");
 
   const [frameChoose, setFrameChoose] = useState(getFrameSelected);
 
   const [count, setCount] = useRecoilState(countState);
-  const [netPrice, setNetPrice] = useRecoilState(netPriceState);
   const [imagecount, setImagecount] = useRecoilState(imageCountState);
-  const [totalPrice, setTotalPrice] = useRecoilState(totalPriceState);
-  const [discountPrice, setDiscountPrice] = useRecoilState(discountPriceState);
-  const [discountPercentage, setDiscountPercentage] = useRecoilState(
-    discountPercentageState
-  );
+
   const { height, width } = useWindowDimensions();
   let history = useHistory();
   const modal = useModal();
@@ -136,18 +114,6 @@ const ReviewImages = () => {
         }
       });
     });
-    // modal("open", "deleteConfirm", {
-    //   data: item,
-    //   onDelete: () =>
-    //     removeImage(id).then((v) => {
-    //       setCount(count + 1);
-    //       getImagesDB().then((res) => {
-    //         if (res.data.data.length === 0) {
-    //           history.push("/upload-your-image");
-    //         }
-    //       });
-    //     }),
-    // });
   };
 
   const frameSelected = async (type) => {
@@ -317,14 +283,6 @@ const ReviewImages = () => {
               onClick={() => showUploadOptions()}
             ></div>
           </div>
-
-          {/* {width <= 767 && (
-            <div className="additional-info-mobile">
-              <img src="/assets/file/images/red_check.svg" alt="check" />
-              <p>כל התמונות עלו בהצלחה</p>
-              <p>תוודאו שהכל נראה טוב ונמשיך</p>
-            </div>
-          )} */}
         </div>
       </div>
 

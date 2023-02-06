@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import cn from 'classnames';
 import { useModal } from '@helpers/hooks/useModal';
 import { useHistory } from "react-router-dom";
@@ -9,20 +9,16 @@ import {
   addImageFromSocial,
   } from '@api';
 import {
-  imagesData,
-} from "@atoms";
-import {
   imageCountState
 } from "@atoms/priceCalc";
 
-import { useRecoilState, useRecoilValue} from "recoil";
+import { useRecoilValue} from "recoil";
 import "./style.css";
 
 const UploadOptions = ({
   isOpen,
   style
 }) => {
-  const [images, setImages] = useRecoilState(imagesData);
   const imagecount = useRecoilValue(imageCountState);
 
   const modal = useModal();

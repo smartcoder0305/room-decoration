@@ -81,8 +81,6 @@ const UploadImage = () => {
           img.onload = function () {
             console.log(img.height);
             console.log(img.width);
-
-            // console.log(files);
           };
           formdata.append("imagewidth", img.width);
           formdata.append("imageheight", img.height);

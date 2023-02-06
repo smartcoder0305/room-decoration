@@ -873,7 +873,6 @@ exports.createOrder = async (req, res) => {
     const images = await Uploadimg.find({uid: req.body.uid});
     console.log('images::::::::::::::', images);
     const dropboxPathPrefix = `${oid}-${moment(new Date()).format("YYYYMMDD")}-${req.body.fullName}`;
-    const refreshToken = 'RtDd-LHLoDMAAAAAAAAAAb-5hg4ej83o08Qtdc-oV9SyAuHVH_4s7VGMD3ZQItM-';
 
     for(let index = 0 ; index < images.length ; index++) {
       const destinationPath = `${dropboxPathPrefix}/${oid}-${index}.png`

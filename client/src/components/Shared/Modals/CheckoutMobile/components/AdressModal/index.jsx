@@ -87,47 +87,6 @@ const AdressModal = (props) => {
                   {shippingAddressFormValidateErr["address1"]}
                 </span>
               </div>
-              {/* <div className="form-group">
-                  <label>כתובת 2</label>
-                  <input
-                    type="text"
-                    name="address2"
-                    id="address2"
-                    className="form-control"
-                    onChange={handleChange}
-                    value={shippingAddressFormValues.address2}
-                    required
-                  />
-                </div> */}
-              {/*<div className="form-group">
-                  <label>עיר</label>
-                  <input
-                    type="text"
-                    name="city"
-                    id="city"
-                    className="form-control"
-                    onChange={handleChange}
-                    value={shippingAddressFormValues.city}
-                  />
-                </div>*/}
-              {/*<div className="form-group">
-                  <label>עיר</label>
-                  <select
-                    name="city"
-                    id="city"
-                    className="form-control"
-                    onChange={handleChange}
-                  >
-                    <option value={""}>Please select your city</option>
-                    {citydata.map((city, index) => {
-                      return (
-                        <>
-                          <option key={city.value} value={city.label}>{city.label}</option>
-                        </>
-                      );
-                    })}
-                  </select>
-                </div>*/}
               <div className="form-group text-right mob-city-select-style">
                 <label className="mob-address-city-label">עיר</label>
                 <Select
@@ -200,15 +159,6 @@ const AdressModal = (props) => {
               </div>
             </form>
           </div>
-          {/* <div className="modal-footer">
-              <button
-                type="button"
-                className="checkout-btn"
-                onClick={handleShippingAddressFormSubmit}
-              >
-                אישור פרטים
-              </button>
-            </div> */}
         </div>
       </div>
     </div>

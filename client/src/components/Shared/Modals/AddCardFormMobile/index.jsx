@@ -6,10 +6,8 @@ import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 import StyledSelect from "@shared/components/Select";
 import Input from "@shared/components/Input";
 import HeartLoader from "@shared/HeartLoader";
-import { paymentMethods, secondaryModals, selectedPaymentMethod, secondOverlayState } from '@atoms';
-import {
-  netPriceState,
-} from "@atoms/priceCalc";
+import { secondaryModals, selectedPaymentMethod, secondOverlayState } from '@atoms';
+import { netPriceState } from "@atoms/priceCalc";
 import "./style.css";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -24,12 +22,10 @@ const AddCardFormMobile = () => {
   });
   const [isLoading, setLoading] = useState(false);
   const [verifyErr, setVerifyErr] = useState('');
-  const setPaymentsMethod = useSetRecoilState(paymentMethods);
   const setSelectedPayment = useSetRecoilState(selectedPaymentMethod);
   const setModals = useSetRecoilState(secondaryModals);
 
   const netPrice = useRecoilValue(netPriceState);
-  const selectedPayment = useRecoilValue(selectedPaymentMethod);
   const [_, setOverlay] = useRecoilState(secondOverlayState);
 
   const getCardExpDate = (month, year) => {
@@ -101,7 +97,6 @@ const AddCardFormMobile = () => {
       else if (cardType === 'diners') hebrewType = 'דיינרס';
       else if (cardType === 'amex') hebrewType = 'אמריקן אקספרס';
       else hebrewType = 'כרטיס אשרא';
-      // setPaymentsMethod(methods => ( [...methods, {...values, hebrewType}]));
       setSelectedPayment({...values, hebrewType});
       setLoading(false);
       handleCloseCardForm();
@@ -162,7 +157,7 @@ const AddCardFormMobile = () => {
                 type="tel"
                 alwaysShowMask={false}
                 onChange={(e) => {
-                  const number = e.target.value.replace(/\s/g, '').replace(/_/g, '');
+                  let number = e.target.value.replace(/\s/g, '').replace(/_/g, '');
                   if (number.startsWith('34') || number.startsWith('37') || number.startsWith('123')) {
                     setCardErr({...cardErr, cardNumberErr: true});
                   } else {
@@ -182,7 +177,7 @@ const AddCardFormMobile = () => {
                 placeholder="מספר כרטיס"
                 value={formik.values.cardNumber}
                 maxLength={19}
-                style={{direction: "rtl"}}
+                style={{direction: "ltr"}}
               />
             </div>
           </div>

@@ -6,15 +6,7 @@ import { useSetRecoilState, useRecoilValue } from "recoil";
 import "./style.css";
 
 const SelectCardModal = ({ style }) => {
-  const payments = useRecoilValue(paymentMethods);
-  const setSelectedPayment = useSetRecoilState(selectedPaymentMethod);
   const setModals = useSetRecoilState(secondaryModals);
-  const modal = useSecondModal();
-
-  const handleSelectPayment = (id) => {
-    setSelectedPayment(id);
-    modal('close', 'selectCard');
-  }
 
   const handleOpenNewCardForm = () => {
     setModals(md => ({
@@ -24,12 +16,6 @@ const SelectCardModal = ({ style }) => {
     }))
   }
 
-  const generageItemName = (value) => {
-    const firstNumbers = value.slice(0, 4);
-    const lastNumbers = value.slice(-4)
-
-    return `${firstNumbers} **** ***** ${lastNumbers}`;
-  }
   return (
     <div className="add-card-modal" style={{ ...style }}>
       <button onClick={() => handleOpenNewCardForm()}>

@@ -1,20 +1,11 @@
 import React from "react";
-import { paymentMethods, selectedPaymentMethod, secondaryModals } from '@atoms';
-import { useSecondModal } from '@helpers/hooks/useSecondModal';
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { secondaryModals } from '@atoms';
+import { useSetRecoilState } from "recoil";
 
 import "./style.css";
 
 const SelectCardModalMobile = ({ style }) => {
-  const payments = useRecoilValue(paymentMethods);
-  const setSelectedPayment = useSetRecoilState(selectedPaymentMethod);
   const setModals = useSetRecoilState(secondaryModals);
-  const modal = useSecondModal();
-
-  const handleSelectPayment = (id) => {
-    setSelectedPayment(id);
-    modal('close', 'selectCardMobile');
-  }
 
   const handleOpenNewCardForm = () => {
     setModals(md => ({
@@ -24,12 +15,6 @@ const SelectCardModalMobile = ({ style }) => {
     }))
   }
 
-  const generageItemName = (value) => {
-    const firstNumbers = value.slice(0, 4);
-    const lastNumbers = value.slice(-4)
-
-    return `${firstNumbers} **** ***** ${lastNumbers}`;
-  }
   return (
     <div className="add-card-modal-mobile" style={{ ...style }}>
       <button onClick={() => handleOpenNewCardForm()} style={{color: "black", fontWeight: "700"}}>

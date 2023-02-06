@@ -12,7 +12,6 @@ import { imagesData } from "@atoms";
 import { getRecoil, setRecoil } from "recoil-nexus";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const storedValues = localStorage.getItem("uniqueUserId");
 
 export async function uploadSingleImage(formdata) {
   const response = await axios
@@ -72,14 +71,6 @@ export async function addImageFromSocial(response) {
 export async function getImagesDB() {
   const count = getRecoil(countState);
   const imageData = await getUserImages();
-  // if (count > 1) {
-  //   if (imageData.status === 200) {
-  //     if (imageData.data.data.length === 0) {
-  //       // localStorage.clear();
-  //       // history.push("/upload-your-image");
-  //     }
-  //   }
-  // }
 
   setRecoil(countState, count + 2);
   if (imageData.data.data.length > 0) {

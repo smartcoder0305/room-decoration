@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 import uniqid from "uniqid";
 import { uploadSingleImage, uploadMultipleImages, getImagesDB } from '@api';
 import { useModal } from "@helpers/hooks/useModal";
@@ -12,7 +11,6 @@ import {useRecoilValue} from "recoil";
 import "./style.css";
 
 const UploadImage = () => {
-  const storedValues = localStorage.getItem("uniqueUserId");
   const imagecount = useRecoilValue(imageCountState);
 
   const [deskbody_opcy, setdeskbody_opcy] = useState();

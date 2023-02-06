@@ -1,5 +1,5 @@
 import React from 'react'
-import { popUpImage, imagesData } from "@atoms";
+import { imagesData } from "@atoms";
 import { useRecoilState } from 'recoil';
 import ImageLoader from "@shared/ImageLoader";
 import './style.css'
@@ -9,8 +9,6 @@ import './style.css'
     modalData,
  }) => {
   const [images, setImages] = useRecoilState(imagesData);
-
-    const MAIN_URL = process.env.REACT_APP_MAIN_URL;
 
   const imageUrl = `${modalData?.data?.image}`;
 

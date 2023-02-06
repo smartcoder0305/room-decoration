@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import Cropper from "react-cropper";
-import { popUpImage, modalWindows } from "@atoms";
+import { popUpImage } from "@atoms";
 import { getImagesDB } from "@api";
 import useWindowDimensions from "@helpers/hooks/windowDemensions";
 
@@ -16,11 +16,9 @@ const EditModal = ({ handleCloseModal, modalData }) => {
   const imageElement = cropperRef?.current;
   const cropper = imageElement?.cropper;
 
-  const MAIN_URL = process.env.REACT_APP_MAIN_URL;
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const localstr = localStorage.getItem("uniqueUserId");
   const imageonpopup = useRecoilValue(popUpImage);
-  const modalsData = useRecoilValue(modalWindows);
   const [zoomvalue, setzoomvalue] = useState(0.0);
   const [isLoading, setLoading] = useState(true);
   const isInitial = useRef(true);
@@ -57,7 +55,6 @@ const EditModal = ({ handleCloseModal, modalData }) => {
     console.log(imageonpopup)
     target?.zoomTo(+imageonpopup.zoomvalue);
     target?.rotate(+imageonpopup.rotate);
-    // setzoomvalue(-1000);
     const cropData = calCropData(imageonpopup);
     target.moveTo(cropData.left, cropData.top)
     setLoading(false)
@@ -69,7 +66,6 @@ const EditModal = ({ handleCloseModal, modalData }) => {
   const getCropData = async () => {
     setLoading(true)
     if (typeof cropper !== "undefined") {
-      // var cc = await cropper.getCroppedCanvas().toDataURL().toString();
       var cropbox_data = cropper.getCanvasData();
       var image_data_rotation = cropper.getImageData();
       var rotate = 0;
@@ -79,9 +75,6 @@ const EditModal = ({ handleCloseModal, modalData }) => {
         rotate = image_data_rotation.rotate;
       }
       console.log('crop', cropbox_data, zoomvalue);
-      // return;
-      //console.log(rotate);
-      // let base64Image = cc.split(";base64,").pop();
 
       const aa = {
         uid: localstr,
@@ -122,27 +115,12 @@ const EditModal = ({ handleCloseModal, modalData }) => {
        }
     }
      setzoomvalue(e.detail.ratio)
-    // const zoom = +(detail.ratio);
-    // if (zoom > 1) {
-    //   return;
-    // } else {
-    // }
   };
 
   const handleZoomTo = (e) => {
     setzoomvalue(+e.target.value);
     cropper?.zoomTo(+e.target.value);
   };
-
-  // useEffect(() => {
-  //   console.log('Hello', zoomvalue)
-  //    if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) {
-  //     cropper?.disable(true)
-  //    }
-  //    if (zoomvalue >= 0.125) {
-  //     cropper?.disable(true)
-  //    }
-  // }, [imageonpopup.imagewidth, imageonpopup.imageheight ,zoomvalue]);
 
   const zoomvalueplus = () => {
     if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) return;

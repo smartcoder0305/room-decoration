@@ -66,7 +66,7 @@ const PaymentSuccess = () => {
       </div>
       <div style={{textAlign: "center", fontSize: isMobile ? "20px" : "24px", fontWeight: "700",  marginTop: isMobile ? "0px": "-39px"}}>התשלום התקבל</div>
       <div style={{textAlign: "center", fontSize: "14.4px", fontWeight: "500", marginTop: isMobile ? "9px" : "40px"}}>ההזמנה התקבלה בהצלחה, תכף תקבלו אישור למייל</div>
-      <div style={{textAlign: "center", fontSize: "14.4px", fontWeight: "400", marginTop: "9px", color: "#727272"}}>{orderId} :הנמזה ‘סמ</div>
+      <div style={{textAlign: "center", fontSize: "14.4px", fontWeight: "400", marginTop: "9px", color: "#727272"}}>{orderId} :מס׳ הזמנה</div>
       <div style={{textAlign: "center", fontSize: "14hpx", fontWeight: "700",  marginTop: isMobile ? "23px" : "39px", marginBottom: isMobile ? "23px" : "41px"}}>
         <NavLink to="/upload-your-image" 
           style={{

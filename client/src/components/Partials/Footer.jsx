@@ -1,10 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import useWindowDimensions from "@helpers/hooks/windowDemensions";
 import { useSecondModal } from "@helpers/hooks/useSecondModal";
 import "./footer.css";
-import { Grid } from "swiper";
 import { useRecoilState } from 'recoil'
 import { aboutUs } from '@atoms';
 
@@ -73,13 +72,6 @@ const Footer = ({existData}) => {
                   >
                     דברו איתנו
                   </a>
-
-                  {/* <NavLink
-                    to="#"
-                    title="leads to ManyChat facebook messenger api"
-                  >
-                    <img src="/assets/images/fb.svg" alt="" />
-                  </NavLink> */}
                 </div>
               </div>
             </div>

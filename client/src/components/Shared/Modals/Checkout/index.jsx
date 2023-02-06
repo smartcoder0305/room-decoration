@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import cn from "classnames";
 import axios from "axios";
-import Select from "react-select";
-import citydata from "../../../data/cityData.json";
-import InputMask from "react-input-mask";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import {
   netPriceState,
   imageCountState,
@@ -17,7 +13,6 @@ import "./style.css";
 import { nextTuesday } from "@helpers/date";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 
 const Checkout = (props) => {
   const netPrice = useRecoilValue(netPriceState);
@@ -34,8 +29,6 @@ const Checkout = (props) => {
   const [isLoading, setLoading] = useState(false);
 
   const history = useHistory();
-
-  const [paypalButton, setpaypalButton] = useState(false);
 
   const creatOrder = async (data) => {
       try {

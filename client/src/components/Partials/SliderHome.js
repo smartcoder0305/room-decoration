@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import useWindowDimensions from "@helpers/hooks/windowDemensions";
@@ -7,12 +7,10 @@ import useWindowDimensions from "@helpers/hooks/windowDemensions";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-
 import "./slidernew.css";
 
 // import required modules
-import { Autoplay, Navigation, Pagination } from "swiper";
-import axios from "axios";
+import { Navigation, Pagination } from "swiper";
 
 const review = {
   image: '/assets/file/images/istockphoto.png',
@@ -45,7 +43,6 @@ const SliderHome = () => {
             swiper.navigation.update();
           }}
           spaceBetween={30}
-          // centeredSlides={true}
           loop={true}
           pagination={{
             clickable: true,

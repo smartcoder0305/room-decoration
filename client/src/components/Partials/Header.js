@@ -28,7 +28,6 @@ export default function Header() {
   };
 
   const handelHeaderLinkToHome = () => {
-    // localStorage.clear();
     window.location.href = '/';
   };
 

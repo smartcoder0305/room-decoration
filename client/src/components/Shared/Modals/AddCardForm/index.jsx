@@ -6,7 +6,7 @@ import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 import StyledSelect from "@shared/components/Select";
 import Input from "@shared/components/Input";
 import HeartLoader from "@shared/HeartLoader";
-import { paymentMethods, secondaryModals, selectedPaymentMethod, secondOverlayState } from '@atoms';
+import { secondaryModals, selectedPaymentMethod, secondOverlayState } from '@atoms';
 import {
   netPriceState,
 } from "@atoms/priceCalc";
@@ -24,11 +24,9 @@ const AddCardForm = () => {
   });
   const [isLoading, setLoading] = useState(false);
   const [verifyErr, setVerifyErr] = useState('');
-  const setPaymentsMethod = useSetRecoilState(paymentMethods);
   const setSelectedPayment = useSetRecoilState(selectedPaymentMethod);
   const setModals = useSetRecoilState(secondaryModals);
   const netPrice = useRecoilValue(netPriceState);
-  const selectedPayment = useRecoilValue(selectedPaymentMethod);
   const [_, setOverlay] = useRecoilState(secondOverlayState);
 
   const getCardExpDate = (month, year) => {
@@ -100,7 +98,6 @@ const AddCardForm = () => {
       else if (cardType === 'diners') hebrewType = 'דיינרס';
       else if (cardType === 'amex') hebrewType = 'אמריקן אקספרס';
       else hebrewType = 'כרטיס אשרא';
-      // setPaymentsMethod(methods => ( [...methods, {...values, hebrewType}]));
       setSelectedPayment({...values, hebrewType});
       setLoading(false);
       handleCloseCardForm();

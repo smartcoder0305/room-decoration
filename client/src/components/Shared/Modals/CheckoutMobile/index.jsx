@@ -3,35 +3,19 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import cn from "classnames";
 import { nextTuesday } from "@helpers/date";
-
-import "./style.css";
-
-import moment from "moment";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import CardPayment from "./components/CardPayment";
 import PaymentOptions from "./components/PaymentOptions";
-import PayPal from "./components/PayPal";
-import TestPay from "./components/TestPay";
-import uniqid from "uniqid";
-import AdressModal from "./components/AdressModal";
 import { useSecondModal } from "@helpers/hooks/useSecondModal";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import {
   netPriceState,
   imageCountState,
-  totalPriceState,
-  discountPriceState,
-  discountPercentageState,
 } from "@atoms/priceCalc";
 import { selectedPaymentMethod, selectedShippingAddress } from "@atoms";
+import "./style.css";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const digit = /[0-9]/;
 
-const mdigit = /[0-1]/;
-function subform(e) {
-  console.log(e.target.value);
-}
 function getFormValues() {
   const storedValues = localStorage.getItem("userShippingAddress");
 
@@ -50,12 +34,6 @@ function getFormValues() {
 }
 
 const CheckoutMobile = (props) => {
-  /*   const [netPrice, setNetPrice] = useState(0);
-  const [discountPercentage, setDiscountPercentage] = useState(0);
-  const [discountPrice, setDiscountPrice] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0); */
-
-  // const []=useState('')
   const { style } = props;
   const netPrice = useRecoilValue(netPriceState);
   const imagecount = useRecoilValue(imageCountState);
@@ -63,12 +41,8 @@ const CheckoutMobile = (props) => {
   const [percentages, setPercentages] = useState();
   const [isDisplay, setIsDisplay] = useState();
 
-  const [checkoutNameColor, setcheckoutNameColor] = useState("");
-
   const [shippingAddressFormValues, setShippingAddressFormValues] = useState(getFormValues);
   const [totalPrice, settotalPrice] = useState(props.netPrice);
-
-  const [fnameFormValidate, setfnameFormValidate] = useState(false);
 
   const [isCardDetails, setisCardDetails] = useState(false);
   const [cardNumber, setcardNumber] = useState("");
@@ -80,18 +54,6 @@ const CheckoutMobile = (props) => {
   const selectedPayment = useRecoilValue(selectedPaymentMethod);
   console.log('selectedAddress', selectedAddress)
   console.log('selectedPayment', selectedPayment)
-  const [shippingAddressFormValidateErr, setShippingAddressFormValidateErr] =
-    useState(() => {
-      return {
-        fullName: "",
-        address1: "",
-        address2: "",
-        city: "",
-        postalCode: "",
-        phone: "",
-        email: "",
-      };
-    });
 
   const modal = useSecondModal();
 
@@ -106,13 +68,11 @@ const CheckoutMobile = (props) => {
   const myPaymentError = queryParams.get("data");
   const history = useHistory();
   if (myPaymentError) {
-    // alert('הזן שם מלא ומספר טלפון')
     history.push("/review-your-images");
   }
 
   const openCheckoutDrawerMobile = () => {
     document.body.classList.add("overflowhdn");
-    closeAddressPopupMobile();
     closePaymentWithCardFormMobile();
     document.getElementById("checkoutOverlayMobile").style.display = "block";
   };
@@ -125,86 +85,6 @@ const CheckoutMobile = (props) => {
 
   const openAddressPopupMobile = () => {
     modal("open", 'addAddressMobile');
-  };
-
-  const closeAddressPopupMobile = () => {
-   
-  };
-
-  const openPaymentPopupMobile = async () => {
-    // if address form not filled and validated
-    if (selectedAddress) {
-      openAddressPopupMobile();
-    }
-  };
-
-  const cardPaymentProcess = async () => {
-    const uniqueUserId = props.uniqueUserId;
-    const frameQuantity = props.imagecount;
-    const oid = `${Math.floor(Math.random() * 100000000 + 1)}`;
-    const cardInfo = JSON.parse(localStorage.getItem("cardNumber"));
-    let totalPrice;
-    if (isDisplay) {
-      if (frameQuantity >= numberOfImages) {
-        totalPrice =
-          45 * frameQuantity - ((45 * frameQuantity) / 100) * percentages;
-      } else {
-        totalPrice = 45 * frameQuantity;
-      }
-    } else {
-      totalPrice = 45 * frameQuantity;
-    }
-
-    const paymentData = {
-      uniqueUserId: uniqueUserId,
-      frameQuantity: frameQuantity,
-      shippingAddressFormValues: shippingAddressFormValues,
-      oid,
-      cardInfo,
-      totalPrice: totalPrice,
-    };
-    console.log("paymentData");
-    console.log(paymentData);
-    console.log("paymentData");
-
-    const config = {
-      headers: {
-        "content-type": "application/json",
-      },
-    };
-
-    await axios.post(BASE_URL + "/user/addordercount");
-    const paymentResponse = await await axios.post(
-      BASE_URL + "/payment-processing",
-      paymentData,
-      config
-    );
-    console.log();
-    if (paymentResponse.status) {
-      let response = await axios.get(
-        `${BASE_URL}/user/addnewordercount`,
-        config
-      );
-      if (response.data.status === 200) {
-        localStorage.clear();
-        localStorage.setItem(
-          "order-details",
-          JSON.stringify(paymentResponse.data.odata)
-        );
-        history.push(paymentResponse.data.sucessUrl);
-      }
-    }
-
-    // .then((res) => {
-    //   console.log('payment ho gaya')
-    //   // console.log(res.data.data.url);
-    //   localStorage.setItem("paymentProcessId", res.data.data.processId);
-    //   localStorage.setItem("paymentProcessToken", res.data.data.processToken);
-    //   window.location.href = res.data.data.url;
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
   };
 
   const selectPaymentOption = (option) => {
