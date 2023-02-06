@@ -15,6 +15,7 @@ process.on('unhandledRejection', (reason, promise) => {
 
 mongoose.connect(process.env.MONGO_URI);
 app.use(cors());
+app.use(express.static('./public'));
 app.use(bodyparser.json({limit: '5000mb'}));
 // app.use(express.static('./public/front'));
 
@@ -24,7 +25,7 @@ app.use(bodyparser.json({limit: '5000mb'}));
 
  app.use("/api", apiroute);
  app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/front/index.html'));
+  res.sendFile(path.join(__dirname, '/public/index.html'));
 });
  
  app.listen(process.env.PORT, function () {
