@@ -13,7 +13,7 @@ process.on('unhandledRejection', (reason, promise) => {
 mongoose.connect(process.env.MONGO_URI);
 app.use(cors());
 app.use(bodyparser.json({limit: '5000mb'}));
-app.use('/public', express.static(__dirname + '/public'));
+app.use('/public/front', express.static(__dirname + '/public/front'));
 
 app.get('/', function (req, res) {
     res.send('You have no permission to access');
