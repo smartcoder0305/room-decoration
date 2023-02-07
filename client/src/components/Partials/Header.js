@@ -54,7 +54,7 @@ export default function Header() {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-2 col-md-4 order-md-1 text-md-left text-right">
-                  <img src="/assets/images/wtsap.svg" alt="" />
+                  <a href="https://wa.me/message/PRRDISOYMEUEB1"><img src="/assets/images/wtsap.svg" alt="" /></a>
                 </div>
 
                 <div className="col-8 col-md-4 text-center text-md-center order-md-2">
@@ -100,7 +100,7 @@ export default function Header() {
                 <img src="/assets/images/mcon1.svg" alt="" />
               </li>
               <li style={{marginBottom: "0px"}}>
-                <span>דברו איתנו בוואצאפ</span>
+                <a href="https://wa.me/message/PRRDISOYMEUEB1" alt=""><span>דברו איתנו בוואצאפ</span></a>
                 <img src="/assets/images/mcon2.svg" alt="" />
               </li>
               <li style={{marginBottom: "0px"}} onClick={() => handleAboutUsModal('CQ')}>

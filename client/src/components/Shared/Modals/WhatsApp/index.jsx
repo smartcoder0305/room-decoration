@@ -29,7 +29,7 @@ const WhatsApp = ({style}) => {
 				&nbsp;&nbsp;&nbsp;
 				<a
 					className="whatsapp_link"
-					href="https://api.whatsapp.com/send?phone=524321272&text=%D7%94%D7%99%D7%99%20%D7%91%D7%9C%[…]%20%D7%9C%D7%A9%D7%90%D7%95%D7%9C%20%D7%A9%D7%90%D7%9C%D7%94"
+					href="https://wa.me/message/PRRDISOYMEUEB1"
 				>
 					תעבירו אותי לוואצאפ
 					<img src="/assets/file/images/whatsapp_icon.png" />
