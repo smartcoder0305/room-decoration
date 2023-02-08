@@ -177,7 +177,7 @@ const AddCardFormMobile = () => {
                 placeholder="מספר כרטיס"
                 value={formik.values.cardNumber}
                 maxLength={19}
-                // style={{direction: "ltr"}}
+                style={{direction: "rtl"}}
               />
             </div>
           </div>
