@@ -54,7 +54,17 @@ export default function Header() {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-2 col-md-4 order-md-1 text-md-left text-right">
-                  <a href="https://wa.me/message/PRRDISOYMEUEB1"><img src="/assets/images/wtsap.svg" alt="" /></a>
+                  <img 
+                    src="/assets/images/wtsap.svg" 
+                    alt="" 
+                    onClick={() => {
+                      if (width > 767) {
+                        modal('open', 'whatsApp');
+                      } else {
+                        modal('open', 'whatsAppMobile');
+                      }
+                    }}
+                  style={{cursor: "pointer"}} />
                 </div>
 
                 <div className="col-8 col-md-4 text-center text-md-center order-md-2">

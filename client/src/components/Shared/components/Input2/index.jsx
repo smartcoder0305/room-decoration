@@ -58,7 +58,7 @@ const Input = (props) => {
         <input 
           id={props.name} 
           className={classNames('blends-input2', {'blends-input2-center': props.name === 'zipCode'})} 
-          style={{maxWidth: "calc(100% - 50px)"}} 
+          style={{minWidth: "calc(100% - 55px)"}} 
           placeholder={ isActive ? '' : props.placeholder} 
           ref={inputRef} 
           autoFocus={props.autoFocus}
