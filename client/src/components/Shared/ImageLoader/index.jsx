@@ -16,6 +16,7 @@ const ImageLoader = (props) => {
           src={"../assets/images/Rolling.svg"}
           style={style}
           className={className}
+          alt=''
         />
       }
       <img
@@ -24,8 +25,9 @@ const ImageLoader = (props) => {
         style={imgStyle}
         onLoad={() => {setLoading(false)}}
         {...rest}
+        alt=''
       />
-      {props?.shadow && <div className="album-item-shadow"></div>}
+      {(props?.shadow && isLoading === false) && <div className="album-item-shadow"></div>}
     </>
   );
 }

@@ -7,6 +7,7 @@ import "./style.css";
 const Input = (props) => {
   const inputRef = useRef();
   const [direction, setDirection] = useState(props.style?.direction);
+  const [isFocus, setFocus] = useState(false);
   const { height, width } = useWindowDimensions();
   useEffect(() => {
     if(props.autoFocus) {
@@ -17,13 +18,19 @@ const Input = (props) => {
   }, [])
 
   const handleFocus = () => {
-    if (width < 768 && props.name === 'cardNumber')
+    setFocus(true);
+    if (width < 768 && props.isFlexible) {
       setDirection('ltr');
+    }
   }
 
-  const handleBlur = () => {
-    if (width < 768 && props.name === 'cardNumber')
-      setDirection('rtl')
+  const handleBlur = (e) => {
+    setFocus(false);
+    if (width < 768 && props.isFlexible) {
+      if (!e.target.value) {
+        setDirection('rtl');
+      }
+    }
   }
   return (
     <div className={classNames('blends-input-wrapper', {error: props.error})}>
@@ -45,6 +52,7 @@ const Input = (props) => {
           ref={inputRef}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          placeholder={isFocus ? '' : props.placeholder}
           />
       {/* </InputMask> */}
     </div>

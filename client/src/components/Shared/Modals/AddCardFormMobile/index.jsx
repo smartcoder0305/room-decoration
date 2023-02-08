@@ -33,6 +33,13 @@ const AddCardFormMobile = () => {
     let shortYearStr = shortYear < 10 ? '0' + shortYear.toString() : shortYear.toString();
     return `${month}${shortYearStr}`;
   }
+
+  const getCurrentMonthString = () => {
+    const month = new Date().getMonth()+1;
+    if (month > 10) return `${month}`;
+    return `0${month}`;
+  }
+
   const verifyCard = async (card) => {
     try {
       const res = await axios.post(BASE_URL+'/payment/cardverify', {
@@ -56,8 +63,8 @@ const AddCardFormMobile = () => {
     initialValues: {
       cardHolder: "",
       cardNumber: "",
-      expiriedMonth: "",
-      expiriedYear: "",
+      expiriedMonth: getCurrentMonthString(),
+      expiriedYear: new Date().getFullYear(),
       cvv: "",
     },
     onSubmit: async (values) => {
@@ -178,6 +185,7 @@ const AddCardFormMobile = () => {
                 value={formik.values.cardNumber}
                 maxLength={19}
                 style={{direction: "rtl"}}
+                isFlexible={true}
               />
             </div>
           </div>
@@ -194,6 +202,7 @@ const AddCardFormMobile = () => {
                   placeholder="קוד בטחון (CVV)"
                   maxLength={3}
                   style={{direction: "rtl"}}
+                  isFlexible={true}
                 />
                 {/* <img 
                   src="/assets/file/images/CVV_icon.png" 

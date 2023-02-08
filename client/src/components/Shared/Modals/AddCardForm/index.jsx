@@ -34,6 +34,13 @@ const AddCardForm = () => {
     let shortYearStr = shortYear < 10 ? '0' + shortYear.toString() : shortYear.toString();
     return `${month}${shortYearStr}`;
   }
+
+  const getCurrentMonthString = () => {
+    const month = new Date().getMonth()+1;
+    if (month > 10) return `${month}`;
+    return `0${month}`;
+  }
+
   const verifyCard = async (card) => {
     try {
       const res = await axios.post(BASE_URL+'/payment/cardverify', {
@@ -57,8 +64,8 @@ const AddCardForm = () => {
     initialValues: {
       cardHolder: "",
       cardNumber: "",
-      expiriedMonth: "",
-      expiriedYear: "",
+      expiriedMonth: getCurrentMonthString(),
+      expiriedYear: new Date().getFullYear(),
       cvv: "",
     },
     onSubmit: async (values) => {
