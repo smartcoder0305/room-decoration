@@ -2629,6 +2629,7 @@ footer:before {
 
     .my-album {
         grid-template-columns: repeat(auto-fill, 250px);
+        padding-top: 65px;
     }
     button.checkout-btn {
         font-size: 11px;

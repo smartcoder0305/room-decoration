@@ -169,6 +169,13 @@ const ReviewImages = () => {
         >
           {width > 767 && (
             <>
+              <style jsx>{`
+                body {
+                  height:100%; 
+                  overflow:hidden;
+                  -webkit-overflow-scrolling: touch;
+                }
+              `}</style>
               <div className={`content-overlay ${frameChoose}`}>
                 <div className="content-details fadeIn-bottom">
                   <img

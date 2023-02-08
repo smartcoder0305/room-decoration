@@ -110,7 +110,7 @@ export default function Header() {
                 <img src="/assets/images/mcon1.svg" alt="" />
               </li>
               <li style={{marginBottom: "0px"}}>
-                <a href="https://wa.me/message/PRRDISOYMEUEB1" alt=""><span>דברו איתנו בוואצאפ</span></a>
+                <a href="https://wa.me/message/PRRDISOYMEUEB1" alt="" target="_blank" rel="noreferrer"><span>דברו איתנו בוואצאפ</span></a>
                 <img src="/assets/images/mcon2.svg" alt="" />
               </li>
               <li style={{marginBottom: "0px"}} onClick={() => handleAboutUsModal('CQ')}>

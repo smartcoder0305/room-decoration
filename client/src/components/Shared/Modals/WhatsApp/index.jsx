@@ -30,9 +30,11 @@ const WhatsApp = ({style}) => {
 				<a
 					className="whatsapp_link"
 					href="https://wa.me/message/PRRDISOYMEUEB1"
+					target="_blank"
+					rel="noreferrer"
 				>
 					תעבירו אותי לוואצאפ
-					<img src="/assets/file/images/whatsapp_icon.png" />
+					<img src="/assets/file/images/whatsapp_icon.png" alt=""/>
 				</a>
 			</div>
 		</div>

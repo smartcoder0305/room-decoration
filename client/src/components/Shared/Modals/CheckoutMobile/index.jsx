@@ -260,6 +260,7 @@ const CheckoutMobile = (props) => {
           no: selectedPayment.cardNumber.replace(/\s/g, ''),
           expdate: getCardExpDate(selectedPayment.expiriedMonth, selectedPayment.expiriedYear),
           cvv: selectedPayment.cvv,
+          email: selectedAddress.email,
         },
         amount: netPrice,
       });

@@ -16,6 +16,8 @@ const filestack = require("filestack-js");
 const smartcrop = require('smartcrop-sharp');
 const aws = require('aws-sdk');
 
+let maxOrderID = 0;
+
 const filestackClient =  filestack.init(process.env.FILESTACK_KEY);
 
 const storage = multer.memoryStorage()
@@ -866,7 +868,14 @@ exports.createOrder = async (req, res) => {
   try {
     const maxOid = await orderAddModel.findOne({}).sort({ oid: -1 }).limit(1);
     console.log('max::::', maxOid.oid);
-    const oid = maxOid.oid ? maxOid.oid + 1 : 534410001;
+    let oid = maxOid.oid ? maxOid.oid + 1 : 534410001;
+    if (maxOrderID === 0) maxOrderID = oid;
+    else {
+      if (maxOrderID >= oid) {
+        oid = maxOrderID + 1;
+      }
+      maxOrderID = oid;
+    }
     console.log('oid::::', oid);
     const orderCreate = await orderAddModel.create({uid: req.body.uid, oid: oid, shippingAddress: req.body});
     console.log('orderCreate:::::::', orderCreate);
@@ -880,7 +889,7 @@ exports.createOrder = async (req, res) => {
       console.log('uploaded file to Dropbox at: ', destinationPath);
       await s3Upload(imgBuffer, destinationPath);
     }
-    const frameName = FRAMES[images[0].frame] || FRAMES.classic;
+    const frameName = FRAMES[images[0]?.frame] || FRAMES.classic;
     const orderText = `(1) Name of chosen frame : ${frameName}
 (2) Full Customer Name : ${req.body.fullName}
 (3) Email : ${req.body.email}
