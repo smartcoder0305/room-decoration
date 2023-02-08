@@ -2640,7 +2640,11 @@ footer:before {
     .my-album {
         /* display: flex; */
         overflow-x: auto;
-        padding-bottom: 20px;
+        padding-bottom: 60px;
+        margin-left: -25px;
+        padding-left: 25px;
+        margin-right: -25px;
+        width: 100vw;
     }
     .gg2 {
         background: #f8f8f8;

@@ -2,10 +2,13 @@ import React, {useRef, useState, useMemo} from "react";
 import classNames from "classnames";
 import "./style.css";
 import { useEffect } from "react";
+import useWindowDimensions from "@helpers/hooks/windowDemensions";
 
 const Input = (props) => {
   const inputRef = useRef();
   const [isActive, setActive] = useState(false);
+  const { height, width } = useWindowDimensions();
+  
   useEffect(() => {
     if(props.autoFocus) {
       if (inputRef.current){

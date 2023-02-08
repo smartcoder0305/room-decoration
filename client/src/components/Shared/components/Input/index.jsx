@@ -1,11 +1,13 @@
-import React, {useRef} from "react";
+import React, {useRef, useState, useEffect} from "react";
 import InputMask from "react-input-mask";
 import classNames from "classnames";
+import useWindowDimensions from "@helpers/hooks/windowDemensions";
 import "./style.css";
-import { useEffect } from "react";
 
 const Input = (props) => {
   const inputRef = useRef();
+  const [direction, setDirection] = useState(props.style?.direction);
+  const { height, width } = useWindowDimensions();
   useEffect(() => {
     if(props.autoFocus) {
       if (inputRef.current){
@@ -13,6 +15,16 @@ const Input = (props) => {
       }
     }
   }, [])
+
+  const handleFocus = () => {
+    if (width < 768 && props.name === 'cardNumber')
+      setDirection('ltr');
+  }
+
+  const handleBlur = () => {
+    if (width < 768 && props.name === 'cardNumber')
+      setDirection('rtl')
+  }
   return (
     <div className={classNames('blends-input-wrapper', {error: props.error})}>
       {props.label && (
@@ -20,13 +32,21 @@ const Input = (props) => {
           {props.label}
         </label>
       )}
-      <InputMask
+      {/* <InputMask
         mask={props?.mask}
         value={props.value}
         onChange={props.onChange}
-      >
-        <input id={props.name} className="blends-input" {...props} ref={inputRef}/>
-      </InputMask>
+      > */}
+        <input 
+          id={props.name} 
+          className="blends-input" 
+          {...props}
+          style={{direction: direction}}
+          ref={inputRef}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          />
+      {/* </InputMask> */}
     </div>
   );
 };

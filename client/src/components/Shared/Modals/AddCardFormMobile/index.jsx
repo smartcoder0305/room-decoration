@@ -177,7 +177,7 @@ const AddCardFormMobile = () => {
                 placeholder="מספר כרטיס"
                 value={formik.values.cardNumber}
                 maxLength={19}
-                style={{direction: "ltr"}}
+                // style={{direction: "ltr"}}
               />
             </div>
           </div>
@@ -195,10 +195,10 @@ const AddCardFormMobile = () => {
                   maxLength={3}
                   style={{direction: "rtl"}}
                 />
-                <img 
+                {/* <img 
                   src="/assets/file/images/CVV_icon.png" 
                   style={{position: "absolute", top: "50%", left: "15px", transform: "translate(0%, -50%)"}}
-                />
+                /> */}
               </div>
             </div>
           </div>

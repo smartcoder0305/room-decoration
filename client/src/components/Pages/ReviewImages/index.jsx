@@ -168,24 +168,26 @@ const ReviewImages = () => {
           onClick={() => openImageOptions(im)}
         >
           {width > 767 && (
-            <div className={`content-overlay ${frameChoose}`}>
-              <div className="content-details fadeIn-bottom">
-                <img
-                  src="/assets/file/images/edit_image.svg"
-                  className="edit"
-                  data-toggle="modal"
-                  data-target="#myModal"
-                  onClick={() => edit_seg(im)}
-                  alt="edit"
-                />
-                <img
-                  src="/assets/file/images/Delete_icon.svg"
-                  className="edit"
-                  alt="remove"
-                  onClick={() => deleteImage(im)}
-                />
+            <>
+              <div className={`content-overlay ${frameChoose}`}>
+                <div className="content-details fadeIn-bottom">
+                  <img
+                    src="/assets/file/images/edit_image.svg"
+                    className="edit"
+                    data-toggle="modal"
+                    data-target="#myModal"
+                    onClick={() => edit_seg(im)}
+                    alt="edit"
+                  />
+                  <img
+                    src="/assets/file/images/Delete_icon.svg"
+                    className="edit"
+                    alt="remove"
+                    onClick={() => deleteImage(im)}
+                  />
+                </div>
               </div>
-            </div>
+            </>
           )}
         </div>
         <ImageLoader
@@ -193,6 +195,7 @@ const ReviewImages = () => {
           className={cn(`img-con ${frameChoose}`)}
           alt="icon"
         />
+          <div className="album-item-shadow"></div>
         </div>
       );
     });
