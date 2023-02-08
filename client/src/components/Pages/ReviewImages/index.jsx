@@ -195,7 +195,6 @@ const ReviewImages = () => {
           className={cn(`img-con ${frameChoose}`)}
           alt="icon"
         />
-          <div className="album-item-shadow"></div>
         </div>
       );
     });

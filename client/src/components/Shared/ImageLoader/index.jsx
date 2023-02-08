@@ -25,6 +25,7 @@ const ImageLoader = (props) => {
         onLoad={() => {setLoading(false)}}
         {...rest}
       />
+      <div className="album-item-shadow"></div>
     </>
   );
 }
