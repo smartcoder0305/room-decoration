@@ -169,13 +169,6 @@ const ReviewImages = () => {
         >
           {width > 767 && (
             <>
-              <style jsx>{`
-                body {
-                  height:100%; 
-                  overflow:hidden;
-                  -webkit-overflow-scrolling: touch;
-                }
-              `}</style>
               <div className={`content-overlay ${frameChoose}`}>
                 <div className="content-details fadeIn-bottom">
                   <img
@@ -299,6 +292,13 @@ const ReviewImages = () => {
       {/* Start checkout for mobile */}
       {width <= 767 && (
         <div className="mobile-checkout">
+          <style jsx>{`
+            body {
+              height: 100% !important; 
+              overflow: hidden !important;
+              -webkit-overflow-scrolling: touch !important;
+            }
+          `}</style>
           <img
             onClick={() => showUploadOptions()}
             src="/assets/file/images/file.png"
