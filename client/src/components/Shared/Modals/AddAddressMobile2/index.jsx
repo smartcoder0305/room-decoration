@@ -75,9 +75,9 @@ const AddAddressModalMobile = () => {
               value={formik.values.fullName}
               error={formik.errors.fullName}
               icon={<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="#727272" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/>
-                  <path d="M14.3333 14.8667C14.3333 11.9211 11.9456 9.53334 8.99996 9.53334C6.05436 9.53334 3.66663 11.9211 3.66663 14.8667" stroke="#727272" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/>
-                  <path d="M9.00005 9.53333C10.7674 9.53333 12.2 8.10064 12.2 6.33333C12.2 4.56602 10.7674 3.13333 9.00005 3.13333C7.23274 3.13333 5.80005 4.56602 5.80005 6.33333C5.80005 8.10064 7.23274 9.53333 9.00005 9.53333Z" stroke="#727272" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/>
+                  <path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="#727272" strokeWidth="1.5" strokeMiterlimit="10" strokeLinejoin="round"/>
+                  <path d="M14.3333 14.8667C14.3333 11.9211 11.9456 9.53334 8.99996 9.53334C6.05436 9.53334 3.66663 11.9211 3.66663 14.8667" stroke="#727272" strokeWidth="1.5" strokeMiterlimit="10" strokeLinejoin="round"/>
+                  <path d="M9.00005 9.53333C10.7674 9.53333 12.2 8.10064 12.2 6.33333C12.2 4.56602 10.7674 3.13333 9.00005 3.13333C7.23274 3.13333 5.80005 4.56602 5.80005 6.33333C5.80005 8.10064 7.23274 9.53333 9.00005 9.53333Z" stroke="#727272" strokeWidth="1.5" strokeMiterlimit="10" strokeLinejoin="round"/>
                 </svg>}
             />
           </div>
@@ -129,8 +129,8 @@ const AddAddressModalMobile = () => {
               onChange={formik.handleChange}
               error={formik.errors.address}
               icon={<svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.3851 17H2.84647V9.61531H1.76031C1.05999 9.61531 0.73322 8.74207 1.26061 8.28114L8.4656 1.45831C9.11053 0.847229 10.1204 0.847229 10.7653 1.45831L17.9697 8.28114C18.4977 8.74146 18.1709 9.61531 17.47 9.61531H16.3851V17Z" stroke="#727272" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M12.0773 17H7.15417V13.3077C7.15417 11.9483 8.25634 10.8461 9.61574 10.8461C10.9751 10.8461 12.0773 11.9483 12.0773 13.3077V17Z" stroke="#727272" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16.3851 17H2.84647V9.61531H1.76031C1.05999 9.61531 0.73322 8.74207 1.26061 8.28114L8.4656 1.45831C9.11053 0.847229 10.1204 0.847229 10.7653 1.45831L17.9697 8.28114C18.4977 8.74146 18.1709 9.61531 17.47 9.61531H16.3851V17Z" stroke="#727272" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12.0773 17H7.15417V13.3077C7.15417 11.9483 8.25634 10.8461 9.61574 10.8461C10.9751 10.8461 12.0773 11.9483 12.0773 13.3077V17Z" stroke="#727272" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>}
             />
             <Input
@@ -177,8 +177,8 @@ const AddAddressModalMobile = () => {
                 error={formik.errors.zipCode}
                 maxLength={7}
                 icon={<svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12.7333 6.86667C12.7333 5.31073 12.1152 3.81852 11.015 2.71831C9.91481 1.61809 8.4226 1 6.86667 1C5.31073 1 3.81852 1.61809 2.71831 2.71831C1.61809 3.81852 1 5.31073 1 6.86667C1 12.2 6.86667 17 6.86667 17C6.86667 17 12.7333 12.2 12.7333 6.86667Z" stroke="#727272" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M6.86668 9.53333C8.33944 9.53333 9.53335 8.33942 9.53335 6.86666C9.53335 5.3939 8.33944 4.2 6.86668 4.2C5.39392 4.2 4.20001 5.3939 4.20001 6.86666C4.20001 8.33942 5.39392 9.53333 6.86668 9.53333Z" stroke="#727272" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12.7333 6.86667C12.7333 5.31073 12.1152 3.81852 11.015 2.71831C9.91481 1.61809 8.4226 1 6.86667 1C5.31073 1 3.81852 1.61809 2.71831 2.71831C1.61809 3.81852 1 5.31073 1 6.86667C1 12.2 6.86667 17 6.86667 17C6.86667 17 12.7333 12.2 12.7333 6.86667Z" stroke="#727272" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M6.86668 9.53333C8.33944 9.53333 9.53335 8.33942 9.53335 6.86666C9.53335 5.3939 8.33944 4.2 6.86668 4.2C5.39392 4.2 4.20001 5.3939 4.20001 6.86666C4.20001 8.33942 5.39392 9.53333 6.86668 9.53333Z" stroke="#727272" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>}
               />
             </div>

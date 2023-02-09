@@ -7,13 +7,13 @@ const ErrorCart = ({style}) => {
   if (width < 767) {
     return (
       <div className="cart-error-message-mobile" style={{ ...style }}>
-        <img src="/assets/file/images/ErrorCartMessage.png" />
+        <img src="/assets/file/images/ErrorCartMessage.png" alt=""/>
       </div>
     );
   }
   return (    
     <div className="cart-error-message" style={{ ...style }}>
-      <img src="/assets/file/images/ErrorCartMessage.png" />
+      <img src="/assets/file/images/ErrorCartMessage.png" alt=""/>
     </div>
   )
 }

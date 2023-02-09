@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import cn from "classnames";
 import axios from "axios";
@@ -85,29 +85,6 @@ const Checkout = (props) => {
     }
   }
 
-  const getCuponData = async () => {
-    try {
-      const config = {
-        headers: {
-          "content-type": "application/json",
-        },
-      };
-      const cuponData = await axios.get(
-        `${BASE_URL}/admin/setting/getcupons`,
-        config
-      );
-      if (cuponData.data.status === 200) {
-        setNumberOfImages(cuponData.data.getCupon.numberOfImages);
-        setPercentages(cuponData.data.getCupon.percentage);
-        setIsDisplay(cuponData.data.getCupon.cuponsAvalible);
-      }
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    getCuponData();
-  }, []);
-
   const openAddCard = (name) => {
     modal("open", name);
   };
@@ -138,9 +115,9 @@ const Checkout = (props) => {
             >
               {selectedAddress ? selectedAddress.city + " ," + selectedAddress.fullName: "פרטים אישיים" }
               {selectedAddress ? (
-                <img src="/assets/file/images/Check.png" style={{marginBottom: "2px", marginRight: "8px"}}/> 
+                <img src="/assets/file/images/Check.png" style={{marginBottom: "2px", marginRight: "8px"}} alt=""/> 
               ) : (
-                <img src={"/assets/images/form_address.svg"} style={{width: "25px", height: "25px"}} />
+                <img src={"/assets/images/form_address.svg"} style={{width: "25px", height: "25px"}} alt=""/>
               )}
             </button>
             <button
@@ -150,9 +127,9 @@ const Checkout = (props) => {
             >
               {selectedPayment ? selectedPayment.hebrewType + ' ' + selectedPayment.cardNumber.substring(15, 19) : 'תשלום באשראי'}
               {selectedPayment ? (
-                <img src="/assets/file/images/Check.png" style={{marginBottom: "2px", marginRight: "8px"}}/> 
+                <img src="/assets/file/images/Check.png" style={{marginBottom: "2px", marginRight: "8px"}} alt=""/> 
               ) : (
-                <img src={"/assets/images/form_card.svg"} style={{width: "25px", height: "25px"}} />
+                <img src={"/assets/images/form_card.svg"} style={{width: "25px", height: "25px"}} alt=""/>
               )}
             </button>
           </div>

@@ -3,8 +3,6 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import cn from "classnames";
 import { nextTuesday } from "@helpers/date";
-import CardPayment from "./components/CardPayment";
-import PaymentOptions from "./components/PaymentOptions";
 import { useSecondModal } from "@helpers/hooks/useSecondModal";
 import { useRecoilValue } from "recoil";
 import {
@@ -42,13 +40,7 @@ const CheckoutMobile = (props) => {
   const [isDisplay, setIsDisplay] = useState();
 
   const [shippingAddressFormValues, setShippingAddressFormValues] = useState(getFormValues);
-  const [totalPrice, settotalPrice] = useState(props.netPrice);
 
-  const [isCardDetails, setisCardDetails] = useState(false);
-  const [cardNumber, setcardNumber] = useState("");
-  const [cardDate, setcardDate] = useState("");
-  const [cardCvv, setcardCvv] = useState("");
-  const [cardHolderId, setcardHolderId] = useState("");
   const [isLoading, setLoading] = useState(false);
   const selectedAddress = useRecoilValue(selectedShippingAddress);
   const selectedPayment = useRecoilValue(selectedPaymentMethod);
@@ -71,53 +63,14 @@ const CheckoutMobile = (props) => {
     history.push("/review-your-images");
   }
 
-  const openCheckoutDrawerMobile = () => {
-    document.body.classList.add("overflowhdn");
-    closePaymentWithCardFormMobile();
-    document.getElementById("checkoutOverlayMobile").style.display = "block";
-  };
-
-  const overlayClick = () => {
-    document.getElementById("myCartMobile").style.display = "none";
-    document.getElementById("checkoutOverlayMobile").style.display = "none";
-  };
-
-
   const openAddressPopupMobile = () => {
     modal("open", 'addAddressMobile');
-  };
-
-  const selectPaymentOption = (option) => {
-    console.log("props");
-    console.log(props.netPrice);
-    settotalPrice(props.netPrice);
-    localStorage.setItem("totalamount", props.netPrice);
-    console.log("props");
-    if (option === "Card") {
-      document.body.classList.remove("overflowhdn");
-      document.getElementById("paymentWithCardFormMobile").style.display =
-        "block";
-      document.getElementById("paymentOptionChoose").style.display = "none";
-    } else {
-      document.getElementById("paypalmodel").style.display = "block";
-      document.getElementById("paymentOptionChoose").style.display = "none";
-    }
   };
 
   const mySaveCardPopUp = () => {
     modal("open", 'selectCardMobile');
   };
 
-  const closePaymentWithCardFormMobile = () => {
-    overlayClick();
-    document.getElementById("paymentWithCardFormMobile").style.display = "none";
-  };
-
-  const paypalCloseButton = () => {
-    document.getElementById("paypalmodel").style.display = "none";
-    document.getElementById("checkoutOverlayMobile").style.display = "none";
-    window.location.href = "/review-your-images";
-  };
 
   const renderAddAddressButton = () => {
     if (selectedAddress) {
@@ -127,7 +80,7 @@ const CheckoutMobile = (props) => {
           selectedAddress.fullName +
           ", " +
           selectedAddress.city,
-        img: <img src="/assets/file/images/Check.png" style={{marginBottom: "2px"}}/>,
+        img: <img src="/assets/file/images/Check.png" style={{marginBottom: "2px"}} alt=""/>,
       };
     } else {
       return {
@@ -143,89 +96,6 @@ const CheckoutMobile = (props) => {
       };
     }
   };
-
-  const saveCardDetails = () => {
-    // console.log({ cardNumber, cardDate, cardCvv, cardHolderId })
-    // console.log('cardNumberlength')
-    // console.log(cardHolderId)
-    // console.log(cardHolderId.length)
-    // console.log('cardNumberlength')
-    if (!cardNumber) {
-      document.getElementById("customerCardNumber").style.display = "block";
-    } else if (cardNumber.length != 19) {
-      document.getElementById("customerCardNumber").style.display = "block";
-    } else if (!cardDate) {
-      document.getElementById("customerCardCvvandDateValidity").style.display =
-        "block";
-    } else if (!cardCvv) {
-      document.getElementById("customerCardCvvandDateValidity").style.display =
-        "block";
-    } else if (!cardHolderId) {
-      document.getElementById("customerCardId").style.display = "block";
-    } else if (cardHolderId.length != 11) {
-      document.getElementById("customerCardId").style.display = "block";
-    } else {
-      let customerCard = { cardNumber, cardDate, cardCvv, cardHolderId };
-      localStorage.setItem("cardNumber", JSON.stringify(customerCard));
-      closePaymentWithCardFormMobile();
-      openCheckoutDrawerMobile();
-      setisCardDetails(true);
-    }
-  };
-
-  const handelSaveCardInputs = (e) => {
-    if (e.target.name === "cardnumber") {
-      document.getElementById("customerCardNumber").style.display = "none";
-      setcardNumber(e.target.value);
-    }
-    if (e.target.name === "cardcvv") {
-      document.getElementById("customerCardCvvandDateValidity").style.display =
-        "none";
-      setcardCvv(e.target.value);
-    }
-    if (e.target.name === "carddate") {
-      document.getElementById("customerCardCvvandDateValidity").style.display =
-        "none";
-      setcardDate(e.target.value);
-    }
-    if (e.target.name === "cardid") {
-      document.getElementById("customerCardId").style.display = "none";
-      setcardHolderId(e.target.value);
-    }
-  };
-  const mycloseAddressPopupMobile = () => {
-    openCheckoutDrawerMobile();
-  };
-
-  const myclosePaymentWithCardFormMobile = () => {
-    // closePaymentWithCardFormMobile()
-    openCheckoutDrawerMobile();
-  };
-
-  const getCuponData = async () => {
-    try {
-      const config = {
-        headers: {
-          "content-type": "application/json",
-        },
-      };
-      const cuponData = await axios.get(
-        `${BASE_URL}/admin/setting/getcupons`,
-        config
-      );
-      console.log("-------------------lol----------------");
-      console.log(cuponData.data.getCupon.numberOfImages);
-      if (cuponData.data.status === 200) {
-        setNumberOfImages(cuponData.data.getCupon.numberOfImages);
-        setPercentages(cuponData.data.getCupon.percentage);
-        setIsDisplay(cuponData.data.getCupon.cuponsAvalible);
-      }
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    getCuponData();
-  }, []);
 
   const creatOrder = async (data) => {
     try {
@@ -306,7 +176,7 @@ const CheckoutMobile = (props) => {
                   אני רוצה שתארזו לי את המשלוח כמתנה
                 </span>&nbsp;
                 <input type="checkbox" style={{width: "14px", height: "25px"}}/>
-                <img src="/assets/file/images/gift.png" style={{width: "25px", height: "25px"}}/>
+                <img src="/assets/file/images/gift.png" style={{width: "25px", height: "25px"}} alt=""/>
               </div>
             </div>
 
@@ -352,7 +222,7 @@ const CheckoutMobile = (props) => {
                         data-target="#addwin"
                         onClick={mySaveCardPopUp}
                       > &nbsp;&nbsp;
-                        <img src="/assets/file/images/Check.png" style={{marginBottom: "2px"}}/>
+                        <img src="/assets/file/images/Check.png" style={{marginBottom: "2px"}} alt=""/>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         {selectedPayment.hebrewType + ' ' +selectedPayment.cardNumber.substring(15, 19)}
                       </p>
@@ -372,6 +242,7 @@ const CheckoutMobile = (props) => {
                         <img
                           src="/assets/file/images/mycard.svg"
                           style={{width: "25px", height: "16.42px"}}
+                          alt=""
                         />
                         &nbsp;&nbsp;&nbsp;
                         תשלום באשראי
@@ -413,48 +284,6 @@ const CheckoutMobile = (props) => {
                     <div>סה”כ</div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      {/* Start payment option choose */}
-      <PaymentOptions selectPaymentOption={selectPaymentOption} />
-      {/* End payment option choose */}
-
-      {/* Start payment with card */}
-      <CardPayment
-        saveCardDetails={saveCardDetails}
-        myclosePaymentWithCardFormMobile={myclosePaymentWithCardFormMobile}
-        handelSaveCardInputs={handelSaveCardInputs}
-      />
-      {/* End payment with card */}
-
-        <div
-          className="modal my-modal1"
-          id="paypalmodel"
-          // style={{ display: "none" }}
-          // id='mob-paypal'
-        >
-          <div className="modal-dialog modal_fixed fullwidthsmall modal-dialog-centered">
-            <div
-              className="modal-content paypal-model-style-mob"
-              id="paymentOptionChooseContent"
-            >
-              <div className="modal-body p-0">
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  onClick={() => {
-                    paypalCloseButton();
-                  }}
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                {/* <PayPal totalPrice={props.netPrice} frames={props.imagecount} /> */}
-                {/* <TestPay totalPrice={props.netPrice} frames={props.imagecount} /> */}
               </div>
             </div>
           </div>

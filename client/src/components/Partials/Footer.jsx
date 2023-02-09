@@ -13,26 +13,6 @@ const Footer = ({existData}) => {
   const modal = useSecondModal();
   const [aboutStatus, setAboutUs] = useRecoilState(aboutUs);
 
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-  const getPages = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const response = await axios.get(`${BASE_URL}/admin/getAllPages`, config);
-
-      if (response.data.status === 200) {
-        setReviewData(response.data.getPage);
-      }
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    getPages();
-  }, []);
-
   const handleAboutUsModal = (type) => {
     setAboutUs(type)
     if (width > 768) {
