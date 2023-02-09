@@ -79,9 +79,9 @@ console.log(url.replace(/\n/g, ''));
 exports.payWithCard = async (req, res) => {
   try {
     const {amount, card} = req.body;
-    console.log('Pay Amount', amount / 45 * 0.5);
+    console.log('Pay Amount', amount);
     console.log('Card Info', card);
-    const {data} = await axios.get(getTranzilaPaymentUrlUsingCard(amount / 45 * 0.5, card));
+    const {data} = await axios.get(getTranzilaPaymentUrlUsingCard(amount, card));
     const responseParams = data.split('&');
     if (responseParams[0] === 'Response=000') {
       return res.json('Payment Success!')
@@ -118,9 +118,9 @@ TranzilaPW=${TRANZILA_PW}
 exports.verifyCard = async (req, res) => {
   try {
     const {amount, card} = req.body;
-    console.log('Pay Amount', amount / 45 * 0.5);
+    console.log('Pay Amount', amount);
     console.log('Card Info', card);
-    const {data} = await axios.get(getTranzilaCardVerifyUrl(amount / 45 * 0.5, card));
+    const {data} = await axios.get(getTranzilaCardVerifyUrl(amount, card));
     const responseParams = data.split('&');
     if (responseParams[0] === 'Response=000') {
       return res.json('Verify Success!');
