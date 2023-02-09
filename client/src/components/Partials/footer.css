@@ -7,6 +7,10 @@
     grid-template-columns: 1fr 1fr 1fr;
 }
 
+.footer-column {
+    order: 1;
+}
+
 @media screen and (max-width: 992px) {
     .footer-row {
         grid-template-columns: 1fr 1fr;
@@ -27,6 +31,7 @@
     .footer-row {
         grid-template-columns: 1fr;
         gap: 15px;
+        grid-auto-flow: dense;
     }
     .footer-row .footer-column:nth-child(2) {
         display: none;

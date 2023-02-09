@@ -1,0 +1,13 @@
+.cart-error-message {
+  position: absolute;
+  left: auto;
+  right: auto;
+  bottom: 46px;
+}
+
+.cart-error-message-mobile {
+  position: absolute;
+  left: auto;
+  right: auto;
+  bottom: 479px;
+}

@@ -12,6 +12,7 @@ const StyledSelect = (props) => {
         className="blends-select"
         classNamePrefix="blends-select"
         {...props}
+        noOptionsMessage={() => 'אין תוצאות'}
       />
     </div>
   );

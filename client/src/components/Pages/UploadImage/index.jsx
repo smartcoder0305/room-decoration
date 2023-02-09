@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 import uniqid from "uniqid";
-import { uploadSingleImage, uploadMultipleImages } from '@api';
+import { uploadSingleImage, uploadMultipleImages, getImagesDB } from '@api';
 import { useModal } from "@helpers/hooks/useModal";
 
+import {
+  imageCountState
+} from "@atoms/priceCalc";
+import {useRecoilValue} from "recoil";
 import "./style.css";
 
 const UploadImage = () => {
-  const storedValues = localStorage.getItem("uniqueUserId");
+  const imagecount = useRecoilValue(imageCountState);
 
   const [deskbody_opcy, setdeskbody_opcy] = useState();
   const [showSpinner, setshowSpinner] = useState(false);
@@ -18,15 +21,31 @@ const UploadImage = () => {
 
   //////////////  Choosing Frame   /////////////
 
+  useEffect(() => {
+    setshowSpinner(true);
+    async function initiateData() {
+      await getImagesDB();
+      setshowSpinner(false);
+    }
+    initiateData();
+  }, []);
+
   const opcy_desh_click = () => {
     setdeskbody_opcy("none");
   };
 
   const upload = (e) => {
+    console.log('####################')
     if (e.type === "click") {
       openUploadMenu();
       return;
     } else {
+      console.log('####################', imagecount + e.target.files.length)
+      if (imagecount + e.target.files.length > 30) {
+        alert("לא ניתן להעלות יותר מ30 תמונות");
+        modal('hide', 'uploadOptions');
+        return;
+      }
       setshowSpinner(true);
       const uid = uniqid();
       const formdata = new FormData();
@@ -48,32 +67,28 @@ const UploadImage = () => {
             })
         };
       } else {
-        if (e.target.files.length > 20) {
-          alert("Image limit over. Max uploaded image 20");
-        } else {
-          for (let i = 0; i < e.target.files.length; i++) {
-            let files = e.target.files[i];
-            let img = document.createElement("img");
-            img.src = URL.createObjectURL(files);
-            img.onload = function () {
-             
-            };
-            formdata.append("imagewidth", img.width);
-            formdata.append("imageheight", img.height);
-            formdata.append("imageext", 0);
-            formdata.append("image", files);
-            formdata.append("uid", uid);
-          }
-
-          for (var key of formdata.entries()) {
-            console.log(key[0] + ", " + key[1]);
-          }
-
-          uploadMultipleImages()
-            .then(() => {
-              history.push("/review-your-images");
-            })
+        for (let i = 0; i < e.target.files.length; i++) {
+          let files = e.target.files[i];
+          let img = document.createElement("img");
+          img.src = URL.createObjectURL(files);
+          img.onload = function () {
+            
+          };
+          formdata.append("imagewidth", img.width);
+          formdata.append("imageheight", img.height);
+          formdata.append("imageext", 0);
+          formdata.append("image", files);
+          formdata.append("uid", uid);
         }
+
+        for (var key of formdata.entries()) {
+          console.log(key[0] + ", " + key[1]);
+        }
+
+        uploadMultipleImages()
+          .then(() => {
+            history.push("/review-your-images");
+          })
       }
     }
   };
@@ -106,9 +121,9 @@ const UploadImage = () => {
                 style={{ zIndex: "1", height: "100% !important" }}
               />
               <button>
-                <img src="assets/file/images/plus.svg" alt="plus" />
+                <img src="/assets/file/images/plus.svg" alt="plus" />
               </button>
-              <h2>גררו את התמונות לכאן</h2>
+              <h2>בואו נתחיל עם כמה תמונות</h2>
               <p>הזמנה ממוצעת מכילה כ8 תמונות</p>
             </div>
           </div>

@@ -12,15 +12,7 @@ export const secondOverlayState = atom({
 
 export const paymentMethods = atom({
     key: 'payments',
-    default: [
-        // {
-        //     cardNumber: '4800 0000 0000 0000',
-        //     cardHolder: 'Rusan Matusevich',
-        //     expiriedMonth: '01',
-        //     expiriedYear: '2022',
-        //     cvv: '000',
-        // }
-    ]
+    default: []
 })
 
 export const selectedPaymentMethod = atom({
@@ -54,8 +46,16 @@ export const secondaryModals = atom({
     key: 'secondary-modals',
     default: {
         addCard: { visible: false, data: {}},
+        addCardMobile: { visible: false, data: {}},
         selectCard: { visible: false, },
+        selectCardMobile: { visible: false, },
         addAddress: { visible: false, data: {}},
+        addAddressMobile: { visible: false, data: {}},
+        errorCart: {visible: false,},
+        aboutUs: { visible: false },
+        aboutUsMobile: {visible: false },
+        whatsApp: { visible: false },
+        whatsAppMobile: {visible: false },
     }
 })
 export const imagesData = atom({
@@ -70,4 +70,13 @@ export const sharedFunction = atom({
 export const popUpImage = atom({
     key: 'imageOnPopup',
     default: undefined,
+})
+
+// Accessibility statement  =>  AS
+// Privacy Policy           =>  PP
+// Common questions         =>  CQ
+// Shipments and returns    =>  SR
+export const aboutUs = atom({
+    key: 'aboutUs',
+    default: '',
 })

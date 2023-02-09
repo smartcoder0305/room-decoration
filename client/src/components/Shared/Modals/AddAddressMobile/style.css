@@ -1,0 +1,68 @@
+.add-address-modal-mobile {
+  background: #f8f8f8;
+  box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 0.15);
+  max-width: 480px;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+.add-address-modal-mobile__header {
+  box-shadow: 0px 4px 4px rgba(204, 204, 204, 0.25);
+  border-radius: 10px 10px 0px 0px;
+  padding: 21px 29px;
+  text-align: center;
+  /* display: flex;
+  justify-content: space-between; */
+}
+
+.add-address-modal-mobile__header span {
+    font-size: 16px;
+    font-weight: 700;
+}
+.add-address-modal-mobile button[type="submit"] {
+    color: #ffffff;
+    background-color: #FF1F84;
+    border: none;
+    outline: none!important;
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.09);
+}
+.add-address-modal-mobile__header img {
+    cursor: pointer;
+    float: right;
+    margin-top: 7px;
+}
+.add-address-modal-mobile__content {
+  padding: 17px 29px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-address-modal-mobile__content .form__row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.add-address-modal-mobile__content .form__row.column {
+    display: flex;
+    flex-direction: row;
+    gap: 31px;
+}
+.add-address-modal-mobile__content .form__row.column > div {
+    width: 100%;
+}
+.add-address-modal-mobile__content .form__row input {
+    border: 0.5px solid #CCCCCC;
+    height: 50px;
+}
+.add-address-modal-mobile__content .form__row .blends-select input {
+    height: 37px;
+}
+.add-address-modal-mobile__content .form__row .blends-select__control {
+    border: 0.5px solid #CCCCCC;
+}

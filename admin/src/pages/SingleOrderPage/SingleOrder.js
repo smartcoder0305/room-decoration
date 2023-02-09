@@ -374,13 +374,13 @@ function SingleOrder() {
                         <div className="form_row mb-3">
                           <div className="col-lg-6 col-sm-6">
                             <span className="price_label">
-                              ₪39<span className="mx-2">x</span>{" "}
+                              ₪45<span className="mx-2">x</span>{" "}
                               {myData[0]?.images.length}
                             </span>
                           </div>
                           <div className="col-lg-6 col-sm-6">
                             <span className="price_data">
-                              ₪{39 * myData[0]?.images.length}
+                              ₪{45 * myData[0]?.images.length}
                             </span>
                           </div>
                         </div>
@@ -395,11 +395,11 @@ function SingleOrder() {
                               -₪
                               {/* {myData[0]?.images.length >= 10
                                 ? parseFloat(
-                                    ((39 * myData[0]?.images.length) / 100) * 5
+                                    ((45 * myData[0]?.images.length) / 100) * 5
                                   ).toFixed(2)
                                 : 0} */}
                                 {
-                                  isDisplay?(myData[0]?.images.length>=numberOfImages?((((39 * myData[0]?.images.length)/100)*percentages).toFixed(2)):(0)):(0)
+                                  isDisplay?(myData[0]?.images.length>=numberOfImages?((((45 * myData[0]?.images.length)/100)*percentages).toFixed(2)):(0)):(0)
                                 }
                             </span>
                           </div>
@@ -411,7 +411,7 @@ function SingleOrder() {
                           <div className="col-lg-6 col-sm-6">
                             <span className="price_data">
                               ₪ {myData[0]?.totalSpending}
-                              {/* {(myData[0]?.images.length >= 10) ? ((39 * myData[0]?.images.length) - (((39 * myData[0]?.images.length) / 100) * 10)) : (39 * myData[0]?.images.length)} */}
+                              {/* {(myData[0]?.images.length >= 10) ? ((45 * myData[0]?.images.length) - (((45 * myData[0]?.images.length) / 100) * 10)) : (45 * myData[0]?.images.length)} */}
                             </span>
                           </div>
                         </div>
@@ -442,7 +442,7 @@ function SingleOrder() {
                           <div className="col-lg-6 col-sm-6">
                             <span className="price_data fontbold">
                               ₪ {myData[0]?.totalSpending}
-                              {/* {(myData[0]?.images.length >= 10) ? ((39 * myData[0]?.images.length) - (((39 * myData[0]?.images.length) / 100) * 10)) : (39 * myData[0]?.images.length)} */}
+                              {/* {(myData[0]?.images.length >= 10) ? ((45 * myData[0]?.images.length) - (((45 * myData[0]?.images.length) / 100) * 10)) : (45 * myData[0]?.images.length)} */}
                             </span>
                           </div>
                         </div>
@@ -455,7 +455,7 @@ function SingleOrder() {
                           <div className="col-lg-6 col-sm-6">
                             <span className="price_data">
                               ₪ {myData[0]?.totalSpending}
-                              {/* {(myData[0]?.images.length >= 10) ? ((39 * myData[0]?.images.length) - (((39 * myData[0]?.images.length) / 100) * 10)) : (39 * myData[0]?.images.length)} */}
+                              {/* {(myData[0]?.images.length >= 10) ? ((45 * myData[0]?.images.length) - (((45 * myData[0]?.images.length) / 100) * 10)) : (45 * myData[0]?.images.length)} */}
                             </span>
                           </div>
                         </div>

@@ -24,16 +24,16 @@ const HeaderEle = () => {
       <link rel="stylesheet" href="assets/file/css/style2.css"></link>
       <div className="header_section">
         <div className="whatsapp">
-          <img src="assets/file/images/whatsapp-icon.svg" alt="img" />
+          <img src="/assets/file/images/whatsapp-icon.svg" alt="img" />
         </div>
         <div className="logo">
           <NavLink onClick={()=> handelHeaderLinkToHome()} to="/">
-            <img src="assets/images/stk_logo.svg" alt="img" />
+            <img src="/assets/images/stk_logo.svg" alt="img" />
           </NavLink>
         </div>
         <div className="menu">
           <img
-            src="assets/file/images/bar.svg"
+            src="/assets/file/images/bar.svg"
             alt="img"
             onClick={() => {
               menushow();
@@ -45,7 +45,7 @@ const HeaderEle = () => {
       <div id="mySidenav" className="sidenav" style={{ right: rightPosition }}>
        
           <img
-            src="assets/images/menu-crs.svg"
+            src="/assets/images/menu-crs.svg"
             className="x"
             alt="img"
             onClick={() => {
@@ -53,32 +53,32 @@ const HeaderEle = () => {
             }}
           />
           <img
-            src="assets/images/stk_logo.svg"
+            src="/assets/images/stk_logo.svg"
             className="menu_logo"
             alt="img"
           />
         
         <img
-          src="assets/file/images/Line_32.png"
+          src="/assets/file/images/Line_32.png"
           className="nav_line"
           alt="img"
         />
         <ul>
           <li>
             <b>הנמזה תלחתה</b> &nbsp;&nbsp;&nbsp;
-            <img src="assets/images/arr.svg" alt="" />
+            <img src="/assets/images/arr.svg" alt="" />
           </li>
           <li>
             ר’גנסמב ונתיא ורבד&nbsp;&nbsp;&nbsp;
-            <img src="assets/images/mcon1.svg" alt="" />
+            <img src="/assets/images/mcon1.svg" alt="" />
           </li>
           <li>
             פאצאווב ונתיא ורבד&nbsp;&nbsp;&nbsp;
-            <img src="assets/images/mcon2.svg" alt="" />
+            <img src="/assets/images/mcon2.svg" alt="" />
           </li>
           <li>
             תוצופנ תולאש&nbsp;&nbsp;&nbsp;&nbsp;
-            <img src="assets/images/mcon3.svg" alt="" />
+            <img src="/assets/images/mcon3.svg" alt="" />
           </li>
         </ul>
 

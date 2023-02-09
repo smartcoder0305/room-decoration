@@ -97,10 +97,16 @@
   .rang_container {
     display: none;
   }
+  .cropper-frame {
+    scale: 0.8;
+    position: relative;
+    top: -50px;
+  }
   #edit-modal {
     bottom: 0;
     position: absolute;
     border-radius: 10px 10px 0 0;
+    height: 550px;
   }
 
   .edit-modal__header--mobile {
@@ -120,11 +126,13 @@
   .mobile-save-button {
     background: #ff1f84;
     border-radius: 8px;
-    position: absolute;
-    bottom: 47px;
+    position: relative;
+    top: -50px;
+    /* position: absolute; */
+    /* bottom: 47px; */
     width: calc(100% - 30px);
-    left: 50%;
-    transform: translateX(-50%);
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
     color: #fff;
     border: none;
     outline: none!important;

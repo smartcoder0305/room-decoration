@@ -32,7 +32,7 @@ const PaymentOptions = (props) => {
                   }}
                 >
                   PayPal תשלום באמצעות{" "}
-                  <img src="assets/file/images/paypal.png" className="file" />
+                  <img src="/assets/file/images/paypal.png" className="file" />
                 </li> */}
               </ul>
             </div>

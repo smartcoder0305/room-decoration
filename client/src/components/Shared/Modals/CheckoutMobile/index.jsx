@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-
+import cn from "classnames";
+import { nextTuesday } from "@helpers/date";
+import { useSecondModal } from "@helpers/hooks/useSecondModal";
+import { useRecoilValue } from "recoil";
+import {
+  netPriceState,
+  imageCountState,
+} from "@atoms/priceCalc";
+import { selectedPaymentMethod, selectedShippingAddress } from "@atoms";
 import "./style.css";
 
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import CardPayment from "./components/CardPayment";
-import PaymentOptions from "./components/PaymentOptions";
-import PayPal from "./components/PayPal";
-import TestPay from "./components/TestPay";
-import uniqid from "uniqid";
-import AdressModal from "./components/AdressModal";
-
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const digit = /[0-9]/;
 
-const mdigit = /[0-1]/;
-function subform(e) {
-  console.log(e.target.value);
-}
 function getFormValues() {
   const storedValues = localStorage.getItem("userShippingAddress");
 
@@ -37,43 +32,22 @@ function getFormValues() {
 }
 
 const CheckoutMobile = (props) => {
-  /*   const [netPrice, setNetPrice] = useState(0);
-  const [discountPercentage, setDiscountPercentage] = useState(0);
-  const [discountPrice, setDiscountPrice] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0); */
-
-  // const []=useState('')
   const { style } = props;
+  const netPrice = useRecoilValue(netPriceState);
+  const imagecount = useRecoilValue(imageCountState);
   const [numberOfImages, setNumberOfImages] = useState();
   const [percentages, setPercentages] = useState();
   const [isDisplay, setIsDisplay] = useState();
 
-  const [checkoutNameColor, setcheckoutNameColor] = useState("");
+  const [shippingAddressFormValues, setShippingAddressFormValues] = useState(getFormValues);
 
-  const [shippingAddressFormValues, setShippingAddressFormValues] =
-    useState(getFormValues);
-  const [totalPrice, settotalPrice] = useState(props.netPrice);
+  const [isLoading, setLoading] = useState(false);
+  const selectedAddress = useRecoilValue(selectedShippingAddress);
+  const selectedPayment = useRecoilValue(selectedPaymentMethod);
+  console.log('selectedAddress', selectedAddress)
+  console.log('selectedPayment', selectedPayment)
 
-  const [fnameFormValidate, setfnameFormValidate] = useState(false);
-
-  const [isCardDetails, setisCardDetails] = useState(false);
-  const [cardNumber, setcardNumber] = useState("");
-  const [cardDate, setcardDate] = useState("");
-  const [cardCvv, setcardCvv] = useState("");
-  const [cardHolderId, setcardHolderId] = useState("");
-
-  const [shippingAddressFormValidateErr, setShippingAddressFormValidateErr] =
-    useState(() => {
-      return {
-        fullName: "",
-        address1: "",
-        address2: "",
-        city: "",
-        postalCode: "",
-        phone: "",
-        email: "",
-      };
-    });
+  const modal = useSecondModal();
 
   useEffect(() => {
     localStorage.setItem(
@@ -86,424 +60,98 @@ const CheckoutMobile = (props) => {
   const myPaymentError = queryParams.get("data");
   const history = useHistory();
   if (myPaymentError) {
-    // alert('הזן שם מלא ומספר טלפון')
     history.push("/review-your-images");
   }
 
-  function handleShippingAddressFormSubmit(event) {
-    event.preventDefault();
-    document.getElementById("fullname").style.display = "block";
-    document.getElementById("address11").style.display = "block";
-    document.getElementById("postalCode1").style.display = "block";
-    document.getElementById("phone1").style.display = "block";
-    document.getElementById("email1").style.display = "block";
-    let errors = {};
-    let formIsValid = true;
-
-    if (!shippingAddressFormValues["fullName"]) {
-      formIsValid = false;
-      errors["fullName"] = "כאן כותבים שם פרטי ושם משפחה";
-    }
-
-    /* if (typeof shippingAddressFormValues["fullName"] !== "undefined") {
-      if (!shippingAddressFormValues["fullName"].match(/^[a-zA-Z\s]+$/)) {
-        formIsValid = false;
-        errors["fullName"] = "Only letters are acceptable for your full name";
-      }
-    } */
-
-    if (!shippingAddressFormValues["address1"]) {
-      formIsValid = false;
-      errors["address1"] = "נא לכתוב כתובת למשלוח";
-    }
-
-    // if (!shippingAddressFormValues["postalCode"]) {
-    //   formIsValid = false;
-    //   errors["postalCode"] = "Please provide your postal code";
-    // }
-
-    if (!shippingAddressFormValues["city"]) {
-      formIsValid = false;
-      errors["city"] = "בחרו עיר מהרשימה";
-    }
-
-    if (!shippingAddressFormValues["phone"]) {
-      formIsValid = false;
-      errors["phone"] = "מספר טלפון בבקשה :)";
-    }
-
-    //Email
-    if (!shippingAddressFormValues["email"]) {
-      formIsValid = false;
-      errors["email"] = "נא להזין את כתובת המייל שלכם";
-    }
-
-    if (typeof shippingAddressFormValues["email"] !== "undefined") {
-      let lastAtPos = shippingAddressFormValues["email"].lastIndexOf("@");
-      let lastDotPos = shippingAddressFormValues["email"].lastIndexOf(".");
-
-      if (
-        !(
-          lastAtPos < lastDotPos &&
-          lastAtPos > 0 &&
-          shippingAddressFormValues["email"].indexOf("@@") == -1 &&
-          lastDotPos > 2 &&
-          shippingAddressFormValues["email"].length - lastDotPos > 2
-        )
-      ) {
-        formIsValid = false;
-        errors["email"] = "נא להזין את כתובת המייל שלכם";
-      }
-      // console.log('kokokoko')
-      if (formIsValid) {
-        document.body.classList.remove("overflowhdn");
-        openCheckoutDrawerMobile();
-        closeAddressPopupMobile();
-      }
-    }
-
-    setShippingAddressFormValidateErr(errors);
-
-    setShippingAddressFormValues((previousValues) => ({
-      ...previousValues,
-      ["fromValidate"]: formIsValid,
-    }));
-
-    if (formIsValid) {
-      document.body.classList.remove("overflowhdn");
-      closeAddressPopupMobile();
-      openCheckoutDrawerMobile();
-    }
-  }
-
-  const handlePaymentFormSubmit = async (event) => {
-    event.preventDefault();
-    const uniqueUserId = props.uniqueUserId;
-    const frameQuantity = props.imagecount;
-
-    const paymentData = {
-      uniqueUserId: uniqueUserId,
-      frameQuantity: frameQuantity,
-      shippingAddressFormValues: shippingAddressFormValues,
-    };
-
-    const config = {
-      headers: {
-        "content-type": "application/json",
-      },
-    };
-
-    await axios
-      .post(BASE_URL + "/payment-processing", paymentData, config)
-      .then((res) => {
-        console.log(res.data.data.processId);
-        localStorage.setItem("paymentProcessId", res.data.data.processId);
-        localStorage.setItem("paymentProcessToken", res.data.data.processToken);
-        //window.location.href = res.data.data.url;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  function handleChange(event) {
-    console.log(event.target.name);
-    if (event.target.name === "fullName") {
-      if (!event.target.value) {
-        document.getElementById("fullname").style.display = "block";
-      } else {
-        document.getElementById("fullname").style.display = "none";
-      }
-    }
-    if (event.target.name === "address1") {
-      if (!event.target.value) {
-        document.getElementById("address11").style.display = "block";
-      } else {
-        document.getElementById("address11").style.display = "none";
-      }
-    }
-    if (event.target.name === "postalCode") {
-      if (!event.target.value) {
-        document.getElementById("postalCode1").style.display = "block";
-      } else {
-        document.getElementById("postalCode1").style.display = "none";
-      }
-    }
-    if (event.target.name === "phone") {
-      if (!event.target.value) {
-        document.getElementById("phone1").style.display = "block";
-      } else {
-        document.getElementById("phone1").style.display = "none";
-      }
-    }
-    if (event.target.name === "email") {
-      if (!event.target.value) {
-        document.getElementById("email1").style.display = "block";
-      } else {
-        document.getElementById("email1").style.display = "none";
-      }
-    }
-
-    setShippingAddressFormValues((previousValues) => ({
-      ...previousValues,
-      [event.target.name]: event.target.value,
-    }));
-  }
-
-  function handleChangeCity(event) {
-    //alert(event.value)
-    //alert(event.value)
-    setShippingAddressFormValues((previousValues) => ({
-      ...previousValues,
-      ["city"]: event.value,
-    }));
-  }
-
-  const openCheckoutDrawerMobile = () => {
-    document.body.classList.add("overflowhdn");
-    closeAddressPopupMobile();
-    closePaymentWithCardFormMobile();
-    document.getElementById("checkoutOverlayMobile").style.display = "block";
-  };
-
-  const overlayClick = () => {
-    document.getElementById("myCartMobile").style.display = "none";
-    document.getElementById("checkoutOverlayMobile").style.display = "none";
-  };
-
-
   const openAddressPopupMobile = () => {
-    
-  };
-
-  const closeAddressPopupMobile = () => {
-   
-  };
-
-  const openPaymentPopupMobile = async () => {
-    // if address form not filled and validated
-    if (!shippingAddressFormValues.fromValidate) {
-      openAddressPopupMobile();
-    }
-  };
-
-  const cardPaymentProcess = async () => {
-    const uniqueUserId = props.uniqueUserId;
-    const frameQuantity = props.imagecount;
-    const oid = `${Math.floor(Math.random() * 100000000 + 1)}`;
-    const cardInfo = JSON.parse(localStorage.getItem("cardNumber"));
-    let totalPrice;
-    if (isDisplay) {
-      if (frameQuantity >= numberOfImages) {
-        totalPrice =
-          39 * frameQuantity - ((39 * frameQuantity) / 100) * percentages;
-      } else {
-        totalPrice = 39 * frameQuantity;
-      }
-    } else {
-      totalPrice = 39 * frameQuantity;
-    }
-
-    const paymentData = {
-      uniqueUserId: uniqueUserId,
-      frameQuantity: frameQuantity,
-      shippingAddressFormValues: shippingAddressFormValues,
-      oid,
-      cardInfo,
-      totalPrice: totalPrice,
-    };
-    console.log("paymentData");
-    console.log(paymentData);
-    console.log("paymentData");
-
-    const config = {
-      headers: {
-        "content-type": "application/json",
-      },
-    };
-
-    await axios.post(BASE_URL + "/user/addordercount");
-    const paymentResponse = await await axios.post(
-      BASE_URL + "/payment-processing",
-      paymentData,
-      config
-    );
-    console.log();
-    if (paymentResponse.status) {
-      let response = await axios.get(
-        `${BASE_URL}/user/addnewordercount`,
-        config
-      );
-      if (response.data.status === 200) {
-        localStorage.clear();
-        localStorage.setItem(
-          "order-details",
-          JSON.stringify(paymentResponse.data.odata)
-        );
-        history.push(paymentResponse.data.sucessUrl);
-      }
-    }
-
-    // .then((res) => {
-    //   console.log('payment ho gaya')
-    //   // console.log(res.data.data.url);
-    //   localStorage.setItem("paymentProcessId", res.data.data.processId);
-    //   localStorage.setItem("paymentProcessToken", res.data.data.processToken);
-    //   window.location.href = res.data.data.url;
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
-  };
-
-  const addCardDetails = () => {};
-
-  const closePaymentPopup = () => {
-    document.getElementById("paymentModal").style.display = "none";
-  };
-
-  const selectPaymentOption = (option) => {
-    console.log("props");
-    console.log(props.netPrice);
-    settotalPrice(props.netPrice);
-    localStorage.setItem("totalamount", props.netPrice);
-    console.log("props");
-    if (option === "Card") {
-      document.body.classList.remove("overflowhdn");
-      document.getElementById("paymentWithCardFormMobile").style.display =
-        "block";
-      document.getElementById("paymentOptionChoose").style.display = "none";
-    } else {
-      document.getElementById("paypalmodel").style.display = "block";
-      document.getElementById("paymentOptionChoose").style.display = "none";
-    }
+    modal("open", 'addAddressMobile');
   };
 
   const mySaveCardPopUp = () => {
-    localStorage.setItem("totalamount", props.netPrice);
-    document.getElementById("checkoutOverlayMobile").style.display = "none";
-    document.getElementById("paymentWithCardFormMobile").style.display =
-      "block";
+    modal("open", 'selectCardMobile');
   };
 
-  const closePaymentWithCardFormMobile = () => {
-    overlayClick();
-    document.getElementById("paymentWithCardFormMobile").style.display = "none";
-  };
-
-  const paypalCloseButton = () => {
-    document.getElementById("paypalmodel").style.display = "none";
-    document.getElementById("checkoutOverlayMobile").style.display = "none";
-    window.location.href = "/review-your-images";
-  };
 
   const renderAddAddressButton = () => {
-    if (shippingAddressFormValues.fromValidate) {
+    if (selectedAddress) {
       return {
-        class: "new-link textBlack",
+        class: cn("", { checked: selectedAddress }),
         text:
-          shippingAddressFormValues.fullName +
+          selectedAddress.fullName +
           ", " +
-          shippingAddressFormValues.city,
-        img: <img src="assets/file/images/black_tick.png" />,
+          selectedAddress.city,
+        img: <img src="/assets/file/images/Check.png" style={{marginBottom: "2px"}} alt=""/>,
       };
     } else {
       return {
         class: "new-link",
-        text: "כתובת למשלוח",
+        text: "פרטים אישיים",
         img: (
           <img
-            src="assets/file/images/add.png"
-            style={{ marginLeft: "5px" }}
-            width={15}
+            src="/assets/images/form_address.svg"
+            style={{ marginLeft: "5px", width: "25px", height: "25px"}}
+            alt="form_address"
           />
         ),
       };
     }
   };
 
-  const saveCardDetails = () => {
-    // console.log({ cardNumber, cardDate, cardCvv, cardHolderId })
-    // console.log('cardNumberlength')
-    // console.log(cardHolderId)
-    // console.log(cardHolderId.length)
-    // console.log('cardNumberlength')
-    if (!cardNumber) {
-      document.getElementById("customerCardNumber").style.display = "block";
-    } else if (cardNumber.length != 19) {
-      document.getElementById("customerCardNumber").style.display = "block";
-    } else if (!cardDate) {
-      document.getElementById("customerCardCvvandDateValidity").style.display =
-        "block";
-    } else if (!cardCvv) {
-      document.getElementById("customerCardCvvandDateValidity").style.display =
-        "block";
-    } else if (!cardHolderId) {
-      document.getElementById("customerCardId").style.display = "block";
-    } else if (cardHolderId.length != 11) {
-      document.getElementById("customerCardId").style.display = "block";
-    } else {
-      let customerCard = { cardNumber, cardDate, cardCvv, cardHolderId };
-      localStorage.setItem("cardNumber", JSON.stringify(customerCard));
-      closePaymentWithCardFormMobile();
-      openCheckoutDrawerMobile();
-      setisCardDetails(true);
-    }
-  };
-
-  const handelSaveCardInputs = (e) => {
-    if (e.target.name === "cardnumber") {
-      document.getElementById("customerCardNumber").style.display = "none";
-      setcardNumber(e.target.value);
-    }
-    if (e.target.name === "cardcvv") {
-      document.getElementById("customerCardCvvandDateValidity").style.display =
-        "none";
-      setcardCvv(e.target.value);
-    }
-    if (e.target.name === "carddate") {
-      document.getElementById("customerCardCvvandDateValidity").style.display =
-        "none";
-      setcardDate(e.target.value);
-    }
-    if (e.target.name === "cardid") {
-      document.getElementById("customerCardId").style.display = "none";
-      setcardHolderId(e.target.value);
-    }
-  };
-  const mycloseAddressPopupMobile = () => {
-    openCheckoutDrawerMobile();
-  };
-
-  const myclosePaymentWithCardFormMobile = () => {
-    // closePaymentWithCardFormMobile()
-    openCheckoutDrawerMobile();
-  };
-
-  const getCuponData = async () => {
+  const creatOrder = async (data) => {
     try {
-      const config = {
-        headers: {
-          "content-type": "application/json",
-        },
-      };
-      const cuponData = await axios.get(
-        `${BASE_URL}/admin/setting/getcupons`,
-        config
-      );
-      console.log("-------------------lol----------------");
-      console.log(cuponData.data.getCupon.numberOfImages);
-      if (cuponData.data.status === 200) {
-        setNumberOfImages(cuponData.data.getCupon.numberOfImages);
-        setPercentages(cuponData.data.getCupon.percentage);
-        setIsDisplay(cuponData.data.getCupon.cuponsAvalible);
-      }
-    } catch (error) {}
-  };
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        const res = await axios.post(`${BASE_URL}/user/createorder`, data, config);
+        if (res.data.status === 200) {
+            console.log('----success-----')
+        }
+        return res.data;
+    } catch (error) {
+        console.log(error)
+        return null;
+    }
+  }
 
-  useEffect(() => {
-    getCuponData();
-  }, []);
+  const getCardExpDate = (month, year) => {
+    const shortYear = year % 100;
+    let shortYearStr = shortYear < 10 ? '0' + shortYear.toString() : shortYear.toString();
+    return `${month}${shortYearStr}`;
+  }
+
+  const handleTranzilarPayment = async (e) => {
+    try {
+      setLoading(true);
+      e.preventDefault();
+      const {paymentData} = await axios.post(BASE_URL+'/payment/do', {
+        card: {
+          no: selectedPayment.cardNumber.replace(/\s/g, ''),
+          expdate: getCardExpDate(selectedPayment.expiriedMonth, selectedPayment.expiriedYear),
+          cvv: selectedPayment.cvv,
+          email: selectedAddress.email,
+        },
+        amount: netPrice,
+      });
+      console.log(paymentData);
+      const orderData = await creatOrder({...selectedAddress, uid: localStorage.getItem('uniqueUserId')});
+      if (!orderData) {
+        throw new Error('Creating order failed.');
+      }
+      console.log(orderData);
+      setLoading(false);
+      localStorage.clear();
+      history.push(`/payment-success/${orderData.oid}`);
+    } catch (err) {
+      setLoading(false);
+      modal("open", 'errorCart');
+    }
+  }
+
+  const renderCounts = () => {
+    return <><span>{imagecount} </span>בלנדס בגודל<span> 20x20</span></> 
+  }
 
   return (
     <div className="mobile-checkout-modal" style={{ ...style }}>
@@ -514,52 +162,69 @@ const CheckoutMobile = (props) => {
         <div className="">
           <div className="" id="myCartMobileContent">
             <div className="" style={{ paddingBottom: "0px" }}>
-              <div className="van-wrap">
+              <div className="van-wrap" style={{verticalAligh: "middle"}}>
                 <span
                   style={{
                     marginRight: "5px",
-                    fontSize: "16px",
-                    color: "#84998B",
-                    fontWeight: "500",
+                    color: "#000000",
+                    fontWeight: "400",
                     fontFamily: "rubik",
+                    fontSize: "14px",
+                    lineHeight: "25px",
                   }}
                 >
-                  בהזמנה זו תקבלו משלוח חינם
-                </span>
-                <img src="assets/file/images/V Cart icon.svg" />
+                  אני רוצה שתארזו לי את המשלוח כמתנה
+                </span>&nbsp;
+                <input type="checkbox" style={{width: "14px", height: "25px"}}/>
+                <img src="/assets/file/images/gift.png" style={{width: "25px", height: "25px"}} alt=""/>
               </div>
             </div>
 
             <div className="modal-body">
               <div className="checkout-name-credit-main-div">
                 <span>
-                  {" "}
-                  <p
-                    className={renderAddAddressButton().class.toString()}
-                    data-dismiss="modal"
-                    data-toggle="modal"
-                    data-target="#addwin"
-                    onClick={openAddressPopupMobile}
-                  >
-                    {renderAddAddressButton().text}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    {renderAddAddressButton().img}
-                  </p>
+                  {selectedAddress ? (
+                    <p
+                      className={renderAddAddressButton().class.toString()}
+                      data-dismiss="modal"
+                      data-toggle="modal"
+                      data-target="#addwin"
+                      onClick={openAddressPopupMobile}
+                      style={{paddingTop: "26px", fontWeight: 400, fontSize: "14px", verticalAlign: "middle"}}
+                    >&nbsp;&nbsp;
+                      {renderAddAddressButton().img}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      {renderAddAddressButton().text}
+                    </p>
+                  ) : (
+                    <p
+                      className={renderAddAddressButton().class.toString()}
+                      data-dismiss="modal"
+                      data-toggle="modal"
+                      data-target="#addwin"
+                      onClick={openAddressPopupMobile}
+                      style={{paddingTop: "26px", fontWeight: 700, fontSize: "14px"}}
+                    >
+                      {renderAddAddressButton().img}
+                      &nbsp;&nbsp;&nbsp;
+                      {renderAddAddressButton().text}
+                    </p>
+                  )}
                 </span>
-                {isCardDetails ? (
+                {selectedPayment ? (
                   <>
                     <span>
                       <p
                         className="new-link add-padd text-black-color"
-                        style={{ color: "black" }}
+                        style={{ color: "black", paddingTop: "26px", fontWeight: 400, fontSize: "14px"}}
                         data-dismiss="modal"
                         data-toggle="modal"
                         data-target="#addwin"
                         onClick={mySaveCardPopUp}
-                      >
-                        {cardNumber.substring(0, 4)}************
+                      > &nbsp;&nbsp;
+                        <img src="/assets/file/images/Check.png" style={{marginBottom: "2px"}} alt=""/>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <img src="assets/file/images/black_tick.png" />
+                        {selectedPayment.hebrewType + ' ' +selectedPayment.cardNumber.substring(15, 19)}
                       </p>
                     </span>
                   </>
@@ -572,149 +237,103 @@ const CheckoutMobile = (props) => {
                         data-toggle="modal"
                         data-target="#addwin"
                         onClick={mySaveCardPopUp}
+                        style={{marginBottom: "26px", fontWeight: 700, fontSize: "14px"}}
                       >
-                        אמצעי תשלום &nbsp;&nbsp;&nbsp;&nbsp;
                         <img
-                          src="assets/file/images/mycard.svg"
-                          style={{ marginLeft: "-5px" }}
+                          src="/assets/file/images/mycard.svg"
+                          style={{width: "25px", height: "16.42px"}}
+                          alt=""
                         />
+                        &nbsp;&nbsp;&nbsp;
+                        תשלום באשראי
                       </p>
                     </span>
                   </>
                 )}
-                {/* <p
-                  className='new-link add-padd'
-                  data-dismiss="modal"
-                  data-toggle="modal"
-                  data-target="#addwin"
-                >
-                 
-                  הננער ,ימלשורי לארשי
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <img src="assets/file/images/mycard.svg" />
-                </p> */}
               </div>
-              <ul className="pro-list">
-                <li>
-                  <span>₪ {props.netPrice}</span>
-                  <span> תמונות ({props.imagecount})</span>
-                </li>
-              </ul>
-              <ul className="pro-foo">
-                <li style={{ paddingBottom: "30px" }}>
-                  <span>
-                    ₪ -
-                    {isDisplay
-                      ? props.imagecount >= numberOfImages
-                        ? ((props.netPrice / 100) * percentages).toFixed(2)
-                        : 0
-                      : 0}
-                  </span>
-                  <span>
-                    {" "}
-                    (
-                    {isDisplay
-                      ? props.imagecount >= numberOfImages
-                        ? percentages
-                        : 0
-                      : 0}
-                    %) הנחה
-                  </span>
-                </li>
-                <li>
-                  <span>
-                    ₪{" "}
-                    {isDisplay
-                      ? props.imagecount >= numberOfImages
-                        ? props.netPrice -
-                          ((props.netPrice / 100) * percentages).toFixed(2)
-                        : props.netPrice
-                      : props.netPrice}
-                  </span>
-                  <span>סה"כ</span>
-                </li>
-              </ul>
-            </div>
+              <div className="checkout-calculation">
+                <div className="checkout-calculation__info" style={{fontWeight: 400, marginBottom: "22px", justifyContent:"flex-end"}}>
+                  <p>
+                    ההזמנה שלכם זכאית ל
+                    <span style={{fontWeight: 500}}>משלוח חינם,&nbsp;</span>
+                    המשלוח צפוי
+                    <br />להגיע אליכם עד
+                    <span style={{fontWeight: 500}}>{nextTuesday()}</span>
+                  </p>
+                  <img src="/assets/images/checkout_check.svg" alt="check" />
+                </div>
 
-            <div className="modal-footer">
-              {isCardDetails ? (
-                <>
-                  <button
-                    type="button"
-                    className="btn btn-secondary cls pay-by-card-button "
-                    onClick={cardPaymentProcess}
-                  >
-                    ביצוע ההזמנה שלך בשקלים
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    type="button"
-                    className="btn btn-secondary cls pay-by-card-button data-not-full-field"
-                    onClick={openPaymentPopupMobile}
-                  >
-                    ביצוע ההזמנה שלך בשקלים
-                  </button>
-                </>
-              )}
+                <div className="price__table">
+                  <div className="price__table--row" style={{fontSize: "14px", fontWeight: 400}}>
+                    <div>₪ {netPrice}</div>
+                    <div style={{direction: "rtl"}}>{renderCounts()}</div>
+                  </div>
+                  <div className="price__table--row" style={{fontSize: "14px",  fontWeight: 400}}>
+                    <div>חינם</div>
+                    <div>משלוח</div>
+                  </div>
+                  <div className="price__table--row" style={{fontWeight: "700", fontSize: "14px"}}>
+                    <div>
+                      ₪&nbsp;
+                      {isDisplay
+                        ? imagecount >= numberOfImages
+                          ? netPrice - ((netPrice / 100) * percentages).toFixed(2)
+                          : netPrice
+                        : netPrice}
+                    </div>
+                    <div>סה”כ</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Start address modal */}
-      <AdressModal
-        handleChange={handleChange}
-        handleChangeCity={handleChangeCity}
-        handleShippingAddressFormSubmit={handleShippingAddressFormSubmit}
-        shippingAddressFormValidateErr={shippingAddressFormValidateErr}
-        mycloseAddressPopupMobile={mycloseAddressPopupMobile}
-        shippingAddressFormValues={shippingAddressFormValues}
-      />
-      {/* End address modal */}
-
-      {/* Start payment option choose */}
-      <PaymentOptions selectPaymentOption={selectPaymentOption} />
-      {/* End payment option choose */}
-
-      {/* Start payment with card */}
-      <CardPayment
-        saveCardDetails={saveCardDetails}
-        myclosePaymentWithCardFormMobile={myclosePaymentWithCardFormMobile}
-        handelSaveCardInputs={handelSaveCardInputs}
-      />
-      {/* End payment with card */}
-
-      <div
-        className="modal my-modal1"
-        id="paypalmodel"
-        // style={{ display: "none" }}
-        // id='mob-paypal'
-      >
-        <div className="modal-dialog modal_fixed fullwidthsmall modal-dialog-centered">
-          <div
-            className="modal-content paypal-model-style-mob"
-            id="paymentOptionChooseContent"
-          >
-            <div className="modal-body p-0">
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-                onClick={() => {
-                  paypalCloseButton();
-                }}
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-              {/* <PayPal totalPrice={props.netPrice} frames={props.imagecount} /> */}
-              {/* <TestPay totalPrice={props.netPrice} frames={props.imagecount} /> */}
+      <div className="mobile-checkout-pay-btn-container" style={{fontSize: "14px"}}>
+        {selectedAddress && selectedPayment ? (
+          <>
+            <button
+              type="button"
+              className="btn cls pay-by-card-button "
+              onClick={handleTranzilarPayment}
+            >
+              המשך לאישור הזמנה
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              type="button"
+              className="btn cls pay-by-card-button data-not-full-field"
+              // onClick={openPaymentPopupMobile}
+              style={{fontWeight: 400, color: "FF1F84"}}
+            >
+              הזינו את פרטי המשלוח והתשלום כדי להמשיך
+            </button>
+          </>
+        )}
+      </div>
+      {isLoading &&
+        <div
+          className="modal loaderbg"
+          id="mainImageLoaderModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+          style={{ display: isLoading }}
+        >
+          <div className="modal-dialog review-image-loader" role="document">
+            <div className="loadingio-spinner-heart-btbrqan8295">
+              <div className="ldio-kv0ui0pfesk">
+                <div>
+                  <div></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      }
     </div>
   );
 };

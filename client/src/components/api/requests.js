@@ -12,7 +12,6 @@ import { imagesData } from "@atoms";
 import { getRecoil, setRecoil } from "recoil-nexus";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const storedValues = localStorage.getItem("uniqueUserId");
 
 export async function uploadSingleImage(formdata) {
   const response = await axios
@@ -61,29 +60,17 @@ export const addUserCount = async () => {
 };
 
 export async function addImageFromSocial(response) {
-  const rep = await axios
-    .post(`${BASE_URL}/social-photo-import`, response, {
-      headers: {
-        "content-type": "application/json",
-      },
-    })
-    .then((res) => {
-      setTimeout(() => getImagesDB(), 500);
-    });
+  const rep = await axios.post(`${BASE_URL}/social-photo-import`, response, {
+    headers: {
+      "content-type": "application/json",
+    },
+  })
   return rep;
 }
 
 export async function getImagesDB() {
   const count = getRecoil(countState);
   const imageData = await getUserImages();
-  // if (count > 1) {
-  //   if (imageData.status === 200) {
-  //     if (imageData.data.data.length === 0) {
-  //       // localStorage.clear();
-  //       // history.push("/upload-your-image");
-  //     }
-  //   }
-  // }
 
   setRecoil(countState, count + 2);
   if (imageData.data.data.length > 0) {
@@ -91,7 +78,7 @@ export async function getImagesDB() {
     setRecoil(imagesData, imageshow);
     setRecoil(imageCountState, imageshow.length);
 
-    let set_net_price = imageshow.length * 39;
+    let set_net_price = imageshow.length * 45;
     let set_discount_percentage = 0;
     let set_discount_price = 0;
     let set_total_price = 0;

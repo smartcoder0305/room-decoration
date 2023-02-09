@@ -6,14 +6,21 @@
   flex-direction: column;
   padding: 10px;
   position: absolute;
-  max-width: 335px;
-  width: 100%;
+  /* max-width: 335px; */
+  width: 94.66%;
   bottom: 15px;
   transition: all .3s ease-in-out;
 }
 /* .upload-options.open {
     bottom: 15px;
 } */
+
+@media screen and (min-width: 768px) {
+  .upload-options {
+    max-width: 335px;
+  }
+}
+
 .upload-options__item {
     border: none;
     outline: none!important;

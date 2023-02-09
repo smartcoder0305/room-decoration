@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useCallback } from "react";
 import { NavLink } from "react-router-dom";
-import SliderNew from "../Partials/SliderNew";
-import SliderReview from "../Partials/SliderReview";
+import SliderHome from "../Partials/SliderHome";
 import SkeletonLoader from "../SkeletonLoader/index";
 import useWindowDimensions from "@helpers/hooks/windowDemensions";
-import Coupon from "./Coupon";
 import "./home.css";
 
-const Home = () => {
+const Home = ({existData}) => {
+  console.log('existsData-----------------------', existData)
   const [skeleton, setSkeleton] = useState(true);
+  const videoRef = useRef();
   const { height, width } = useWindowDimensions();
   useEffect(() => {
     setTimeout(() => {
       setSkeleton(false);
+      videoRef.current?.play();
     }, 1000);
   }, []);
 
@@ -40,10 +41,16 @@ const Home = () => {
                 </div>
 
                 <div className="col-12 order-md-2 order-3 text-center text-md-right">
-                  <NavLink to="/upload-your-image" className="site-btn gg1">
-                    בואו נתחיל
-                  </NavLink>
-
+                  {existData ? (
+                    <NavLink to="/review-your-images" className="site-btn gg1">
+                      בואו נמשיך
+                    </NavLink>
+                    ) : (
+                    <NavLink to="/upload-your-image" className="site-btn gg1">
+                      בואו נתחיל
+                    </NavLink>
+                    )
+                  }
                   <NavLink
                     to="/upload-your-image"
                     className="site-btn kk forhover"
@@ -74,8 +81,14 @@ const Home = () => {
             </div>
             <div className="col-md-6 order-1 order-md-2 pl-none header-image-wrapper">
               <div className="ban-img">
-                <img src="/assets/images/home-1.jpg" alt="" />
-                <img src="/assets/images/home-2.jpg" alt="" />
+                <img 
+                  src="/assets/file/images/SquareBig.png" alt="" 
+                  style={{width: "357px", height: "357px"}}
+                />
+                <img 
+                  src="/assets/file/images/SquareSmall2.png" alt="" 
+                  style={{width: "180px", height: "180px"}}
+                />
               </div>
             </div>
           </div>
@@ -114,30 +127,17 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div>
-          <div className="res-offer">
-            {/* <img src="/assets/images/ofr-mob.jpg" alt="" /> */}
-            <img src="/assets/images/cpl.jpg" alt="" />
-            <div className="ofr-wrap">
-              <h4>מסגרות שפשוט נדבקות לקיר</h4>
-              <p>
-                זה פשוט ומהיר הדפיסו תמונות על הקיר ותשדרגו כל סביבה לסביבה
-                נעימה יותר
-                <br />
-              </p>
-            </div>
-          </div>
-          <div className="sub order-md-3 order-2 col-12">
-            <img src="/assets/images/van.svg" alt="" className="xp " />
-            <p className="home-van-bottom-text">משלוחים חינם לכל הארץ</p>
-          </div>
-        </div>
       </section>
       <section className="about">
         <div className="container">
           <div className="about__wrapper">
             <div className="about__wrapper--image">
-              <img src="/assets/images/home-1.jpg" alt="" />
+              <video 
+                src="/assets/file/videos/HomepageVideo.mp4" alt="" 
+                style={{width: "534px", height: "402px", borderRadius: "15px"}} 
+                loop
+                autoPlay={"autoplay"}
+                muted/>
             </div>
             <div className="about__wrapper--content">
               <h4>סיפור על קיר באמצעות תמונות</h4>
@@ -155,8 +155,27 @@ const Home = () => {
       {/* <SliderReview /> */}
       <section className="slider-section">
         <div className="slider-section--wrapper">
+          <div style={{textAlign: "center"}}>
+            <h1 style={{fontSize: "36px", fontWeight: "700", color: "#304036"}}>{"םירמוא ונלש תוחוקלש םירבד".split("").reverse().join("")}</h1>
+            <p style={{fontSize: "18px", color: "#304036", marginTop: "10px"}}>הנה כמה ביקורות שאספנו מהזמנות של הזמן האחרון</p>
+          </div>
           <div className="container homepage-container">
-            <SliderNew />
+            <div className="swiper_left"></div>
+            <div className="swiper_right"></div>
+            <div></div>
+            <SliderHome />
+          </div>
+          <div style={{textAlign: "center", marginTop: "25px", marginBottom: "5px"}}>
+          {existData ? (
+            <NavLink to="/review-your-images" className="site-btn gg1" style={{backgroundColor: "#60806B"}}>
+              בואו נמשיך
+            </NavLink>
+            ) : (
+              <NavLink to="/upload-your-image" className="site-btn gg1" style={{backgroundColor: "#60806B"}}>
+                בואו נתחיל עם תמונות
+              </NavLink>
+            )
+          }
           </div>
         </div>
       </section>
@@ -166,12 +185,13 @@ const Home = () => {
   const renderMobile = () => (
     <>
       <section id="hero">
-        <div className="mobile-banner" style={{ background: "#C4C4C4" }}>
-          <h1>התמונות שלכם יהפכו כל קיר לקיר מלא בזכרונות נעימים</h1>
-          <p>
-            מסגרות מהממות ואיכותיות, שנדבקות אל הקיר ללא מאמץ וממלאות כל חלל
-            לחלל חי ונושם
-          </p>
+        <div className="mobile-banner" style={{ backgroundImage: "url('/assets/file/images/mobile-home-bg-img.jpg')", backgroundSize: "cover", backgroundPosition: "center",}}>
+            <img src="/assets/file/images/mobile-home-mask.png" />
+            <h1>התמונות שלכם יהפכו כל קיר לקיר מלא בזכרונות נעימים</h1>
+            <p>
+              מסגרות מהממות ואיכותיות, שנדבקות אל הקיר ללא מאמץ וממלאות כל חלל
+              לחלל חי ונושם
+            </p>
         </div>
         <div className="additional-info">
           <div className="benefits__item">
@@ -205,13 +225,22 @@ const Home = () => {
       </section>
       <section id="offer">
       <div className="content">
-      <h2>מסגרות שפשוט נדבקות לקיר</h2>
+      <h2 style={{maxWidth: "90%"}}>מסגרות שפשוט נדבקות לקיר</h2>
       <br></br>
         <p>
             זה פשוט ומהיר הדפיסו תמונות על היקרים
             ותשדרגו כל סביבה לסביבה נעימה יותר
         </p>
-        <img src="/assets/images/placeholder.jpg" alt="" />
+        <video 
+          src="/assets/file/videos/MobileHomepageVideo.mp4" alt="" 
+          style={{width: "calc(100vw - 20px)", borderRadius: "8px", margin: "auto", display: "block"}} 
+          loop
+          playsInline
+          // autoPlay
+          muted
+          id="mobile_home_video"
+          ref={videoRef}
+          />
       </div>
        
         <div className="additional-block">
@@ -222,7 +251,10 @@ const Home = () => {
         </div>
       </section>
       <section id="slider">
-        <SliderNew />
+        <div style={{textAlign: "center", marginBottom: "-24px"}}>
+          <h1 style={{fontSize: "24px", fontWeight: "700", color: "#304036"}}>{"םירמוא ונלש תוחוקלש םירבד".split("").reverse().join("")}</h1>
+        </div>
+        <SliderHome />
         <div className="additional-block">
           <p>
           “הדבקנו על הקיר תמונות בלובי וכל פעם
@@ -234,7 +266,7 @@ const Home = () => {
   );
   const renderHomePage = useCallback(() => {
     return width >= 767 ? renderDesktop() : renderMobile();
-  }, [width]);
+  }, [width, existData]);
 
   return <>{skeleton ? <SkeletonLoader /> : renderHomePage()}</>;
 };

@@ -1,0 +1,26 @@
+.aboutus_shipreturn{
+  font-size: 18px;
+}
+
+.aboutus_shipreturn_table_row {
+  height: 56px;
+}
+
+.aboutus_shipreturn_table_row_item {
+  /* line-height: px; */
+  vertical-align: middle;
+  text-align: center;
+  width: 25%;
+  border: 1px solid #000000;
+  height: 56px;
+  line-height: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  direction: rtl;
+  font-size: 16px;
+}
+
+.aboutus_shipreturn_table_row_item.shipreturn_bold {
+  font-weight: 700;
+}

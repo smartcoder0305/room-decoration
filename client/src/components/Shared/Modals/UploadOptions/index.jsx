@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import cn from 'classnames';
 import { useModal } from '@helpers/hooks/useModal';
 import { useHistory } from "react-router-dom";
@@ -8,17 +8,18 @@ import {
   uploadMultipleImages,
   addImageFromSocial,
   } from '@api';
-  import {
-    imagesData,
-  } from "@atoms";
-  import { useRecoilState } from "recoil";
+import {
+  imageCountState
+} from "@atoms/priceCalc";
+
+import { useRecoilValue} from "recoil";
 import "./style.css";
 
 const UploadOptions = ({
   isOpen,
   style
 }) => {
-  const [images, setImages] = useRecoilState(imagesData);
+  const imagecount = useRecoilValue(imageCountState);
 
   const modal = useModal();
   const filestack = require("filestack-js");
@@ -27,7 +28,8 @@ const UploadOptions = ({
   const filestack_client = filestack.init(FILESTACK_APIKEY); // Client
   let uid;
   const userId = localStorage.getItem('uniqueUserId');
-  if (typeof userId === 'object') { 
+  console.log('userid__________', userId);
+  if (!userId) { 
     uid = uniqid();
     localStorage.setItem("uniqueUserId", uid);
   } else {
@@ -39,6 +41,12 @@ const UploadOptions = ({
   }
 
   const uploadFromFile = (e) => {
+    console.log('@@@@@@@@@@@@@@@@@@@', imagecount + e.target.files.length)
+    if (imagecount + e.target.files.length > 30) {
+      alert("לא ניתן להעלות יותר מ30 תמונות");
+      modal('hide', 'uploadOptions');
+      return;
+    }
     modal('open', 'imageLoader');
 
     const formdata = new FormData();
@@ -70,52 +78,47 @@ const UploadOptions = ({
           .catch((err) => {});
       };
     } else {
-      // setloaderdis(true);
-
-      if (e.target.files.length > 20) {
-        alert("Image limit over. Max uploaded image 20");
-      } else {
-        // console.log(e.target);
-        let promises = [];
-        for (let i = 0; i < e.target.files.length; i++) {
-        
-          promises.push(new Promise((res, rej)=>{
-            let files = e.target.files[i];
-            let img = document.createElement("img");
-            img.src = URL.createObjectURL(files);
-              img.onload = function () {
-                formdata.append("imagewidth", img.width);
-                formdata.append("imageheight", img.height);
-                formdata.append("imageext", 0);
-                formdata.append("image", files);
-                formdata.append("uid", uid);
-                formdata.append("frametype", frametype);
-                formdata.append("source", '151122');
-                res();
-              };
-          }))       
-        }
-
-        //https://stickable-admin.yeshostings.com
-        Promise.all(promises).then(()=>uploadMultipleImages(formdata)
-          .then((res) => {
-            setTimeout(() => {
-              modal('hide', 'imageLoader')
-              hideUploadOptions();
-              history.push("/review-your-images");
-            }, 200);
-          }));
+      // console.log(e.target);
+      let promises = [];
+      for (let i = 0; i < e.target.files.length; i++) {
+      
+        promises.push(new Promise((res, rej)=>{
+          let files = e.target.files[i];
+          let img = document.createElement("img");
+          img.src = URL.createObjectURL(files);
+            img.onload = function () {
+              formdata.append("imagewidth", img.width);
+              formdata.append("imageheight", img.height);
+              formdata.append("imageext", 0);
+              formdata.append("image", files);
+              formdata.append("uid", uid);
+              formdata.append("frametype", frametype);
+              formdata.append("source", '151122');
+              res();
+            };
+        }))       
       }
+
+      //https://stickable-admin.yeshostings.com
+      Promise.all(promises).then(()=>uploadMultipleImages(formdata)
+        .then((res) => {
+          setTimeout(() => {
+            modal('hide', 'imageLoader')
+            hideUploadOptions();
+            history.push("/review-your-images");
+          }, 200);
+        }));
     }
   }; 
 
   const uploadOptions = {
     accept: ["image/*"],
-    maxFiles: 20,
+    maxFiles: 30 - imagecount,
     uploadInBackground: false,
-    onUploadDone: (res) => {
+    onUploadDone: async (res) => {
       res.uid = uid;
-      addImageFromSocial(res);
+      modal('open', 'imageLoader');
+      await addImageFromSocial(res);
       modal('hide', 'imageLoader');
       hideUploadOptions();
       history.push("/review-your-images");
@@ -142,8 +145,8 @@ const UploadOptions = ({
 
   return (
     <div className={cn("upload-options", { open: isOpen })} style={{...style }} >
-  <div className="upload-options__item">
-    העלאת תמונות <img src="assets/file/images/upload-file.svg" alt="file" />
+  <div className="upload-options__item" style={{fontWeight: "700"}}>
+    העלאת תמונות <img src="/assets/file/images/upload-file.svg" alt="file" />
     {isOpen && <input
       className="file-input"
       type="file"
@@ -152,11 +155,11 @@ const UploadOptions = ({
       onChange={(e) => uploadFromFile(e)}
     />}
   </div>
-  <button onClick={() => facebookPhotoImport()} className="upload-options__item">
-    ייבוא מהפייסבוק <img src="assets/file/images/upload-fb.svg" alt="facebook" />
+  <button onClick={() => facebookPhotoImport()} className="upload-options__item" style={{color: "black", fontWeight: "700"}}>
+    ייבוא מהפייסבוק <img src="/assets/file/images/upload-fb.svg" alt="facebook" />
   </button>
-  <button onClick={() => instagramPhotoImport()} className="upload-options__item">
-    ייבוא מהאינסטגרם <img src="assets/file/images/upload-inst.svg" alt="instagram" />
+  <button onClick={() => instagramPhotoImport()} className="upload-options__item" style={{color: "black", fontWeight: "700"}}>
+    ייבוא מהאינסטגרם <img src="/assets/file/images/upload-inst.svg" alt="instagram" />
   </button>
 </div>
   );

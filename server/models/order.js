@@ -7,6 +7,14 @@ const OrderSchema = new mongoose.Schema({
     },
     oid: {
         type: Number,
+        default:534410000
+    },
+    uid: {
+        type: String,
+        required: true
+    },
+    shippingAddress: {
+        type: Object,
         required: true
     }
 }, {
@@ -14,4 +22,5 @@ const OrderSchema = new mongoose.Schema({
 })
 
 const model = mongoose.model("Order", OrderSchema);
+
 module.exports = model;

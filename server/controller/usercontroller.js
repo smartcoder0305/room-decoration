@@ -9,15 +9,26 @@ const paymentProcessModel = require("../models/paymentprocess");
 const orderAddModel = require("../models/order");
 const userCountModel = require("../models/countUser");
 const fetch = require("node-fetch");
-var axios = require("axios");
+const axios = require("axios");
+const Dropbox = require('dropbox').Dropbox;
 const moment = require("moment");
 const filestack = require("filestack-js");
-
 const smartcrop = require('smartcrop-sharp');
+const aws = require('aws-sdk');
+
+let maxOrderID = 0;
 
 const filestackClient =  filestack.init(process.env.FILESTACK_KEY);
 
 const storage = multer.memoryStorage()
+
+const s3 = new aws.S3({
+  params: {
+    Bucket: process.env.S3_BUCKET,
+  },
+  accessKeyId: process.env.S3_ACCESS_ID,
+  secretAccessKey: process.env.S3_ACCESS_KEY,
+});
 
 const upload = multer({
   storage: storage,
@@ -26,7 +37,15 @@ const upload = multer({
 const cdnBaseUrl = process.env.CDN_BASE_URL;
 const minImgSize = 1600;
 const maxImgSize = 2100;
+const maxOriginSize = 2500;
 const thumbSize = 250;
+
+const FRAMES = {
+  classic: "קלאסי",
+  bold: "נועז",
+  ever: "נקי",
+  clean: "אותנטי",
+};
 
 exports.uploadImage = upload.array("image", 20);
 
@@ -35,31 +54,58 @@ exports.imageuploadsing = upload.single("image");
 exports.uploadSocialPhoto = upload.array("image", 20);
 
 exports.imageupload = async (req, res) => {
- const smartCropRes = await smartcrop.crop(req.file.buffer, { width: minImgSize, height: minImgSize });
+ console.log('imageUpload')
+ let newBuffer, newWid, newHei;
+ newBuffer = req.file.buffer;
+ newWid = req.body.imagewidth;
+ newHei = req.body.imageheight;
+ if (req.body.imageheight > maxOriginSize && req.body.imagewidth > maxOriginSize) {
+  if (req.body.imageheight > req.body.imagewidth) {
+    newWid = maxOriginSize;
+    newHei = Math.floor(req.body.imageheight / req.body.imagewidth * maxOriginSize);
+  } else {
+    newHei = maxOriginSize;
+    newWid = Math.floor(req.body.imagewidth / req.body.imageheight * maxOriginSize);
+  }
+  newBuffer = await sharp(req.file.buffer)
+  .rotate()
+  .resize(newWid)
+  .withMetadata()
+  .toBuffer();
+ }
 
- var cropbox_data = {
+ const smartCropRes = await smartcrop.crop(newBuffer, { width: minImgSize, height: minImgSize });
+  console.log('smartsharpResult', smartCropRes)
+  const cropbox_data = {
     height: smartCropRes.topCrop.height,
     width: smartCropRes.topCrop.width,
     top: smartCropRes.topCrop.y,
     left: smartCropRes.topCrop.x,
   };
-
-  const thumbBuffer = await sharp(req.file.buffer)
+  const cropBuffer = await sharp(newBuffer)
+    .extract(cropbox_data)
+    .withMetadata()
+    .toBuffer();
+  const thumbBuffer = await sharp(newBuffer)
     .extract(cropbox_data)
     .withMetadata() 
     .resize(thumbSize)
     .withMetadata()
     .toBuffer();
+  console.log('thumbResult')
+  const filestackCropPromise = filestackClient.upload(cropBuffer,undefined, {
+    filename: 'crop_'+ req.file.originalname
+  });
 
   const filestackThumbPromise = filestackClient.upload(thumbBuffer,undefined, {
     filename: 'thumb_'+ req.file.originalname
   });
     
-  const filestackPromise = filestackClient.upload(req.file.buffer,undefined, {
+  const filestackPromise = filestackClient.upload(newBuffer,undefined, {
     filename: req.file.originalname
   });
 
-  const [filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackThumbPromise,filestackPromise]);
+  const [filestackCropPromiseResponse, filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackCropPromise, filestackThumbPromise,filestackPromise]);
   console.log("thumbUrl", filestackThumbPromiseResponse.url);
   console.log("filestackResponse", filestackResponse);
 
@@ -67,14 +113,15 @@ exports.imageupload = async (req, res) => {
 
   console.log("cropbox_data", cropbox_data);
 
-  var new_ar = {
+  let new_ar = {
     uid: req.body.uid,
     //image: req.file.filename,
     image: filestackResponse.url,
     frame: req.body.frametype,
-    imageheight: req.body.imageheight,
-    imagewidth: req.body.imagewidth,
+    imageheight: newHei,
+    imagewidth: newWid,
     imageext: req.body.imageext,
+    crop_image: filestackCropPromiseResponse.url,
     view_image: filestackThumbPromiseResponse.url,
     cropbox_data: cropbox_data,
     zoomvalue: 0,
@@ -92,43 +139,70 @@ exports.imageupload = async (req, res) => {
 };
 
 exports.upload = async (req, res) => {
-  for (var i = 0; i < req.files.length; i++) {
+  let newBuffer, newWid, newHei;
+  for (let i = 0; i < req.files.length; i++) {
     img = req.files[i];
 
-    const smartCropRes = await smartcrop.crop(img.buffer, { width: minImgSize, height: minImgSize });
+    newBuffer = img.buffer;
+    newWid = req.body.imagewidth[i];
+    newHei = req.body.imageheight[i];
+    if (req.body.imageheight[i] > maxOriginSize && req.body.imagewidth[i] > maxOriginSize) {
+      if (req.body.imageheight[i] > req.body.imagewidth[i]) {
+        newWid = maxOriginSize;
+        newHei = Math.floor(req.body.imageheight[i] / req.body.imagewidth[i] * maxOriginSize);
+      } else {
+        newHei = maxOriginSize;
+        newWid = Math.floor(req.body.imagewidth[i] / req.body.imageheight[i] * maxOriginSize);
+      }
+      newBuffer = await sharp(img.buffer)
+      .rotate()
+      .resize(newWid)
+      .withMetadata()
+      .toBuffer();
+    }
 
-    var cropbox_data = {
+    const smartCropRes = await smartcrop.crop(newBuffer, { width: minImgSize, height: minImgSize });
+
+    const cropbox_data = {
        height: smartCropRes.topCrop.height,
        width: smartCropRes.topCrop.width,
        top: smartCropRes.topCrop.y,
        left: smartCropRes.topCrop.x,
      };
-   
-     const thumbBuffer = await sharp(img.buffer)
+    const cropBuffer = await sharp(newBuffer)
+      .extract(cropbox_data)
+      .withMetadata()
+      .toBuffer();
+     const thumbBuffer = await sharp(newBuffer)
        .extract(cropbox_data)
        .withMetadata()
        .resize(thumbSize)
        .withMetadata()
        .toBuffer();
    
+    const filestackCropPromise = filestackClient.upload(cropBuffer,undefined, {
+      filename: 'crop_'+ img.originalname
+    });
+
      const filestackThumbPromise = filestackClient.upload(thumbBuffer,undefined, {
        filename: 'thumb_'+ img.originalname
      });
        
-     const filestackPromise = filestackClient.upload(img.buffer,undefined, {
+     const filestackPromise = filestackClient.upload(newBuffer,undefined, {
        filename: img.originalname
      });
    
-   const [filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackThumbPromise,filestackPromise]);
+   const [filestackCropPromiseResponse, filestackThumbPromiseResponse, filestackResponse] = await Promise.all([filestackCropPromise, filestackThumbPromise,filestackPromise]);
     console.log("body", req.body);
-    var new_ar;
+    let new_ar;
     if (req.body.frametype) {
       new_ar = {
         uid: req.body.uid[i],
         image: filestackResponse.url,
-        imageheight: req.body.imageheight[i],
-        imagewidth: req.body.imagewidth[i],
+        imageheight: newHei,
+        imagewidth: newWid,
         imageext: req.body.imageext[i],
+        crop_image: filestackCropPromiseResponse.url,
         view_image: filestackThumbPromiseResponse.url,
         frame: req.body.frametype[i],
         cropbox_data: cropbox_data,
@@ -140,9 +214,10 @@ exports.upload = async (req, res) => {
       new_ar = {
         uid: req.body.uid[i],
         image: filestackResponse.url,
-        imageheight: req.body.imageheight[i],
-        imagewidth: req.body.imagewidth[i],
+        imageheight: newHei,
+        imagewidth: newWid,
         imageext: req.body.imageext[i],
+        crop_image: filestackCropPromiseResponse.url,
         view_image: filestackThumbPromiseResponse.url,
         cropbox_data: cropbox_data,
         zoomvalue: 0,
@@ -163,36 +238,61 @@ exports.upload = async (req, res) => {
 
 exports.socialPhotoImport = async (req, res) => {
 
-  for (var i = 0; i < req.body.filesUploaded.length; i++) {
+  for (let i = 0; i < req.body.filesUploaded.length; i++) {
       const handle =  req.body.filesUploaded[i].handle;
-      const input = (await axios({ url: req.body.filesUploaded[i].url, responseType: "arraybuffer" })).data;
-     
-      const smartCropRes = await smartcrop.crop(input, { width: minImgSize, height: minImgSize });
+      const aresp = await axios.get(`${cdnBaseUrl}/imagesize/${handle}`);
 
-      var cropbox_data = {
+      console.log('Social Image Upload')
+      const input = (await axios({ url: req.body.filesUploaded[i].url, responseType: "arraybuffer" })).data;
+      let newBuffer, newWid, newHei;
+      newBuffer = input;
+      newWid = aresp.data.width;
+      newHei = aresp.data.height;
+      if (newHei > maxOriginSize && newWid > maxOriginSize) {
+        if (newHei > newWid) {
+          newWid = maxOriginSize;
+          newHei = Math.floor(newHei / newWid * maxOriginSize);
+        } else {
+          newHei = maxOriginSize;
+          newWid = Math.floor(newWid / newHei * maxOriginSize);
+        }
+        newBuffer = await sharp(input)
+        .rotate()
+        .resize(newWid)
+        .withMetadata()
+        .toBuffer();
+      }
+
+      const smartCropRes = await smartcrop.crop(newBuffer, { width: minImgSize, height: minImgSize });
+      let cropbox_data = {
         height: smartCropRes.topCrop.height,
         width: smartCropRes.topCrop.width,
         top: smartCropRes.topCrop.y,
         left: smartCropRes.topCrop.x,
       };
-   
-      const aresp = await axios.get(`${cdnBaseUrl}/imagesize/${handle}`);
       console.log(aresp,"aresp");
-      const thumbBuffer = await sharp(input)
+      const cropBuffer = await sharp(newBuffer)
+        .extract(cropbox_data)
+        .withMetadata()
+        .toBuffer();
+      const thumbBuffer = await sharp(newBuffer)
         .extract(cropbox_data)
         .withMetadata()
         .resize(thumbSize)
         .withMetadata()
         .toBuffer();
     
+      const filestackCropPromiseResponse = await filestackClient.upload(cropBuffer);
       const filestackThumbPromiseResponse = await filestackClient.upload(thumbBuffer);
-       
-      var new_ar = {
+      const filestackResponse = await filestackClient.upload(newBuffer);
+      
+      const new_ar = {
         uid: req.body.uid,
-        image: req.body.filesUploaded[i].url,
-        imageheight: aresp.data.height,
-        imagewidth: aresp.data.width,
+        image: filestackResponse.url,
+        imageheight: newHei,
+        imagewidth: newWid,
         imageext: 0,
+        crop_image: filestackCropPromiseResponse.url,
         view_image:  filestackThumbPromiseResponse.url,
         cropbox_data: cropbox_data,
         zoomvalue: 0,
@@ -231,27 +331,75 @@ exports.imagedelete = async (req, res) => {
 };
 
 exports.cropped_img = async (req, res) => {
-    var base64Str = req.body.base64Image;
-    
-    var regex = /^data:.+\/(.+);base64,(.*)$/;
-    var matches = base64Str.match(regex);
-    var ext = matches[1];
-    var data = matches[2];
-    var buffer = Buffer.from(data, 'base64');
-    var imgName = `image_${Date.now()}.${ext}`;
+  try {
+
+    console.log('editing image');
+    // let base64Str = req.body.base64Image;
+    // console.log(base64Str);
+    // let regex = /^data:.+\/(.+);base64,(.*)$/;
+    // let subBase64Str = base64Str.substring(0, 50);
+    // console.log('######### - subBase64Str - ', subBase64Str)
+    // let matches = subBase64Str.match(regex);
+    // if (!matches) {
+    //   res.status(404).json({
+    //     message: "Invalid Image",
+    //   });
+    //   return
+    // }
+    // let splitBase64Str = base64Str.split(';base64,');
+    // console.log('matches', matches);
+    // let ext = matches[1];
+    // let data = splitBase64Str[1];
+    // // console.log('base64 Data', data);
+    // let buffer = Buffer.from(data, 'base64');
+    let query = { _id: req.body.id };
+    const img = await Uploadimg.findOne(query)
+    console.log('imgData', img)
+    const cropbox_data = req.body.cropbox_data;
+    console.log('cropbox_data', cropbox_data);
+    const defaultSize = req.body.defaultSize;
+    console.log('defaultSize', defaultSize);
+    let rate = 1.0;
+    if (req.body.zoomvalue != 0) {
+      const minSize = cropbox_data.width > cropbox_data.height ? cropbox_data.height : cropbox_data.width;
+      rate = minSize / defaultSize;
+    }
+    console.log('rate', rate);
+    const imgBuffer = (await axios({ url: img.image, responseType: "arraybuffer" })).data;
+    let imageSize = img.imagewidth;
+    if (img.imagewidth > img.imageheight) imageSize = img.imageheight;
+    let top, left;
+    if (parseInt(img.imagewidth) !== cropbox_data.naturalWidth) {
+      top = Math.round(-cropbox_data.left * (img.imagewidth / cropbox_data.width));
+      left = Math.round(-cropbox_data.top * (img.imageheight / cropbox_data.height));
+    } else {
+      top = Math.round(-cropbox_data.top * (img.imageheight / cropbox_data.height));
+      left = Math.round(-cropbox_data.left * (img.imagewidth / cropbox_data.width));
+    }
+    const buffer = await sharp(imgBuffer)
+      .extract({
+        width: Math.floor(imageSize / rate),
+        height: Math.floor(imageSize / rate),
+        top: top,
+        left: left,
+      })
+      .withMetadata()
+      .toBuffer();
+    console.log('read the buffer', buffer);
+    let imgName = `crop_${Date.now()}.${img.imageext}`;
 
     const filestackPromise = filestackClient.upload(buffer,undefined, {
       filename: imgName
     });
 
     const filestackResponse = await filestackPromise;
- 
+    console.log('fileStackResponse', filestackResponse);
     const cropeImage = filestackResponse.url;
     console.log(cropeImage);
   
     //console.log("cropped_img", req.body);
-     var query = { _id: req.body.id };
      updated = {
+      crop_image: cropeImage,
       view_image: cropeImage,
       rotate: req.body.rotate,
       zoomvalue: req.body.zoomvalue,
@@ -259,15 +407,23 @@ exports.cropped_img = async (req, res) => {
       //image:cropeImage
      };
   
-  var response = await Uploadimg.findOneAndUpdate(query, updated, {
-    upsert: true,
-  });
-  if (response) {
-    res.status(200).json({
-      message: "Image Save Sucessfully",
+    let response = await Uploadimg.findOneAndUpdate(query, updated, {
+      upsert: true,
+    });
+    if (response) {
+      res.status(200).json({
+        message: "Image Save Sucessfully",
+      });
+    } else {
+      console.log('db update bug exists.')
+    }
+    console.log("File created");
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({
+      message: err.message
     });
   }
-  console.log("File created");
 };
 
 
@@ -380,7 +536,7 @@ exports.paymentProcessing = async (req, res) => {
 };
 
 function sendOrderSMS(price, amount, oid) {
-  var data = JSON.stringify({
+  let data = JSON.stringify({
     Data: {
       Message: `New order in Stickable, Price: ${price} , Amount: ${amount} , Order ID: ${oid} , Date: ${moment().format(
         "L"
@@ -396,7 +552,7 @@ function sendOrderSMS(price, amount, oid) {
     },
   });
 
-  var config = {
+  let config = {
     method: "post",
     url: "https://capi.inforu.co.il/api/v2/SMS/SendSms",
     headers: {
@@ -421,7 +577,7 @@ exports.paymentProcessingInformation = async (req, res) => {
   const processToken = req.body.processToken;
   const uniqueUserId = req.body.uniqueUserId;
 
-  var options = {
+  let options = {
     method: "POST",
     url: "https://sandbox.meshulam.co.il/api/light/server/1.0/getPaymentProcessInfo",
     headers: {
@@ -435,12 +591,12 @@ exports.paymentProcessingInformation = async (req, res) => {
     },
   };
 
-  request(options, async function (error, response, body) {
+  request(options, async function (error, response, pBody) {
     if (error) throw new Error(error);
-    var body = JSON.parse(body);
+    let body = JSON.parse(pBody);
     console.log(body);
 
-    var query = {
+    let query = {
       uid: uniqueUserId,
       processId: processId,
       processToken: processToken,
@@ -448,7 +604,7 @@ exports.paymentProcessingInformation = async (req, res) => {
     updated = {
       paymentProcessInfo: body,
     };
-    var response_payment_process = await paymentProcessModel.findOneAndUpdate(
+    let response_payment_process = await paymentProcessModel.findOneAndUpdate(
       query,
       updated,
       { upsert: true },
@@ -479,7 +635,7 @@ exports.addShippingAddress = async (req, res) => {
   const getipresponse = await fetch("https://api.ipify.org/?format=json");
   const ipAddress = await getipresponse.json();
 
-  var userData = {
+  let userData = {
     uid: userId,
     fullName: userShippingData.fullName,
     address1: userShippingData.address1,
@@ -533,7 +689,7 @@ exports.countUser = async (req, res) => {
       status: 400,
     });
   }
-  // var response_payment_process = await userCountModel.findOneAndUpdate({})
+  // let response_payment_process = await userCountModel.findOneAndUpdate({})
 };
 
 exports.countOrder = async (req, res) => {
@@ -613,3 +769,165 @@ exports.getUserCount = async (req, res) => {
     });
   }
 };
+
+////// Order Controller/////////
+
+const s3Upload = async (fileData, filePath) => {
+  try {
+    await new Promise((resolve, reject) => {
+      s3.upload({
+        Key: filePath,
+        Body: fileData,
+      }).send(async (errS3, data) => {
+        if (errS3) {
+          reject(errS3);
+        } else {
+          resolve(data);
+        }
+      })
+    })
+    return true;
+  } catch (err) {
+    throw err;
+  }
+}
+
+const SMS_BASE_CREDENTIAL = 'Basic c2tpcG91dDpmZjVkOTlhYy00NDdlLTQyMjgtOTU2YS04MWQ5YTZlYTczNzI=';
+const SMS_ADMIN_NUMBER = '972548057015';
+const SMS_CUSTOMER_MSG = `איזה כיף, ההזמנה שלכם בבלנדס נקלטה!
+בקרוב נתחיל לעבוד עליה בקפדנות עם דגש על הפרטים הקטנים,
+נעדכן אתכם כשההזמנה תצא :)
+מס' הזמנה: `;
+
+const sendSMS = async (smsInfo) => {
+  try {
+    const data = JSON.stringify({
+      "Data": {
+        "Message": SMS_CUSTOMER_MSG + smsInfo.oid,
+        "Recipients": [
+          {
+            "Phone": smsInfo.phone
+          }
+        ],
+        "Settings": {
+          "Sender": "Blends"
+        }
+      }
+    });
+    
+    const config = {
+      method: 'post',
+      url: 'https://capi.inforu.co.il/api/v2/SMS/SendSms',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'Authorization': SMS_BASE_CREDENTIAL
+      },
+      data : data
+    };
+    
+    await axios(config)
+  } catch (err) {
+    console.log(err)
+    throw new Error(err.message)
+  }
+
+  try {
+    const data = JSON.stringify({
+      "Data": {
+        "Message": `נקלטה הזמנה חדשה: ${smsInfo.name}, ₪${smsInfo.price}, ${smsInfo.dateAndTime}, ${smsInfo.oid}, ${smsInfo.tof}, תמונות ${smsInfo.nof}`,
+        "Recipients": [
+          {
+            "Phone": SMS_ADMIN_NUMBER
+          }
+        ],
+        "Settings": {
+          "Sender": "Blends"
+        }
+      }
+    });
+    
+    const config = {
+      method: 'post',
+      url: 'https://capi.inforu.co.il/api/v2/SMS/SendSms',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'Authorization': SMS_BASE_CREDENTIAL
+      },
+      data : data
+    };
+    
+    await axios(config)
+  } catch (err) {
+    console.log(err)
+    throw new Error(err.message)
+  }
+}
+
+exports.createOrder = async (req, res) => {
+  console.log(req.body);
+  try {
+    const maxOid = await orderAddModel.findOne({}).sort({ oid: -1 }).limit(1);
+    console.log('max::::', maxOid.oid);
+    let oid = maxOid.oid ? maxOid.oid + 1 : 534410001;
+    if (maxOrderID === 0) maxOrderID = oid;
+    else {
+      if (maxOrderID >= oid) {
+        oid = maxOrderID + 1;
+      }
+      maxOrderID = oid;
+    }
+    console.log('oid::::', oid);
+    const orderCreate = await orderAddModel.create({uid: req.body.uid, oid: oid, shippingAddress: req.body});
+    console.log('orderCreate:::::::', orderCreate);
+    const images = await Uploadimg.find({uid: req.body.uid});
+    console.log('images::::::::::::::', images);
+    const dropboxPathPrefix = `${oid}-${moment(new Date()).format("YYYYMMDD")}-${req.body.fullName}`;
+
+    for(let index = 0 ; index < images.length ; index++) {
+      const destinationPath = `${dropboxPathPrefix}/${oid}-${index}.png`
+      const imgBuffer = (await axios({ url: images[index].crop_image, responseType: "arraybuffer" })).data;
+      console.log('uploaded file to Dropbox at: ', destinationPath);
+      await s3Upload(imgBuffer, destinationPath);
+    }
+    const frameName = FRAMES[images[0]?.frame] || FRAMES.classic;
+    const orderText = `(1) Name of chosen frame : ${frameName}
+(2) Full Customer Name : ${req.body.fullName}
+(3) Email : ${req.body.email}
+(4) Address : ${req.body.address}
+(5) City : ${req.body.city}
+(6) Postal Code : ${req.body.zipCode}
+(7) Notes : ${req.body.arrivalInstructions}
+(8) Total number of frames : ${images.length}
+(9) Date and time of order : ${moment(new Date()).format("DD/MM/YYYY HH:mm:ss")}
+(10) Order ID : ${oid}`;
+    
+    console.log('orderText:::::::::', orderText);
+    await s3Upload(orderText, `${dropboxPathPrefix}/order.txt`);
+    await sendSMS({
+      name: req.body.fullName,
+      price: images.length * 45,
+      dateAndTime: moment(new Date()).format("DD/MM/YYYY HH:mm:ss"),
+      oid: oid,
+      tof: images.length,
+      nof: frameName,
+      phone: req.body.phoneNumber,
+    })
+    return res.json(orderCreate);
+  } catch (error) {
+    console.log(error)
+    return res.status(400).send('Creat Order Failed');
+  }  
+}
+
+exports.getOrder = async (req, res) => {
+  try {
+    const order = await orderAddModel.findOne({oid: req.params.oid});
+    const images = await Uploadimg.find({uid: order.uid});
+    return res.json({
+      order: order,
+      imageCount: images.length,
+    })
+  } catch (err) {
+    return res.status(400).send('Verify Failed');
+  }
+}

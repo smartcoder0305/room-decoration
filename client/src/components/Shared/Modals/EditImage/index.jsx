@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import Cropper from "react-cropper";
-import { popUpImage, modalWindows } from "@atoms";
+import { popUpImage } from "@atoms";
 import { getImagesDB } from "@api";
 import useWindowDimensions from "@helpers/hooks/windowDemensions";
 
@@ -16,31 +16,57 @@ const EditModal = ({ handleCloseModal, modalData }) => {
   const imageElement = cropperRef?.current;
   const cropper = imageElement?.cropper;
 
-  const MAIN_URL = process.env.REACT_APP_MAIN_URL;
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const localstr = localStorage.getItem("uniqueUserId");
   const imageonpopup = useRecoilValue(popUpImage);
-  const modalsData = useRecoilValue(modalWindows);
   const [zoomvalue, setzoomvalue] = useState(0.0);
+  const [isLoading, setLoading] = useState(true);
+  const isInitial = useRef(true);
 
   useEffect(() => {
-    cropper?.zoomTo(+imageonpopup.zoomvalue * 5);
+    console.log(imageonpopup)
+    cropper?.zoomTo(+imageonpopup.zoomvalue);
     cropper?.rotate(+imageonpopup.rotate);
   }, []);
 
+  const calCropData = (imageonpopup) => {
+    if (imageonpopup.cropbox_data.naturalWidth) return {
+      ...imageonpopup.cropbox_data
+    }
+    let left = imageonpopup.cropbox_data.left;
+    let top = imageonpopup.cropbox_data.top;
+    const naturalHeight = parseInt(imageonpopup.imageheight);
+    const naturalWidth = parseInt(imageonpopup.imagewidth);
+    const croperSize = getCropperSize();
+    let rate;
+    if (naturalHeight <= naturalWidth) {
+      rate = croperSize / naturalHeight;
+    } else {
+      rate = croperSize / naturalWidth;
+    }
+    left = left * -rate;
+    top = top * -rate;
+    return {
+      top,
+      left,
+    }
+  }
   const InitialSets = (target) => {
-    target?.zoomTo(+imageonpopup.zoomvalue * 5);
+    console.log(imageonpopup)
+    target?.zoomTo(+imageonpopup.zoomvalue);
     target?.rotate(+imageonpopup.rotate);
-    setzoomvalue(+imageonpopup.zoomvalue);
+    const cropData = calCropData(imageonpopup);
+    target.moveTo(cropData.left, cropData.top)
+    setLoading(false)
   };
   const imageRotate = () => {
     cropper?.rotate(-90);
   };
 
-  const getCropData = () => {
+  const getCropData = async () => {
+    setLoading(true)
     if (typeof cropper !== "undefined") {
-      var cc = cropper.getCroppedCanvas().toDataURL();
-      var cropbox_data = cropper.getCropBoxData();
+      var cropbox_data = cropper.getCanvasData();
       var image_data_rotation = cropper.getImageData();
       var rotate = 0;
       if (image_data_rotation.rotate === undefined) {
@@ -48,16 +74,16 @@ const EditModal = ({ handleCloseModal, modalData }) => {
       } else {
         rotate = image_data_rotation.rotate;
       }
-      //console.log(rotate);
-      // let base64Image = cc.split(";base64,").pop();
+      console.log('crop', cropbox_data, zoomvalue);
 
       const aa = {
         uid: localstr,
         id: imageonpopup?._id,
-        base64Image: cc,
+        // base64Image: cc,
         cropbox_data: cropbox_data,
         rotate: rotate,
         zoomvalue: zoomvalue,
+        defaultSize: getCropperSize(),
       };
 
       const config = {
@@ -68,42 +94,51 @@ const EditModal = ({ handleCloseModal, modalData }) => {
 
       axios.post(BASE_URL + "/cropped_img", aa, config).then((v) => {
         getImagesDB();
+        setLoading(false)
+        handleCloseModal("editImage");
       });
-
-      handleCloseModal("editImage");
     }
   };
 
-  const handleOnZoom = ({ detail }) => {
-    const zoom = +(detail.ratio / 5).toFixed(2);
-    if (zoom > 5) {
-      return;
+  const handleOnZoom = (e) => {
+    console.log('isInitial', isInitial);
+    if (isInitial.current) {
+      isInitial.current = false;
     } else {
-      setzoomvalue(+(detail.ratio / 5).toFixed(2));
+      console.log('detail', e.detail);
+      console.log('zoomvalue', zoomvalue);
+      if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) {
+        e.preventDefault();
+       }
+       if (e.detail.ratio >= 0.125) {
+        e.preventDefault();
+       }
     }
+     setzoomvalue(e.detail.ratio)
   };
 
   const handleZoomTo = (e) => {
     setzoomvalue(+e.target.value);
-    cropper?.zoomTo(+e.target.value * 5);
+    cropper?.zoomTo(+e.target.value);
   };
 
   const zoomvalueplus = () => {
-    if (zoomvalue >= 1.0) {
+    if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) return;
+    if (zoomvalue >= 0.125) {
       return;
     } else {
-      setzoomvalue((zm) => zm + 0.1);
-      cropper.zoomTo((zoomvalue + 0.1) * 5);
+      setzoomvalue((zm) => zm + 0.005);
+      cropper.zoomTo((zoomvalue + 0.005));
     }
   };
 
   const zoomvalueminus = () => {
-    if (zoomvalue < 0.1) {
+    if (zoomvalue < 0.005) {
       setzoomvalue(0.0);
       cropper.zoomTo(0.0);
     } else {
-      setzoomvalue((zm) => zm - 0.1);
-      cropper.zoomTo((zoomvalue - 0.1) * 5);
+      setzoomvalue((zm) => zm - 0.005);
+      cropper.zoomTo((zoomvalue - 0.005));
     }
   };
   const getCropperSize = () => ({
@@ -112,6 +147,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
     bold: 330,
     ever: 325,
   }[modalData.frame])
+  console.log('isZoomable');
   return (
     <div id="edit-modal">
     {width > 767 ?
@@ -120,18 +156,15 @@ const EditModal = ({ handleCloseModal, modalData }) => {
           אישור
         </button>
         <button onClick={() => handleCloseModal("editImage")} className="close">
-          <img src="assets/file/images/cross.svg" alt="close" />
+          <img src="/assets/file/images/cross.svg" alt="close" />
         </button>
       </div>)
-      : (
-        <div className="edit-modal__header--mobile">
-          <button onClick={() => getCropData()}>חזור <img src="assets/file/images/arrow.png" alt="arrow"/></button>
-        </div>
-      )}
+      : (<div className="edit-modal__header"></div>)
+    }
       <div className="edit-modal__content">
-        <h2>התאמת תמונה</h2>
-        <p>הזיזו או הגדילו את התמונה בתוך המסגרת</p>
-        <div className={`${modalData?.frame} cropper-frame`}>
+        <p style={{fontWeight: "600", fontSize: "18px"}}>התאמת תמונה</p>
+        <p style={{fontWeight: "600", fontSize: "14px"}}>הזיזו או הגדילו את התמונה בתוך המסגרת</p>
+        <div className={`${modalData?.frame} cropper-frame`} style={{marginTop: "24px"}}>
           <Cropper
             ref={cropperRef}
             style={{
@@ -157,11 +190,12 @@ const EditModal = ({ handleCloseModal, modalData }) => {
             responsive
             checkOrientation={false}
             zoom={handleOnZoom}
+            center={false}
           />
         </div>
         <div className="rang_container">
           <img
-            src="assets/file/images/minus_icon.svg"
+            src="/assets/file/images/minus_icon.svg"
             onClick={() => {
               zoomvalueminus();
             }}
@@ -169,16 +203,16 @@ const EditModal = ({ handleCloseModal, modalData }) => {
           />
           <input
             type="range"
-            min="0"
-            max=".25"
+            min="0.1"
+            max="0.125"
             value={zoomvalue}
             onChange={(e) => handleZoomTo(e)}
-            step="0.025"
+            step="0.005"
             id="zoomer"
             className="slider"
           />
           <img
-            src="assets/file/images/plus_icon.svg"
+            src="/assets/file/images/plus_icon.svg"
             onClick={() => {
               zoomvalueplus();
             }}
@@ -191,6 +225,27 @@ const EditModal = ({ handleCloseModal, modalData }) => {
         </button>
         )}
       </div>
+      {isLoading &&
+        <div
+          className="modal loaderbg"
+          id="mainImageLoaderModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+          style={{ display: isLoading }}
+        >
+          <div className="modal-dialog review-image-loader" role="document">
+            <div className="loadingio-spinner-heart-btbrqan8295">
+              <div className="ldio-kv0ui0pfesk">
+                <div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, memo, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import cn from "classnames";
 import axios from "axios";
@@ -7,11 +7,7 @@ import "cropperjs/dist/cropper.css";
 import { popUpImage, imagesData } from "@atoms";
 import {
   countState,
-  netPriceState,
   imageCountState,
-  totalPriceState,
-  discountPriceState,
-  discountPercentageState,
 } from "@atoms/priceCalc";
 import { useRecoilState } from "recoil";
 import { useModal } from "@helpers/hooks/useModal";
@@ -22,15 +18,9 @@ import Loader from "@shared/Loader";
 import "./style.css";
 import { useCallback } from "react";
 import FrameSelector from "./components/FrameSelector";
+import ImageLoader from "@shared/ImageLoader";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const MAIN_URL = process.env.REACT_APP_MAIN_URL;
-const FILESTACK_APIKEY = process.env.REACT_APP_FILESTACK_APIKEY;
-
-const filestack = require("filestack-js");
-
-//const filestack_client = filestack.init("AbUWMKsQDSg2HbtzgqaQhz"); // Champ
-const filestack_client = filestack.init(FILESTACK_APIKEY); // Client
 
 function getFrameSelected() {
   const frameSelected = localStorage.getItem("frameSelected");
@@ -39,31 +29,20 @@ function getFrameSelected() {
 }
 
 const ReviewImages = () => {
-
-  const localstr = localStorage.getItem("uniqueUserId");
   const [imageonpopup, setimageonpopup] = useRecoilState(popUpImage);
   const [images, setImages] = useRecoilState(imagesData);
   const [firstLoader, setfirstLoader] = useState("block");
 
   const [transac, settransac] = useState();
   const [loaderdis, setloaderdis] = useState(false);
-  const [facebook_modal, setfacebook_modal] = useState("none");
-  const [fbsavebtn, setfbsavebtn] = useState("none");
   const [socialopc, setsocialopc] = useState("none");
 
-  const [facebookpic, setfacebookpic] = useState(null);
-  const [fbbuttonhide, setfbbuttonhide] = useState("block");
 
   const [frameChoose, setFrameChoose] = useState(getFrameSelected);
 
   const [count, setCount] = useRecoilState(countState);
-  const [netPrice, setNetPrice] = useRecoilState(netPriceState);
   const [imagecount, setImagecount] = useRecoilState(imageCountState);
-  const [totalPrice, setTotalPrice] = useRecoilState(totalPriceState);
-  const [discountPrice, setDiscountPrice] = useRecoilState(discountPriceState);
-  const [discountPercentage, setDiscountPercentage] = useRecoilState(
-    discountPercentageState
-  );
+
   const { height, width } = useWindowDimensions();
   let history = useHistory();
   const modal = useModal();
@@ -135,18 +114,6 @@ const ReviewImages = () => {
         }
       });
     });
-    // modal("open", "deleteConfirm", {
-    //   data: item,
-    //   onDelete: () =>
-    //     removeImage(id).then((v) => {
-    //       setCount(count + 1);
-    //       getImagesDB().then((res) => {
-    //         if (res.data.data.length === 0) {
-    //           history.push("/upload-your-image");
-    //         }
-    //       });
-    //     }),
-    // });
   };
 
   const frameSelected = async (type) => {
@@ -195,38 +162,40 @@ const ReviewImages = () => {
 
     return images.map((im, index) => {
       return (
-        <div className="album-item-wrapper">
+        <div className="album-item-wrapper" key={index.toString()}>
         <div
-          key={index.toString()}
           className={cn(`album-item ${frameChoose}`)}
           onClick={() => openImageOptions(im)}
         >
           {width > 767 && (
-            <div className={`content-overlay ${frameChoose}`}>
-              <div className="content-details fadeIn-bottom">
-                <img
-                  src="assets/file/images/edit_image.svg"
-                  className="edit"
-                  data-toggle="modal"
-                  data-target="#myModal"
-                  onClick={() => edit_seg(im)}
-                  alt="edit"
-                />
-                <img
-                  src="assets/file/images/Delete_icon.svg"
-                  className="edit"
-                  alt="remove"
-                  onClick={() => deleteImage(im)}
-                />
+            <>
+              <div className={`content-overlay ${frameChoose}`}>
+                <div className="content-details fadeIn-bottom">
+                  <img
+                    src="/assets/file/images/edit_image.svg"
+                    className="edit"
+                    data-toggle="modal"
+                    data-target="#myModal"
+                    onClick={() => edit_seg(im)}
+                    alt="edit"
+                  />
+                  <img
+                    src="/assets/file/images/Delete_icon.svg"
+                    className="edit"
+                    alt="remove"
+                    onClick={() => deleteImage(im)}
+                  />
+                </div>
               </div>
-            </div>
+            </>
           )}
         </div>
-        <img
-            src={`${im.view_image}`}
-            className={cn(`img-con ${frameChoose}`)}
-            alt="icon"
-          />
+        <ImageLoader
+          src={im.view_image}
+          className={cn(`img-con ${frameChoose}`)}
+          alt="icon"
+          shadow={true}
+        />
         </div>
       );
     });
@@ -243,15 +212,38 @@ const ReviewImages = () => {
       </div>
       {/* End frame section */}
 
-      <div className="review-images-wrapper">
+      <div className="review-images-wrapper" style={{maxHeight: width < 768 ? height - 305 : null}}>
         {width > 767 && (
           <div className="checkout-wrapper">
             <div className="aside-checkout">
-              <h1>תמונות {imagecount} יש לנו כאן</h1>
-              <p>וודאו שהכל נראה טוב ונמשיך</p>
-              <button className="checkout-btn" onClick={openCheckoutDrawer}>
-                קליק וממשיכים
-              </button>
+              {imagecount >= 2 && 
+                <>
+                  <h1>יש לנו כאן {imagecount} תמונות</h1>
+                  <p>וודאו שהכל נראה טוב ונמשיך</p>
+                </>
+              }
+              {imagecount === 1 && 
+                <>
+                  <h1>יש לנו כאן רק תמונה אחת</h1>
+                  <p>על קירות כאלה נאמר, איפה כולם?</p>
+                </>
+              }
+              {imagecount === 0 &&
+                <>
+                  <h1>אין לנו כאן תמונות</h1>
+                  <p>נסו לחזור אחורה ולהתחיל שוב או דווחו לנו</p>
+                </>
+              }
+              {imagecount === 0 &&
+                <button className="checkout-btn" onClick={showUploadOptions} style={{width: "auto"}}>
+                  בחירת תמונות חדשות
+                </button>
+              }
+              {imagecount >=1 &&
+                <button className="checkout-btn" onClick={openCheckoutDrawer}>
+                  קליק וממשיכים
+                </button>
+              }
               <div className="gift">
                 <h2 className="">:בהזמנה זו תקבלו</h2>
 
@@ -260,25 +252,25 @@ const ReviewImages = () => {
                     משלוח עד 7 ימים אל הבית
                     <img
                       style={{ width: "23px" }}
-                      src="assets/file/images/gift_1.svg"
+                      src="/assets/file/images/gift_1.svg"
                       alt="gift"
                     />
                   </li>
                   <li>
                    לא מרוצים? עד 14 ימים החזרה בקלות
-                    <img src="assets/file/images/gift_2.svg" alt="gift" />
+                    <img src="/assets/file/images/gift_2.svg" alt="gift" />
                   </li>
 
                   <li>
                     אריזת מתנה לשמירה על התמונות
-                    <img src="assets/file/images/gift_3.svg" alt="gift" />
+                    <img src="/assets/file/images/gift_3.svg" alt="gift" />
                   </li>
                 </ul>
               </div>
             </div>
           </div>
         )}
-        <div className="trx">
+        <div className="trx" style={ width < 767 ? {display: "flex", alignItems: "center", height: `calc(${height}px - 305px)`, paddingTop: "0px"} : null}>
           <div
             className={cn("my-album", { single: images.length <= 1 })}
             style={{
@@ -294,42 +286,55 @@ const ReviewImages = () => {
               onClick={() => showUploadOptions()}
             ></div>
           </div>
-
-          {width <= 767 && (
-            <div className="additional-info-mobile">
-              <img src="assets/file/images/red_check.svg" alt="check" />
-              <p>החלצהב ולע תונומתה לכ</p>
-              <p>תוודאו שהכל נראה טוב ונמשיך</p>
-            </div>
-          )}
         </div>
       </div>
 
       {/* Start checkout for mobile */}
       {width <= 767 && (
         <div className="mobile-checkout">
+          <style jsx>{`
+            body {
+              height: 100% !important; 
+              overflow: hidden !important;
+              -webkit-overflow-scrolling: touch !important;
+            }
+          `}</style>
           <img
             onClick={() => showUploadOptions()}
-            src="assets/file/images/file.png"
+            src="/assets/file/images/file.png"
             className="file"
             alt="file-icon"
           />
           <div className="mobile-checkout-info">
             <p>
-              <img src="assets/file/images/green_check.svg" alt="check" /> םניח
-              חולשמל תיאכז רבכ ךלש הנמזהה
+              <img src="/assets/file/images/green_check.svg" alt="check" style={{width: "20px"}}/>&nbsp;&nbsp; ההזמנה שלך זכאית למשלוח חינם
             </p>
           </div>
-          <div className="mobile-checkout-button">
-            <a
-              href="#"
-              className="site-btn"
-              data-toggle="modal"
-              data-target="#rescart"
-              onClick={openCheckoutDrawerMobile}
-            >
-              המשך לרכישה ({imagecount} תמונות)
-            </a>
+          <div className="mobile-checkout-button" style={{margin: "0", width: "100%"}}>
+            {imagecount === 0 &&
+              <a
+                href="#"
+                className="site-btn"
+                data-toggle="modal"
+                data-target="#rescart"
+                onClick={showUploadOptions}
+                style={{padding: "10px 20px", width: "92%", margin: "0"}}
+              >
+                בחירת תמונות חדשות
+              </a>
+            }
+            {imagecount >= 1 &&
+              <a
+                href="#"
+                className="site-btn"
+                data-toggle="modal"
+                data-target="#rescart"
+                onClick={openCheckoutDrawerMobile}
+                style={{padding: "10px 20px", width: "92%", margin: "auto"}}
+              >
+                המשך להזמנה - {imagecount} תמונות
+              </a>
+            }
           </div>
         </div>
       )}

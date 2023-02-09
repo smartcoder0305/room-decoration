@@ -81,8 +81,6 @@ const UploadImage = () => {
           img.onload = function () {
             console.log(img.height);
             console.log(img.width);
-
-            // console.log(files);
           };
           formdata.append("imagewidth", img.width);
           formdata.append("imageheight", img.height);
@@ -134,7 +132,7 @@ const UploadImage = () => {
                     }}
                   >
                     <img
-                      src="assets/file/images/d1.png"
+                      src="/assets/file/images/d1.png"
                       alt="img"
                       className="w-100"
                     />
@@ -148,7 +146,7 @@ const UploadImage = () => {
                     }}
                   >
                     <img
-                      src="assets/file/images/d2.png"
+                      src="/assets/file/images/d2.png"
                       alt="img"
                       className="w-100"
                     />
@@ -162,7 +160,7 @@ const UploadImage = () => {
                     }}
                   >
                     <img
-                      src="assets/file/images/d3.png"
+                      src="/assets/file/images/d3.png"
                       alt="img"
                       className="w-100"
                     />
@@ -176,7 +174,7 @@ const UploadImage = () => {
                     }}
                   >
                     <img
-                      src="assets/file/images/d4.png"
+                      src="/assets/file/images/d4.png"
                       alt="img"
                       className="w-100"
                     />
@@ -216,7 +214,7 @@ const UploadImage = () => {
                   {/* <input className="file-input" onChange={(e)=>this.upload(e)} type="file" multiple defaultValue="file" /> */}
                   <p></p>
                   <img
-                    src="assets/file/images/save.png"
+                    src="/assets/file/images/save.png"
                     alt="img"
                     className="w-25"
                     style={{ marginTop: "-30px" }}
@@ -255,9 +253,9 @@ const UploadImage = () => {
                         <div className="hovr-sec">
                         <p>
                     <input type="file"  accept="image/*" className="file-input" multiple name="file" onChange={(e) => {upload(e)}} style={{zIndex:'999', height:"100% !important"}} />
-                        <img src="assets/images/photo-gallery.png" alt="" />&nbsp; &nbsp;Upload Photos</p>
-                    <p><img src="assets/images/facebook.png" alt="" />&nbsp; &nbsp;Import From Facebook</p>
-                    <p><img src="assets/images/instagram.png" alt="" />&nbsp; &nbsp;Import From Instagram</p>
+                        <img src="/assets/images/photo-gallery.png" alt="" />&nbsp; &nbsp;Upload Photos</p>
+                    <p><img src="/assets/images/facebook.png" alt="" />&nbsp; &nbsp;Import From Facebook</p>
+                    <p><img src="/assets/images/instagram.png" alt="" />&nbsp; &nbsp;Import From Instagram</p>
                     </div>
                     </div>
                     
@@ -273,12 +271,12 @@ const UploadImage = () => {
         {/* <div className="row justify-content-center d-flex">
                                     <div className="col-md-6">
                                         <div className="fbsec">
-                                        <p><img src="assets/images/facebook.png" alt="" />&nbsp; &nbsp;Import From Facebook</p>
+                                        <p><img src="/assets/images/facebook.png" alt="" />&nbsp; &nbsp;Import From Facebook</p>
                     
                                         </div>
                                     </div>
                                     <div className="col-md-6">
-                                    <p><img src="assets/images/instagram.png" alt="" />&nbsp; &nbsp;Import From Instagram</p>
+                                    <p><img src="/assets/images/instagram.png" alt="" />&nbsp; &nbsp;Import From Instagram</p>
                                     </div>
 
                                 </div>   */}
@@ -304,9 +302,9 @@ const UploadImage = () => {
             style={{ zIndex: "999", height: "100% !important" }}
           />
 
-          {/* <img src="assets/file/images/file.png" alt="img" onClick={()=>{mobile_file_click()}} /> */}
+          {/* <img src="/assets/file/images/file.png" alt="img" onClick={()=>{mobile_file_click()}} /> */}
           <img
-            src="assets/file/images/file.png"
+            src="/assets/file/images/file.png"
             alt="img"
             onClick={() => {
               mobile_file_click();
@@ -328,15 +326,15 @@ const UploadImage = () => {
                 }}
                 style={{ zIndex: "999", height: "100% !important" }}
               />
-              <img src="assets/images/photo-gallery.png" alt="" />
+              <img src="/assets/images/photo-gallery.png" alt="" />
               &nbsp; &nbsp;Choose From Your Phone
             </p>
             <p>
-              <img src="assets/images/facebook.png" alt="" />
+              <img src="/assets/images/facebook.png" alt="" />
               &nbsp; &nbsp;Import From Facebook
             </p>
             <p>
-              <img src="assets/images/instagram.png" alt="" />
+              <img src="/assets/images/instagram.png" alt="" />
               &nbsp; &nbsp;Import From Instagram
             </p>
           </div>

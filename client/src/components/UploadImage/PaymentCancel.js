@@ -76,7 +76,7 @@ document.getElementById('mainBody').classList.remove("overflowhdn")
           <div className="col-md-12">
             <div className="success_img">
               <img
-                src="assets/file/images/cancel_tick.png"
+                src="/assets/file/images/cancel_tick.png"
                 alt="payment-success-icon"
               />
             </div>
@@ -150,18 +150,18 @@ document.getElementById('mainBody').classList.remove("overflowhdn")
           <div>
             <div className="each-post">
               <div className="post-head">
-                <img src="assets/images/slider-user.png" alt="" />
+                <img src="/assets/images/slider-user.png" alt="" />
                 <div className="head-txt">
                   <h6>talfeinstein</h6>
                   <p>Raanana, Israel</p>
                 </div>
               </div>
-              <img src="assets/images/slider-img1.png" alt="" />
+              <img src="/assets/images/slider-img1.png" alt="" />
               <div className="inst-info">
                 <div className="info-grp">
-                  <img src="assets/images/insccon1.svg" alt="" />
-                  <img src="assets/images/insccon2.svg" alt="" />
-                  <img src="assets/images/insccon3.svg" alt="" />
+                  <img src="/assets/images/insccon1.svg" alt="" />
+                  <img src="/assets/images/insccon2.svg" alt="" />
+                  <img src="/assets/images/insccon3.svg" alt="" />
                 </div>
                 <p>
                   <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -174,18 +174,18 @@ document.getElementById('mainBody').classList.remove("overflowhdn")
           <div>
             <div className="each-post">
               <div className="post-head">
-                <img src="assets/images/slider-user.png" alt="" />
+                <img src="/assets/images/slider-user.png" alt="" />
                 <div className="head-txt">
                   <h6>talfeinstein</h6>
                   <p>Raanana, Israel</p>
                 </div>
               </div>
-              <img src="assets/images/slider-img1.png" alt="" />
+              <img src="/assets/images/slider-img1.png" alt="" />
               <div className="inst-info">
                 <div className="info-grp">
-                  <img src="assets/images/insccon1.svg" alt="" />
-                  <img src="assets/images/insccon2.svg" alt="" />
-                  <img src="assets/images/insccon3.svg" alt="" />
+                  <img src="/assets/images/insccon1.svg" alt="" />
+                  <img src="/assets/images/insccon2.svg" alt="" />
+                  <img src="/assets/images/insccon3.svg" alt="" />
                 </div>
                 <p>
                   <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -198,18 +198,18 @@ document.getElementById('mainBody').classList.remove("overflowhdn")
           <div>
             <div className="each-post">
               <div className="post-head">
-                <img src="assets/images/slider-user.png" alt="" />
+                <img src="/assets/images/slider-user.png" alt="" />
                 <div className="head-txt">
                   <h6>talfeinstein</h6>
                   <p>Raanana, Israel</p>
                 </div>
               </div>
-              <img src="assets/images/slider-img1.png" alt="" />
+              <img src="/assets/images/slider-img1.png" alt="" />
               <div className="inst-info">
                 <div className="info-grp">
-                  <img src="assets/images/insccon1.svg" alt="" />
-                  <img src="assets/images/insccon2.svg" alt="" />
-                  <img src="assets/images/insccon3.svg" alt="" />
+                  <img src="/assets/images/insccon1.svg" alt="" />
+                  <img src="/assets/images/insccon2.svg" alt="" />
+                  <img src="/assets/images/insccon3.svg" alt="" />
                 </div>
                 <p>
                   <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -222,18 +222,18 @@ document.getElementById('mainBody').classList.remove("overflowhdn")
           <div>
             <div className="each-post">
               <div className="post-head">
-                <img src="assets/images/slider-user.png" alt="" />
+                <img src="/assets/images/slider-user.png" alt="" />
                 <div className="head-txt">
                   <h6>talfeinstein</h6>
                   <p>Raanana, Israel</p>
                 </div>
               </div>
-              <img src="assets/images/slider-img1.png" alt="" />
+              <img src="/assets/images/slider-img1.png" alt="" />
               <div className="inst-info">
                 <div className="info-grp">
-                  <img src="assets/images/insccon1.svg" alt="" />
-                  <img src="assets/images/insccon2.svg" alt="" />
-                  <img src="assets/images/insccon3.svg" alt="" />
+                  <img src="/assets/images/insccon1.svg" alt="" />
+                  <img src="/assets/images/insccon2.svg" alt="" />
+                  <img src="/assets/images/insccon3.svg" alt="" />
                 </div>
                 <p>
                   <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -246,18 +246,18 @@ document.getElementById('mainBody').classList.remove("overflowhdn")
           <div>
             <div className="each-post">
               <div className="post-head">
-                <img src="assets/images/slider-user.png" alt="" />
+                <img src="/assets/images/slider-user.png" alt="" />
                 <div className="head-txt">
                   <h6>talfeinstein</h6>
                   <p>Raanana, Israel</p>
                 </div>
               </div>
-              <img src="assets/images/slider-img1.png" alt="" />
+              <img src="/assets/images/slider-img1.png" alt="" />
               <div className="inst-info">
                 <div className="info-grp">
-                  <img src="assets/images/insccon1.svg" alt="" />
-                  <img src="assets/images/insccon2.svg" alt="" />
-                  <img src="assets/images/insccon3.svg" alt="" />
+                  <img src="/assets/images/insccon1.svg" alt="" />
+                  <img src="/assets/images/insccon2.svg" alt="" />
+                  <img src="/assets/images/insccon3.svg" alt="" />
                 </div>
                 <p>
                   <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -270,18 +270,18 @@ document.getElementById('mainBody').classList.remove("overflowhdn")
           <div>
             <div className="each-post">
               <div className="post-head">
-                <img src="assets/images/slider-user.png" alt="" />
+                <img src="/assets/images/slider-user.png" alt="" />
                 <div className="head-txt">
                   <h6>talfeinstein</h6>
                   <p>Raanana, Israel</p>
                 </div>
               </div>
-              <img src="assets/images/slider-img1.png" alt="" />
+              <img src="/assets/images/slider-img1.png" alt="" />
               <div className="inst-info">
                 <div className="info-grp">
-                  <img src="assets/images/insccon1.svg" alt="" />
-                  <img src="assets/images/insccon2.svg" alt="" />
-                  <img src="assets/images/insccon3.svg" alt="" />
+                  <img src="/assets/images/insccon1.svg" alt="" />
+                  <img src="/assets/images/insccon2.svg" alt="" />
+                  <img src="/assets/images/insccon3.svg" alt="" />
                 </div>
                 <p>
                   <b style={{ marginRight: "5px" }}>talfeinstein</b>במננעגד רקק כדש
@@ -300,13 +300,13 @@ document.getElementById('mainBody').classList.remove("overflowhdn")
             <p className="text-center">עיצבתם קיר מושלם? תייגו אותנו!</p>
           </div>
           <div className="col-md-2 col-3 text-md-left text-center py-md-3 sucesspage-social-links-main">
-            <img src="assets/file/images/res-so1.svg" className="xp bb" />
-            <img src="assets/file/images/fb.png" className="xy dd" />
+            <img src="/assets/file/images/res-so1.svg" className="xp bb" />
+            <img src="/assets/file/images/fb.png" className="xy dd" />
             <div className="sucesspage-social-links-heading">stickable.il</div>
           </div>
           <div className="col-md-2 col-3 text-md-left text-center py-md-3 sucesspage-social-links-main">
-            <img src="assets/file/images/res-so2.svg" className="xp bb" />
-            <img src="assets/file/images/instagram.png" className="xy dd" />
+            <img src="/assets/file/images/res-so2.svg" className="xp bb" />
+            <img src="/assets/file/images/instagram.png" className="xy dd" />
             <div className="sucesspage-social-links-heading">Stickable</div>
           </div>
         </div>

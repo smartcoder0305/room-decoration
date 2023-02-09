@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import useWindowDimensions from "@helpers/hooks/windowDemensions";
 
 // Import Swiper styles
 import "swiper/css";
@@ -10,47 +11,29 @@ import "swiper/css/pagination";
 import "./slidernew.css";
 
 // import required modules
-import { Autoplay, Navigation, Pagination } from "swiper";
-import axios from "axios";
+import { Navigation, Pagination } from "swiper";
+
+const review = {
+  image: '/assets/file/images/istockphoto.png',
+  customerName: 'ירון ברלד',
+  review: 'אין על סטיקבל קיבלתי שירות מצוין והתמונות הגיעו בזמן זה בול מה שרציתי',
+
+}
 const SliderNew = () => {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-  const MAIN_URL = process.env.REACT_APP_MAIN_URL;
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const [reviews, setReviews] = useState([]);
+  const { height, width } = useWindowDimensions();
   const getAllReviews = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const response = await axios.get(
-        `${BASE_URL}/admin/setting/getreview`,
-        config
-      );
-      if (response.data.status === 200) {
-        setReviews(response.data.dataRes);
-      }
-    } catch (error) {}
+    setReviews([review, review, review, review, review, review])
   };
 
   useEffect(() => {
     getAllReviews();
   }, []);
 
-  // const moveSlideTo = useCallback((to) => ({
-  //   'prev': () => sliderRef.current.swiper.slidePrev(),
-  //   'next': () => sliderRef.current.swiper.slideNext(),
-  // }[to]), [])
   return (
-    <>
-      <div className="slider-section--titles">
-        <h2 className="slider-section--title">דברים שהלקוחות שלנו אומרים</h2>
-        <p className="slider-section--description">
-          הנה כמה ביקורות שאספנו מהזמנות של הזמן האחרון
-        </p>
-      </div>
+    <div style={{height: `${width / 4 + 200}px`}}>
       {reviews.length > 0 ? (
         <Swiper
           onInit={(swiper) => {
@@ -86,8 +69,8 @@ const SliderNew = () => {
         >
           {reviews.map((data, index) => {
             return (
-              <SwiperSlide key={data._id}>
-                <div className="imgBox">
+              <SwiperSlide key={index}>
+                <div className="imgBox" style={{width: `${width > 767 ? width / 4 : ''}px`, height: `${width > 767 ? width / 4 : ''}px`}}>
                   <a className="boxLink" href="#">
                     <img src={`${data.image}`} alt="" />
                     <div className="bgOverlay">
@@ -131,7 +114,7 @@ const SliderNew = () => {
           </button>
         </Swiper>
       ) : null}
-    </>
+    </div>
   );
 };
 
