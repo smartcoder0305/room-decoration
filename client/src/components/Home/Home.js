@@ -133,11 +133,15 @@ const Home = ({existData}) => {
           <div className="about__wrapper">
             <div className="about__wrapper--image">
               <video 
-                src="/assets/file/videos/HomepageVideo.mp4" alt="" 
                 style={{width: "534px", height: "402px", borderRadius: "15px"}} 
-                loop
                 autoPlay={"autoplay"}
-                muted/>
+                loop
+                muted
+                playsInline
+              >
+                <source type="video/mp4" src="/assets/file/videos/HomepageVideo.mp4" />
+                <source type="video/webm" src="/assets/file/videos/HomepageVideo.webm" />
+              </video>
             </div>
             <div className="about__wrapper--content">
               <h4>סיפור על קיר באמצעות תמונות</h4>
@@ -234,13 +238,16 @@ const Home = ({existData}) => {
         <video 
           src="/assets/file/videos/MobileHomepageVideo.mp4" alt="" 
           style={{width: "calc(100vw - 20px)", borderRadius: "8px", margin: "auto", display: "block"}} 
+          autoPlay
           loop
           playsInline
-          // autoPlay
           muted
           id="mobile_home_video"
           ref={videoRef}
-          />
+        >
+          <source type="video/mp4" src="/assets/file/videos/MobileHomepageVideo.mp4" />
+          <source type="video/webm" src="/assets/file/videos/MobileHomepageVideo.webm" />
+        </video>
       </div>
        
         <div className="additional-block">
