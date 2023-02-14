@@ -2639,7 +2639,7 @@ footer:before {
         width: 250px;
     }
     .my-album {
-        /* display: flex; */
+        display: flex;
         overflow-x: auto;
         padding-bottom: 60px;
         padding-left: 25px;
