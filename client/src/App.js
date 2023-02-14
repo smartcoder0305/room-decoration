@@ -14,9 +14,13 @@ import SecondaryModals from "@shared/SecondaryModals";
 import { RecoilRoot } from 'recoil';
 import RecoilNexus from "recoil-nexus";
 import { getUserImages } from "@api";
+import smoothscroll from 'smoothscroll-polyfill';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
+smoothscroll.polyfill();
+window.__forceSmoothScrollPolyfill__ = true;
 
 function App() {
   const [existData, setExistData] = useState(false);
