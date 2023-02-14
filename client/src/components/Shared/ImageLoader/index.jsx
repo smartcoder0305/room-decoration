@@ -27,7 +27,7 @@ const ImageLoader = (props) => {
         {...rest}
         alt=''
       />
-      {(props?.shadow && isLoading === false) && <div className="album-item-shadow"></div>}
+      {/* {(props?.shadow && isLoading === false) && <div className="album-item-shadow"></div>} */}
     </>
   );
 }
