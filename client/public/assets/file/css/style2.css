@@ -2644,6 +2644,8 @@ footer:before {
         padding-bottom: 60px;
         padding-left: 25px;
         width: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior : smooth;
     }
     .gg2 {
         background: #f8f8f8;
