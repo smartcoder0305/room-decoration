@@ -13,5 +13,6 @@ jobs:
           REMOTE_USER: ${{ secrets.DEPLOY_USERNAME }}
           TARGET: ${{ secrets.DEPLOY_TARGET}}
           SCRIPT_AFTER: |
+            ls
             cd server
             forever restart -c "node stickable.js" ./
