@@ -16,6 +16,5 @@ jobs:
           SCRIPT_AFTER: |
             ls
             cd blendsproduction/server
-            git pull 
-            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
+            git pull https://StickableIL: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@github.com/StickableIL/blendsproduction.git
             forever restart -c "node stickable.js" ./
