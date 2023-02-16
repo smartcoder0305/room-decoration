@@ -15,7 +15,7 @@ jobs:
           TARGET: ${{ secrets.DEPLOY_TARGET}}
           SCRIPT_AFTER: |
             cd blendsproduction/client
+            git pull https://StickableIL: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@github.com/StickableIL/blendsproduction.git
             yarn run build
             cd ../server
-            git pull https://StickableIL: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@github.com/StickableIL/blendsproduction.git
             forever restart -c "node stickable.js" ./
