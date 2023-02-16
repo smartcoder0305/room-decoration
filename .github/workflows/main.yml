@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build React Files & Deploy to EC2 amazon
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@master
       with:
         node-version: 16.x
     - run: cd server
