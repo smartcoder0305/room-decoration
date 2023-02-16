@@ -2643,7 +2643,6 @@ footer:before {
         overflow-x: auto;
         padding-bottom: 60px;
         padding-left: 25px;
-        min-width: 3500vw;
         -moz-overflow-scrolling: touch; 
         -webkit-overflow-scrolling: touch;
         scroll-behavior : smooth;

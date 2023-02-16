@@ -273,10 +273,10 @@ const ReviewImages = () => {
         <div className="trx" style={ width < 767 ? {display: "flex", alignItems: "center", height: `calc(${height}px - 305px)`, paddingTop: "0px"} : null}>
           <div
             className={cn("my-album", { single: images.length <= 1 })}
-            style={{
-              gridTemplateColumns:
-                width <= 767 ? `repeat(${images.length}, 250px)` : null,
-            }}
+            // style={{
+            //   gridTemplateColumns:
+            //     width <= 767 ? `repeat(${images.length}, 250px)` : null,
+            // }}
           >
             {renderImages()}
 
