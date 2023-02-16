@@ -2642,12 +2642,11 @@ footer:before {
         display: flex;
         overflow-x: auto;
         padding-bottom: 60px;
+        padding-top: 0px;
         padding-left: 25px;
         -moz-overflow-scrolling: touch; 
         -webkit-overflow-scrolling: touch;
         scroll-behavior : smooth;
-        transform: translate3d(0,0,0);
-        -webkit-transform: translate3d(0,0,0);
     }
     .gg2 {
         background: #f8f8f8;

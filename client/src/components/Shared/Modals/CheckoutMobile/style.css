@@ -18,7 +18,7 @@
 }
 .mobile-checkout-button {
     width: calc(100% - 30px);
-    margin: 0 auto;
+    margin: auto;
 
 }
 .mobile-checkout-button a {
