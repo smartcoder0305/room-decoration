@@ -2644,6 +2644,7 @@ footer:before {
         padding-bottom: 60px;
         padding-left: 25px;
         width: auto;
+        -moz-overflow-scrolling: touch; 
         -webkit-overflow-scrolling: touch;
         scroll-behavior : smooth;
         content-visibility: auto;
