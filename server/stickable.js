@@ -25,7 +25,7 @@ app.use(express.static('./public'));
 
  app.use("/api", apiroute);
  app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/index.html'));
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
  
  app.listen(process.env.PORT, function () {

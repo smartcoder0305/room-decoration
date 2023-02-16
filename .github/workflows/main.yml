@@ -14,7 +14,8 @@ jobs:
           REMOTE_USER: ${{ secrets.DEPLOY_USERNAME }}
           TARGET: ${{ secrets.DEPLOY_TARGET}}
           SCRIPT_AFTER: |
-            ls
-            cd blendsproduction/server
+            cd blendsproduction/client
+            yarn run build
+            cd ../server
             git pull https://StickableIL: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@github.com/StickableIL/blendsproduction.git
             forever restart -c "node stickable.js" ./
