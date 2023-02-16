@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@master
+        uses: easingthemes/ssh-deploy@v2.1.4
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
