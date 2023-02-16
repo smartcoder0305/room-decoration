@@ -14,5 +14,5 @@ jobs:
           TARGET: ${{ secrets.DEPLOY_TARGET}}
           SCRIPT_AFTER: |
             ls
-            cd server
+            cd blendsproduction/server
             forever restart -c "node stickable.js" ./
