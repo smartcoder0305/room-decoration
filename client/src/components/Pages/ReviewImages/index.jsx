@@ -292,7 +292,7 @@ const ReviewImages = () => {
       {/* Start checkout for mobile */}
       {width <= 767 && (
         <div className="mobile-checkout">
-          <style jsx>{`
+          <style jsx="true">{`
             body {
               height: 100% !important; 
               overflow: hidden !important;
