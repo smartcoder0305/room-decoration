@@ -6,12 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Executing remote ssh commands using ssh key
-        uses: easingthemes/ssh-deploy@v2.1.4
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_KEY }}
-          target: ${{ secrets.DEPLOY_TARGET }}
-          script: |
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+          REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
+          REMOTE_USER: ${{ secrets.DEPLOY_USER }}
+          TARGET: ${{ secrets.DEPLOY_TARGET}}
+          SCRIPT_AFTER: |
             cd server
-            sudo forever restart -c "node stickable.js" ./
+            forever restart -c "node stickable.js" ./
