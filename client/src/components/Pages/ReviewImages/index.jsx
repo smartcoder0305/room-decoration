@@ -274,8 +274,8 @@ const ReviewImages = () => {
           <div
             className={cn("my-album", { single: images.length <= 1 })}
             // style={{
-            //   gridTemplateColumns:
-            //     width <= 767 ? `repeat(${images.length}, 250px)` : null,
+            //   width:
+            //     width <= 767 ? `${images.length * 100}vw` : null,
             // }}
           >
             {renderImages()}
