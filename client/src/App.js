@@ -28,7 +28,7 @@ function App() {
       if (data.data.length) setExistData(true);
       else setExistData(false);
     });
-  }, [])
+  })
 
   return (
     <RecoilRoot>
