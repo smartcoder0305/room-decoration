@@ -192,6 +192,7 @@ const ReviewImages = () => {
           src={im.view_image}
           className={cn(`img-con ${frameChoose}`)}
           alt="icon"
+          shadow={true}
         />
         </div>
       );

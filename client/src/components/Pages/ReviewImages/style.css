@@ -79,6 +79,17 @@ ul.gift-list li {
     width: 260px;
 }
 
+.album-item-shadow {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  top: 31px;
+  right: 31px;
+  background: rgba(33, 33, 33, 0.25);
+  filter: blur(19.5px);
+  z-index: 0;
+}
+
 .album-item-wrapper .img-con {
   position: absolute;
   background-image: none!important;
