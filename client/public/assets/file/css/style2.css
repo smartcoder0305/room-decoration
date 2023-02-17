@@ -2641,6 +2641,7 @@ footer:before {
         /* display: flex; */
         overflow-x: auto;
         padding-bottom: 60px;
+        padding-top: 60px;
     }
     .gg2 {
         background: #f8f8f8;
