@@ -256,7 +256,7 @@ const Footer = ({existData}) => {
             זמני המשלוח מהירים במיוחד השבוע 
            
           </p>
-          {existData ? (
+          {existData || localStorage.getItem('dataExist') == 1 ? (
             <NavLink to="/review-your-images" className="site-btn" style={{fontWeight: "700"}}>
               בואו נמשיך
             </NavLink>

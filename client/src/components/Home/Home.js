@@ -2,18 +2,18 @@ import React, { useEffect, useState, useRef } from "react";
 import { useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import SliderHome from "../Partials/SliderHome";
-import SkeletonLoader from "../SkeletonLoader/index";
+// import SkeletonLoader from "../SkeletonLoader/index";
 import useWindowDimensions from "@helpers/hooks/windowDemensions";
 import "./home.css";
 
 const Home = ({existData}) => {
   console.log('existsData-----------------------', existData)
-  const [skeleton, setSkeleton] = useState(true);
+  // const [skeleton, setSkeleton] = useState(true);
   const videoRef = useRef();
   const { height, width } = useWindowDimensions();
   useEffect(() => {
     setTimeout(() => {
-      setSkeleton(false);
+      // setSkeleton(false);
       videoRef.current?.play();
     }, 1000);
   }, []);
@@ -39,9 +39,9 @@ const Home = ({existData}) => {
                     ימוסגרו על פי בחירתכם ויישלחו אליכם עד הבית
                   </p>
                 </div>
-
+                
                 <div className="col-12 order-md-2 order-3 text-center text-md-right">
-                  {existData ? (
+                  {existData || localStorage.getItem('dataExist') == 1 ? (
                     <NavLink to="/review-your-images" className="site-btn gg1">
                       בואו נמשיך
                     </NavLink>
@@ -276,6 +276,7 @@ const Home = ({existData}) => {
     return width >= 767 ? renderDesktop() : renderMobile();
   }, [width, existData]);
 
-  return <>{skeleton ? <SkeletonLoader /> : renderHomePage()}</>;
+  // return <>{skeleton ? <SkeletonLoader /> : renderHomePage()}</>;
+  return <>{renderHomePage()}</>;
 };
 export default Home;

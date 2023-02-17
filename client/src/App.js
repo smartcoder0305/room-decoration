@@ -25,10 +25,15 @@ function App() {
     getUserImages().then(({data}) => {
       setExistData(false);
       console.log(data);
-      if (data.data.length) setExistData(true);
-      else setExistData(false);
+      if (data.data.length) {
+        setExistData(true);
+        localStorage.setItem('dataExist', 1);
+      } else {
+        localStorage.setItem('dataExist', 0);
+        setExistData(false);
+      }
     });
-  })
+  }, [])
 
   return (
     <RecoilRoot>

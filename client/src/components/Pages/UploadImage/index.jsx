@@ -22,10 +22,10 @@ const UploadImage = () => {
   //////////////  Choosing Frame   /////////////
 
   useEffect(() => {
-    // setshowSpinner(true);
+    setshowSpinner(true);
     async function initiateData() {
       await getImagesDB();
-      // setshowSpinner(false);
+      setshowSpinner(false);
     }
     initiateData();
   }, []);

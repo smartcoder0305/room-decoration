@@ -80,6 +80,7 @@ const ReviewImages = () => {
             setCount(count + 1);
             getImagesDB().then((res) => {
               if (res.data.data.length === 0) {
+                localStorage.setItem('dataExist', 0);
                 history.push("/upload-your-image");
               }
             });
