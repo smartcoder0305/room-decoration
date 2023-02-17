@@ -63,7 +63,7 @@ const UploadImage = () => {
           uploadSingleImage(formdata)
             .then(() => {
               setshowSpinner(false);
-              localStorage.setItem('datExist', 1);
+              localStorage.setItem('dataExist', 1);
               history.push("/review-your-images");
             })
         };
@@ -88,7 +88,7 @@ const UploadImage = () => {
 
         uploadMultipleImages()
           .then(() => {
-            localStorage.setItem('datExist', 1);
+            localStorage.setItem('dataExist', 1);
             history.push("/review-your-images");
           })
       }
