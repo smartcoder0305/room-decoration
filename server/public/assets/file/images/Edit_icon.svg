@@ -1,7 +1,0 @@
-<svg id="Group_1" data-name="Group 1" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
-  <rect id="Rectangle_1" data-name="Rectangle 1" width="50" height="50" rx="10" fill="#fff"/>
-  <path id="Path_1" data-name="Path 1" d="M11.006,38a1,1,0,0,1-1-1.11l.77-7a1,1,0,0,1,.29-.59l16.36-16.36a3.2,3.2,0,0,1,4.53,0l3.11,3.11a3.2,3.2,0,0,1,0,4.53L18.716,36.93a1,1,0,0,1-.59.29l-7,.77Zm1.73-7.55-.6,5.42,5.42-.6,16.1-16.1a1.2,1.2,0,0,0,0-1.7l-3.12-3.12a1.2,1.2,0,0,0-1.7,0Z" fill="#101820"/>
-  <path id="Path_2" data-name="Path 2" d="M32.006,23.209a1,1,0,0,1-.71-.29l-6.21-6.23a1,1,0,0,1,1.42-1.42l6.23,6.23a1,1,0,0,1-.73,1.71Z" fill="#101820"/>
-  <path id="Path_3" data-name="Path 3" d="M25.091,21.5l-7.785,7.785L18.72,30.7l7.785-7.785Z" fill="#101820"/>
-  <path id="Path_4" data-name="Path 4" d="M39.006,38h-16a1,1,0,0,1,0-2h16a1,1,0,0,1,0,2Z" fill="#101820"/>
-</svg>
