@@ -71,6 +71,7 @@ const UploadOptions = ({
         uploadSingleImage(formdata)
           .then((res) => {
             console.log(res);
+              localStorage.setItem('dataExist', 1);
               modal('hide', 'imageLoader')
               hideUploadOptions();
               history.push("/review-your-images");
@@ -103,6 +104,7 @@ const UploadOptions = ({
       Promise.all(promises).then(()=>uploadMultipleImages(formdata)
         .then((res) => {
           setTimeout(() => {
+            localStorage.setItem('dataExist', 1);
             modal('hide', 'imageLoader')
             hideUploadOptions();
             history.push("/review-your-images");
