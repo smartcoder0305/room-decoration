@@ -204,6 +204,7 @@ ul.gift-list li {
   }
   .trx {
     overflow: hidden;
+    padding: 0px;
   }
   .my-album .classic .img-con {
     top: -3px !important;
