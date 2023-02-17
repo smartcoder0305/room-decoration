@@ -76,20 +76,7 @@ ul.gift-list li {
 .album-item-wrapper {
   position: relative;
   height: 260px;
-  width: 260px;
-  filter: drop-shadow(9px 13px 50px rgba(204, 204, 204, 0.25));
-
-}
-
-.album-item-shadow {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  top: 31px;
-  right: 31px;
-  background: rgba(33, 33, 33, 0.25);
-  filter: blur(19.5px);
-  z-index: 0;
+    width: 260px;
 }
 
 .album-item-wrapper .img-con {
@@ -217,7 +204,6 @@ ul.gift-list li {
   }
   .trx {
     overflow: hidden;
-    padding: 0px;
   }
   .my-album .classic .img-con {
     top: -3px !important;

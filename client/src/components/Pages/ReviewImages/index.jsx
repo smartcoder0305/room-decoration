@@ -168,33 +168,30 @@ const ReviewImages = () => {
           onClick={() => openImageOptions(im)}
         >
           {width > 767 && (
-            <>
-              <div className={`content-overlay ${frameChoose}`}>
-                <div className="content-details fadeIn-bottom">
-                  <img
-                    src="/assets/file/images/edit_image.svg"
-                    className="edit"
-                    data-toggle="modal"
-                    data-target="#myModal"
-                    onClick={() => edit_seg(im)}
-                    alt="edit"
-                  />
-                  <img
-                    src="/assets/file/images/Delete_icon.svg"
-                    className="edit"
-                    alt="remove"
-                    onClick={() => deleteImage(im)}
-                  />
-                </div>
+            <div className={`content-overlay ${frameChoose}`}>
+              <div className="content-details fadeIn-bottom">
+                <img
+                  src="/assets/file/images/edit_image.svg"
+                  className="edit"
+                  data-toggle="modal"
+                  data-target="#myModal"
+                  onClick={() => edit_seg(im)}
+                  alt="edit"
+                />
+                <img
+                  src="/assets/file/images/Delete_icon.svg"
+                  className="edit"
+                  alt="remove"
+                  onClick={() => deleteImage(im)}
+                />
               </div>
-            </>
+            </div>
           )}
         </div>
         <ImageLoader
           src={im.view_image}
           className={cn(`img-con ${frameChoose}`)}
           alt="icon"
-          shadow={true}
         />
         </div>
       );
@@ -292,13 +289,6 @@ const ReviewImages = () => {
       {/* Start checkout for mobile */}
       {width <= 767 && (
         <div className="mobile-checkout">
-          <style jsx="true">{`
-            body {
-              height: 100% !important; 
-              overflow: hidden !important;
-              -webkit-overflow-scrolling: touch !important;
-            }
-          `}</style>
           <img
             onClick={() => showUploadOptions()}
             src="/assets/file/images/file.png"
@@ -332,7 +322,7 @@ const ReviewImages = () => {
                 onClick={openCheckoutDrawerMobile}
                 style={{padding: "10px 20px", width: "92%", margin: "auto"}}
               >
-              המשך להזמנה - {imagecount} תמונות
+                יש לנו כאן {imagecount} תמונות
               </a>
             }
           </div>
