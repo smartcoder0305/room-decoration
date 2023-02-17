@@ -2629,7 +2629,6 @@ footer:before {
 
     .my-album {
         grid-template-columns: repeat(auto-fill, 250px);
-        padding-top: 65px;
     }
     button.checkout-btn {
         font-size: 11px;
@@ -2639,13 +2638,9 @@ footer:before {
         width: 250px;
     }
     .my-album {
-        display: flex;
+        /* display: flex; */
         overflow-x: auto;
-        padding-bottom: 60px;
-        padding-left: 25px;
-        -moz-overflow-scrolling: touch; 
-        -webkit-overflow-scrolling: touch;
-        scroll-behavior : smooth;
+        padding-bottom: 20px;
     }
     .gg2 {
         background: #f8f8f8;
@@ -2754,7 +2749,6 @@ footer:before {
 
     .my-album .album-item img {
         object-fit: initial !important;
-        content-visibility: auto;
     }
 
     .cart_sidebar a {

@@ -212,7 +212,7 @@ const ReviewImages = () => {
       </div>
       {/* End frame section */}
 
-      <div className="review-images-wrapper" style={{maxHeight: width < 768 ? height - 305 : null}}>
+      <div className="review-images-wrapper">
         {width > 767 && (
           <div className="checkout-wrapper">
             <div className="aside-checkout">
@@ -270,7 +270,7 @@ const ReviewImages = () => {
             </div>
           </div>
         )}
-        <div className="trx" style={ width < 767 ? {display: "flex", alignItems: "center", height: `calc(${height}px - 305px)`, paddingTop: "0px"} : null}>
+        <div className="trx" style={ width < 767 ? {display: "flex", alignItems: "center", height: `calc(${height}px - 300px)`} : null}>
           <div
             className={cn("my-album", { single: images.length <= 1 })}
             style={{
@@ -332,7 +332,7 @@ const ReviewImages = () => {
                 onClick={openCheckoutDrawerMobile}
                 style={{padding: "10px 20px", width: "92%", margin: "auto"}}
               >
-                המשך להזמנה - {imagecount} תמונות
+              המשך להזמנה - {imagecount} תמונות
               </a>
             }
           </div>
