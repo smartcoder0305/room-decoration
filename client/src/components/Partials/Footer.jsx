@@ -239,20 +239,18 @@ const Footer = ({existData}) => {
         </div>
       </div>
       {width <= 768 && (
-        <div className="mobile-stick-bottom">
-          <p> <svg
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="9" cy="9" r="9" fill="#304036" />
-              <path
-                d="M8.61488 5.596C8.53488 5.596 8.46688 5.572 8.41088 5.524C8.36288 5.468 8.33887 5.4 8.33887 5.32V4.672C8.33887 4.592 8.36288 4.524 8.41088 4.468C8.46688 4.412 8.53488 4.384 8.61488 4.384H9.37088C9.45088 4.384 9.51888 4.412 9.57488 4.468C9.63088 4.524 9.65888 4.592 9.65888 4.672V5.32C9.65888 5.4 9.63088 5.468 9.57488 5.524C9.51888 5.572 9.45088 5.596 9.37088 5.596H8.61488ZM8.71088 13C8.63088 13 8.56288 12.976 8.50688 12.928C8.45888 12.872 8.43488 12.804 8.43488 12.724V7.036C8.43488 6.956 8.45888 6.892 8.50688 6.844C8.56288 6.788 8.63088 6.76 8.71088 6.76H9.28688C9.36688 6.76 9.43088 6.788 9.47888 6.844C9.53488 6.892 9.56288 6.956 9.56288 7.036V12.724C9.56288 12.804 9.53488 12.872 9.47888 12.928C9.43088 12.976 9.36688 13 9.28688 13H8.71088Z"
-                fill="white"
-              />
-            </svg> 
+        <div className="mobile-stick-bottom" style={{fontWeight: 300, color: "#727272"}}>
+          <p> 
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 14H13C14.1 14 15 13.1 15 12V2H6C4.5 2 3.19001 2.82999 2.51001 4.04999" stroke="#727272" strokeWidth="1.5" strokeLinecap="round" strokeLinejoinn="round"/>
+              <path d="M2 17C2 18.66 3.34 20 5 20H6C6 18.9 6.9 18 8 18C9.1 18 10 18.9 10 20H14C14 18.9 14.9 18 16 18C17.1 18 18 18.9 18 20H19C20.66 20 22 18.66 22 17V14H19C18.45 14 18 13.55 18 13V10C18 9.45 18.45 9 19 9H20.29L18.58 6.01001C18.22 5.39001 17.56 5 16.84 5H15V12C15 13.1 14.1 14 13 14H12" stroke="#727272" strokeWidth="1.5" strokeLinecap="round" strokeLinejoinn="round"/>
+              <path d="M8 22C9.10457 22 10 21.1046 10 20C10 18.8954 9.10457 18 8 18C6.89543 18 6 18.8954 6 20C6 21.1046 6.89543 22 8 22Z" stroke="#727272" strokeWidth="1.5" strokeLinecap="round" strokeLinejoinn="round"/>
+              <path d="M16 22C17.1046 22 18 21.1046 18 20C18 18.8954 17.1046 18 16 18C14.8954 18 14 18.8954 14 20C14 21.1046 14.8954 22 16 22Z" stroke="#727272" strokeWidth="1.5" strokeLinecap="round" strokeLinejoinn="round"/>
+              <path d="M22 12V14H19C18.45 14 18 13.55 18 13V10C18 9.45 18.45 9 19 9H20.29L22 12Z" stroke="#727272" strokeWidth="1.5" strokeLinecap="round" strokeLinejoinn="round"/>
+              <path d="M2 8H8" stroke="#727272" strokeWidth="1.5" strokeLinecap="round" strokeLinejoinn="round"/>
+              <path d="M2 11H6" stroke="#727272" strokeWidth="1.5" strokeLinecap="round" strokeLinejoinn="round"/>
+              <path d="M2 14H4" stroke="#727272" strokeWidth="1.5" strokeLinecap="round" strokeLinejoinn="round"/>
+            </svg>
             זמני המשלוח מהירים במיוחד השבוע 
            
           </p>
