@@ -2628,6 +2628,7 @@ footer:before {
 @media screen and (max-width: 767px) {
 
     .my-album {
+        padding-left: 30px;
         grid-template-columns: repeat(auto-fill, 250px);
     }
     button.checkout-btn {
