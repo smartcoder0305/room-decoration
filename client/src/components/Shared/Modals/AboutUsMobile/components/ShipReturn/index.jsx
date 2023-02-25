@@ -20,7 +20,7 @@ const ShipReturn = () => {
       </div>
       <div className='aboutus_shipreturn_mobile_table_row' style={{display: "flex", justifyContent:"space-between", alignItems: "center"}}>
         <span className='aboutus_shipreturn_mobile_table_row_item'>דואר ישראל</span>
-        <span className='aboutus_shipreturn_mobile_table_row_item'>9.90 שח</span>
+        <span className='aboutus_shipreturn_mobile_table_row_item'>29.90 שח</span>
       </div>
     </div>
     <div style={{direction: "rtl", marginTop: "27px"}}>
