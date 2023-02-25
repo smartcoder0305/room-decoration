@@ -33,6 +33,9 @@ function App() {
         setExistData(false);
       }
     });
+    if (!localStorage.getItem("frameSelected")) {
+      localStorage.setItem("frameSelected", "clean");
+    }
   }, [])
 
   return (
