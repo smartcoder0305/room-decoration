@@ -2339,7 +2339,7 @@ footer:before {
         right: 10px;
         width: 70px;
         z-index: 1;
-        filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
+        box-shadow: 0px 4px 10px rgba(88, 183, 236, 0.05);
     }
 
     .kk {
@@ -2857,10 +2857,11 @@ footer:before {
         bottom: 90px; */
         /* position: fixed;
         bottom: 120px; */
-        right: 10px;
+        bottom: 138px;
+        left: 23px;
         width: 70px;
         z-index: 1;
-        filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
+        box-shadow: 0px 4px 10px rgba(88, 183, 236, 0.05);
     }
 
     .kk {
@@ -3582,7 +3583,7 @@ footer:before {
         right: 4px;
         width: 70px;
         z-index: 1;
-        filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
+        box-shadow: 0px 4px 10px rgba(88, 183, 236, 0.05);
     }
 
     .kk {

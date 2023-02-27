@@ -23,9 +23,8 @@ const Checkout = (props) => {
   const modal = useSecondModal();
   console.log(selectedPayment);
 
-  const [numberOfImages, setNumberOfImages] = useState();
+  const [numberOfImages, setNumberOfImages] = useState(3);
   const [percentages, setPercentages] = useState();
-  const [isDisplay, setIsDisplay] = useState();
   const [isLoading, setLoading] = useState(false);
 
   const history = useHistory();
@@ -150,21 +149,21 @@ const Checkout = (props) => {
                 <div style={{direction: "rtl"}}>{renderCounts()}</div>
               </div>
               <div className="price__table--row"  style={{fontWeight: "400"}}>
-                <div>35</div>
+                <div>29.90</div>
                 <div>משלוח</div>
               </div>
               <div className="price__table--row"  style={{fontWeight: "400"}}>
-                <div>-35</div>
+                {imagecount <= 2 && <div>-0.00</div>}
+                {imagecount > 2 && <div>-29.90</div>}
                 <div>הטבת כמות</div>
               </div>
               <div className="price__table--row total">
                 <div style={{fontSize: "16px", fontWeight: "700 !important"}}>
-                  ₪
-                  {isDisplay
-                    ? imagecount >= numberOfImages
-                      ? netPrice - ((netPrice / 100) * percentages).toFixed(2)
-                      : netPrice
-                    : netPrice}
+                  ₪&nbsp;
+                     {imagecount >= numberOfImages
+                      ? netPrice
+                      : netPrice + 29.90
+                     }
                 </div>
                 <div style={{fontSize: "16px", fontWeight: "700 !important"}}>סה”כ</div>
               </div>

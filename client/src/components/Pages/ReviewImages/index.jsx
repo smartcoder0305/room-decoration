@@ -19,6 +19,7 @@ import "./style.css";
 import { useCallback } from "react";
 import FrameSelector from "./components/FrameSelector";
 import ImageLoader from "@shared/ImageLoader";
+import ShippingIcon from "./components/ShippingIcon";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -215,16 +216,24 @@ const ReviewImages = () => {
         {width > 767 && (
           <div className="checkout-wrapper">
             <div className="aside-checkout">
-              {imagecount >= 2 && 
+              {imagecount > 2 && 
                 <>
                   <h1>יש לנו כאן {imagecount} תמונות</h1>
                   <p>וודאו שהכל נראה טוב ונמשיך</p>
                 </>
               }
+              {imagecount === 2 && 
+                <>
+                  <h1>יש לנו כאן {imagecount} תמונות</h1>
+                  <p><ShippingIcon />&nbsp;&nbsp;&nbsp;תוסיפו עוד תמונה אחת וקבלו משלוח חינם
+                  
+                  </p>
+                </>
+              }
               {imagecount === 1 && 
                 <>
                   <h1>יש לנו כאן רק תמונה אחת</h1>
-                  <p>על קירות כאלה נאמר, איפה כולם?</p>
+                  <p><ShippingIcon />&nbsp;&nbsp;&nbsp; תוסיפו עוד 2 תמונות וקבלו משלוח חינם</p>
                 </>
               }
               {imagecount === 0 &&
@@ -238,31 +247,44 @@ const ReviewImages = () => {
                   בחירת תמונות חדשות
                 </button>
               }
-              {imagecount >=1 &&
-                <button className="checkout-btn" onClick={openCheckoutDrawer}>
-                  קליק וממשיכים
-                </button>
+              {imagecount >= 1 && imagecount <= 2 &&
+                <>
+                  <button className="checkout-btn" onClick={openCheckoutDrawer}>
+                    קליק וממשיכים
+                  </button>
+                  <br /><br/>
+                  <p>עלות משלוח: 29.90</p>
+                </>
+              }
+              {imagecount > 2 &&
+                <>
+                  <button className="checkout-btn" onClick={openCheckoutDrawer}>
+                   קליק וממשיכים
+                  </button>
+                  <br /><br />
+                  <p style={{color: "#087E63"}}><img src="/assets/file/images/emoji-normal.png" alt="" />&nbsp; ההזמנה עומדת בתנאים למשלוח חינם</p>
+                </>
               }
               <div className="gift">
                 <h2 className="">:בהזמנה זו תקבלו</h2>
 
                 <ul className="gift-list">
                   <li>
-                    משלוח עד 7 ימים אל הבית
+                  שליח עד הבית
                     <img
                       style={{ width: "23px" }}
-                      src="/assets/file/images/gift_1.svg"
+                      src="/assets/file/images/truck-tick.png"
                       alt="gift"
                     />
                   </li>
                   <li>
-                   לא מרוצים? עד 14 ימים החזרה בקלות
-                    <img src="/assets/file/images/gift_2.svg" alt="gift" />
+                  החזרה מהירה בקלות
+                    <img src="/assets/file/images/3d-rotate.png" alt="gift" />
                   </li>
 
                   <li>
-                    אריזת מתנה לשמירה על התמונות
-                    <img src="/assets/file/images/gift_3.svg" alt="gift" />
+                  תונומתה לע הרימשל הזירא
+                    <img src="/assets/file/images/bag-happy.png" alt="gift" />
                   </li>
                 </ul>
               </div>
@@ -298,9 +320,21 @@ const ReviewImages = () => {
             alt="file-icon"
           />
           <div className="mobile-checkout-info">
+          {imagecount >= 3 &&
             <p>
-              <img src="/assets/file/images/green_check.svg" alt="check" style={{width: "20px"}}/>&nbsp;&nbsp; ההזמנה שלך זכאית למשלוח חינם
+              <img src="/assets/file/images/emoji-normal.png" alt="check" style={{width: "20px"}}/>&nbsp;&nbsp; ההזמנה עומדת בתנאים למשלוח חינם
             </p>
+          }
+          {imagecount === 2 &&
+            <p style={{color: "#727272"}}>
+              <ShippingIcon />&nbsp;&nbsp; תוסיפו עוד תמונה אחת וקבלו משלוח חינם
+            </p>
+          }
+          {imagecount === 1 &&
+            <p style={{color: "#727272"}}>
+              <ShippingIcon />&nbsp;&nbsp; תוסיפו עוד 2 תמונות וקבלו משלוח חינם
+            </p>
+          }
           </div>
           <div className="mobile-checkout-button" style={{margin: "0", width: "100%"}}>
             {imagecount === 0 &&

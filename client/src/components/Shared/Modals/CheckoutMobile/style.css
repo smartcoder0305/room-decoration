@@ -30,9 +30,6 @@
     align-items: center;
     justify-content: center;
 }
-.file {
-    bottom: 80px;
-}
 
 .mobile-checkout-modal {
     position: fixed;

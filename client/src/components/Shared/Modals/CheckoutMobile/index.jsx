@@ -269,17 +269,17 @@ const CheckoutMobile = (props) => {
                     <div style={{direction: "rtl"}}>{renderCounts()}</div>
                   </div>
                   <div className="price__table--row" style={{fontSize: "14px",  fontWeight: 400}}>
-                    <div>חינם</div>
+                    {imagecount <= 2 && <div>₪&nbsp;29.90</div>}
+                    {imagecount > 2 && <div>חינם</div>}
                     <div>משלוח</div>
                   </div>
                   <div className="price__table--row" style={{fontWeight: "700", fontSize: "14px"}}>
                     <div>
                       ₪&nbsp;
-                      {isDisplay
-                        ? imagecount >= numberOfImages
-                          ? netPrice - ((netPrice / 100) * percentages).toFixed(2)
-                          : netPrice
-                        : netPrice}
+                      {imagecount >= numberOfImages
+                      ? netPrice
+                      : (netPrice + 29.90)
+                     }
                     </div>
                     <div>סה”כ</div>
                   </div>
