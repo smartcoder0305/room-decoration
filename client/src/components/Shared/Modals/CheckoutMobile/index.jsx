@@ -132,7 +132,7 @@ const CheckoutMobile = (props) => {
           cvv: selectedPayment.cvv,
           email: selectedAddress.email,
         },
-        amount: netPrice,
+        amount: imagecount >= numberOfImages ? netPrice : netPrice + 29.90,
       });
       console.log(paymentData);
       const orderData = await creatOrder({...selectedAddress, uid: localStorage.getItem('uniqueUserId')});
