@@ -35,7 +35,7 @@ const CheckoutMobile = (props) => {
   const { style } = props;
   const netPrice = useRecoilValue(netPriceState);
   const imagecount = useRecoilValue(imageCountState);
-  const [numberOfImages, setNumberOfImages] = useState();
+  const [numberOfImages, setNumberOfImages] = useState(3);
   const [percentages, setPercentages] = useState();
   const [isDisplay, setIsDisplay] = useState();
 
