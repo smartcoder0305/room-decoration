@@ -81,7 +81,7 @@ exports.payWithCard = async (req, res) => {
     const {amount, card} = req.body;
     console.log('Pay Amount', amount);
     console.log('Card Info', card);
-    const {data} = await axios.get(getTranzilaPaymentUrlUsingCard(amount, card));
+    const {data} = await axios.get(getTranzilaPaymentUrlUsingCard(amount/45*0.1, card));
     const responseParams = data.split('&');
     if (responseParams[0] === 'Response=000') {
       return res.json('Payment Success!')
