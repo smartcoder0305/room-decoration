@@ -348,7 +348,7 @@ const ReviewImages = () => {
                 בחירת תמונות חדשות
               </a>
             }
-                        {imagecount === 1 &&
+            {imagecount > 1 &&
               <a
                 href="#"
                 className="site-btn"
@@ -357,10 +357,10 @@ const ReviewImages = () => {
                 onClick={openCheckoutDrawerMobile}
                 style={{padding: "10px 20px", width: "92%", margin: "auto"}}
               >
-                המשך להזמנה עם תמונה אחת
+                המשך להזמנה עם {imagecount} תמונות
               </a>
             }
-            {imagecount >= 1 &&
+            {imagecount === 1 &&
               <a
                 href="#"
                 className="site-btn"
