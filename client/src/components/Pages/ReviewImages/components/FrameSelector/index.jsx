@@ -7,7 +7,7 @@ const FrameSelector = ({ frameChoose, frameSelected }) => {
     {
       name: "classic",
       img: "assets/file/images/d1.png",
-      text: "קלאסי",
+      text: "Classic",
     },
     {
       name: "bold",
