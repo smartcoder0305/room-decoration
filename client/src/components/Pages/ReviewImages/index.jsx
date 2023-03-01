@@ -250,7 +250,7 @@ const ReviewImages = () => {
               {imagecount >= 1 && imagecount <= 2 &&
                 <>
                   <button className="checkout-btn" onClick={openCheckoutDrawer}>
-                    קליק וממשיכים
+                    המשך להזמנה
                   </button>
                   <br /><br/>
                   <p>עלות משלוח: 29.90</p>
@@ -259,7 +259,7 @@ const ReviewImages = () => {
               {imagecount > 2 &&
                 <>
                   <button className="checkout-btn" onClick={openCheckoutDrawer}>
-                   קליק וממשיכים
+                   המשך להזמנה
                   </button>
                   <br /><br />
                   <p style={{color: "#087E63"}}><img src="/assets/file/images/emoji-normal.png" alt="" />&nbsp; ההזמנה עומדת בתנאים למשלוח חינם</p>
@@ -272,7 +272,6 @@ const ReviewImages = () => {
                   <li>
                   שליח עד הבית
                     <img
-                      style={{ width: "23px" }}
                       src="/assets/file/images/truck-tick.png"
                       alt="gift"
                     />
@@ -283,7 +282,7 @@ const ReviewImages = () => {
                   </li>
 
                   <li>
-                  תונומתה לע הרימשל הזירא
+                  אריזה לשמירה על התמונות
                     <img src="/assets/file/images/bag-happy.png" alt="gift" />
                   </li>
                 </ul>
@@ -349,6 +348,18 @@ const ReviewImages = () => {
                 בחירת תמונות חדשות
               </a>
             }
+                        {imagecount === 1 &&
+              <a
+                href="#"
+                className="site-btn"
+                data-toggle="modal"
+                data-target="#rescart"
+                onClick={openCheckoutDrawerMobile}
+                style={{padding: "10px 20px", width: "92%", margin: "auto"}}
+              >
+                המשך להזמנה עם תמונה אחת
+              </a>
+            }
             {imagecount >= 1 &&
               <a
                 href="#"
@@ -358,9 +369,9 @@ const ReviewImages = () => {
                 onClick={openCheckoutDrawerMobile}
                 style={{padding: "10px 20px", width: "92%", margin: "auto"}}
               >
-                נמשיך עם - {imagecount} תמונות
+                המשך להזמנה עם {imagecount} תמונות
               </a>
-            }
+            } 
           </div>
         </div>
       )}
