@@ -18,6 +18,12 @@ const review = {
   review: 'אין על סטיקבל קיבלתי שירות מצוין והתמונות הגיעו בזמן זה בול מה שרציתי',
 
 }
+const review1 = {
+  image: '/assets/file/images/istockphoto.png',
+  customerName: 'טל פיינשטיין',
+  review: 'באמת שאין על בלנדס, קיבלתי שירות מצוין והתמונות הגיעו בזמן זה בול מה שרציתי',
+
+}
 const SliderHome = () => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -25,7 +31,7 @@ const SliderHome = () => {
   const { height, width } = useWindowDimensions();
   // alert(width);
   const getAllReviews = async () => {
-    setReviews([review, review, review, review, review, review])
+    setReviews([review1, review, review, review, review, review])
   };
 
   useEffect(() => {
