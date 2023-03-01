@@ -272,18 +272,19 @@ const ReviewImages = () => {
                   <li>
                   שליח עד הבית
                     <img
-                      src="/assets/file/images/truck-tick.png"
-                      alt="gift"
+                      style={{ width: "23px" }}
+                      src="/assets/file/images/truck-tick.svg"
+                      alt="שליח דואר ישראל על לביתכם"
                     />
                   </li>
                   <li>
                   החזרה מהירה בקלות
-                    <img src="/assets/file/images/3d-rotate.png" alt="gift" />
+                    <img src="/assets/file/images/3d-rotate.svg" alt="החזרת סחורה באי שביעות רצון ללא שאלות מיותרות" />
                   </li>
 
                   <li>
                   אריזה לשמירה על התמונות
-                    <img src="/assets/file/images/bag-happy.png" alt="gift" />
+                    <img src="/assets/file/images/bag-happy.svg" alt="קרטון עם מילוי לשמירה על תמונות קיר" />
                   </li>
                 </ul>
               </div>
