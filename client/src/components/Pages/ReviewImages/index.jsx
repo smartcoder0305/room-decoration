@@ -369,7 +369,7 @@ const ReviewImages = () => {
                 onClick={openCheckoutDrawerMobile}
                 style={{padding: "10px 20px", width: "92%", margin: "auto"}}
               >
-                המשך להזמנה עם {imagecount} תמונות
+                המשך להזמנה עם תמונה אחת
               </a>
             } 
           </div>
