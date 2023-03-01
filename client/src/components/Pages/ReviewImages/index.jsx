@@ -358,7 +358,7 @@ const ReviewImages = () => {
                 onClick={openCheckoutDrawerMobile}
                 style={{padding: "10px 20px", width: "92%", margin: "auto"}}
               >
-                יש לנו כאן {imagecount} תמונות
+                נמשיך עם - {imagecount} תמונות
               </a>
             }
           </div>
