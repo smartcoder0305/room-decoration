@@ -19,6 +19,7 @@ const AddCardFormMobile = () => {
     cardExpMonErr: false,
     cardExpYearErr: false,
     cardCVVErr: false,
+    cardIdErr: false,
   });
   const [isLoading, setLoading] = useState(false);
   const [verifyErr, setVerifyErr] = useState('');
@@ -47,6 +48,7 @@ const AddCardFormMobile = () => {
           no: card.cardNumber.replace(/\s/g, ''),
           expdate: getCardExpDate(card.expiriedMonth, card.expiriedYear),
           cvv: card.cvv,
+          id: card.id,
         },
         amount: netPrice,
       });
@@ -66,6 +68,7 @@ const AddCardFormMobile = () => {
       expiriedMonth: getCurrentMonthString(),
       expiriedYear: new Date().getFullYear(),
       cvv: "",
+      id: "",
     },
     onSubmit: async (values) => {
       setLoading(true);
@@ -83,6 +86,7 @@ const AddCardFormMobile = () => {
           cardExpMonErr: !expMonValidation,
           cardExpYearErr: !expYearValidation,
           cardCVVErr: !cvvValidation,
+          cardIdErr: !values.id,
         })
         setLoading(false);
         return;
@@ -208,6 +212,21 @@ const AddCardFormMobile = () => {
                   src="/assets/file/images/CVV_icon.png" 
                   style={{position: "absolute", top: "50%", left: "15px", transform: "translate(0%, -50%)"}}
                 /> */}
+              </div>
+            </div>
+          </div>
+          <br/>
+          <div className="form__fields-mobile--row">
+            <div className="cvv_content">
+              <div className="cvv_content" style={cardErr.cardIdErr ? {border: "1px solid red", borderRadius: "6px"} : {}}>
+                <Input
+                  name="id"
+                  onChange={formik.handleChange}
+                  value={formik.values.id}
+                  mask=""
+                  placeholder="תעודת זהות של בעל הכרטיס"
+                  style={{direction: "rtl"}}
+                />
               </div>
             </div>
           </div>

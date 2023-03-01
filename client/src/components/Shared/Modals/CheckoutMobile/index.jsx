@@ -131,6 +131,7 @@ const CheckoutMobile = (props) => {
           expdate: getCardExpDate(selectedPayment.expiriedMonth, selectedPayment.expiriedYear),
           cvv: selectedPayment.cvv,
           email: selectedAddress.email,
+          id: selectedPayment.id,
         },
         amount: imagecount >= numberOfImages ? netPrice : netPrice + 29.90,
       });

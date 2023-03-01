@@ -70,7 +70,8 @@ currency=1&
 cred_type=1&
 mycvv=${card.cvv}&
 TranzilaPW=${TRANZILA_PW}&
-email=${card.email}
+email=${card.email}&
+myid=${card.id}
 `;
 console.log(url.replace(/\n/g, ''));
   return url.replace(/\n/g, '');
@@ -109,7 +110,8 @@ sum=${amount}&
 currency=1&
 cred_type=1&
 mycvv=${card.cvv}&
-TranzilaPW=${TRANZILA_PW}
+TranzilaPW=${TRANZILA_PW}&
+myid=${card.id}
 `;
   console.log(url.replace(/\n/g, ''));
   return url.replace(/\n/g, '');

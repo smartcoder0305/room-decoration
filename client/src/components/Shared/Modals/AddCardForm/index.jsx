@@ -21,6 +21,7 @@ const AddCardForm = () => {
     cardExpMonErr: false,
     cardExpYearErr: false,
     cardCVVErr: false,
+    cardIdErr: false,
   });
   const [isLoading, setLoading] = useState(false);
   const [verifyErr, setVerifyErr] = useState('');
@@ -48,6 +49,7 @@ const AddCardForm = () => {
           no: card.cardNumber.replace(/\s/g, ''),
           expdate: getCardExpDate(card.expiriedMonth, card.expiriedYear),
           cvv: card.cvv,
+          id: card.id,
         },
         amount: netPrice,
       });
@@ -67,6 +69,7 @@ const AddCardForm = () => {
       expiriedMonth: getCurrentMonthString(),
       expiriedYear: new Date().getFullYear(),
       cvv: "",
+      id: "",
     },
     onSubmit: async (values) => {
       setLoading(true);
@@ -84,6 +87,7 @@ const AddCardForm = () => {
           cardExpMonErr: !expMonValidation,
           cardExpYearErr: !expYearValidation,
           cardCVVErr: !cvvValidation,
+          cardIdErr: !values.id
         })
         setLoading(false);
         return;
@@ -223,6 +227,18 @@ const AddCardForm = () => {
               />
             </div>
             <span>קוד בטחון (CVV)</span>
+          </div>
+          <div className="form__fields--row">
+            <div style={cardErr.cardIdErr ? {border: "1px solid red", borderRadius: "6px"} : {}}>
+              <Input
+                name="id"
+                onChange={formik.handleChange}
+                value={formik.values.id}
+                mask=""
+                style={{direction: "rtl"}}
+              />
+            </div>
+            <span>ת.ז בעל הכרטיס</span>
           </div>
           {verifyErr && (
             <div className="form__fields--row" style={{color: "red"}}>
