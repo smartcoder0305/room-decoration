@@ -52,8 +52,8 @@ const SliderNew = () => {
           navigation
           breakpoints={{
             640: {
-              slidesPerView: 1,
-              spaceBetween: 19,
+              slidesPerView: 3,
+              spaceBetween: 20,
             },
             768: {
               slidesPerView: 4,
