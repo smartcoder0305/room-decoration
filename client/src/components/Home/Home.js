@@ -192,10 +192,10 @@ const Home = ({existData}) => {
       <section id="hero">
         <div className="mobile-banner" style={{ backgroundImage: "url('/assets/file/images/mobile-home-bg-img.jpg')", backgroundSize: "cover", backgroundPosition: "center",}}>
             <img src="/assets/file/images/mobile-home-mask.png" />
-            <h1>התמונות שלכם יהפכו כל קיר לקיר מלא בזכרונות נעימים</h1>
+            <h1>מסגרות קסומות שנדבקות לקיר, תהפכו את הקיר שלכם לסיפור</h1>
             <p>
-              מסגרות מהממות ואיכותיות, שנדבקות אל הקיר ללא מאמץ וממלאות כל חלל
-              לחלל חי ונושם
+            תהפכו פינות בבית או במשרד לחלל חי ונושם, 
+            עם מסגרות איכותיות שנדבקות אל הקיר ללא מאמץ
             </p>
         </div>
         <div className="additional-info">
@@ -230,11 +230,11 @@ const Home = ({existData}) => {
       </section>
       <section id="offer">
       <div className="content">
-      <h2 style={{maxWidth: "90%"}}>מסגרות שפשוט נדבקות לקיר</h2>
+      <h2 style={{maxWidth: "90%"}}>זה ממש פשוט להדביק אותן</h2>
       <br></br>
         <p>
-            זה פשוט ומהיר הדפיסו תמונות על היקרים
-            ותשדרגו כל סביבה לסביבה נעימה יותר
+            זה פשוט ומהיר! הדביקו זכרונות מרגשים לקיר
+            ושדרגו את הסביבה לסביבה נעימה יותר
         </p>
         <video 
           src="/assets/file/videos/MobileHomepageVideo.mp4" alt="" 
