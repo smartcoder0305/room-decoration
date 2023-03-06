@@ -3251,8 +3251,7 @@ footer:before {
     }
     .mobile-banner h1,
     .mobile-banner p {
-        max-width: 300px;
-        /* margin: 0 auto; */
+        max-width: 80%;
         text-align: center;
         z-index: 2;
         color: #304036;

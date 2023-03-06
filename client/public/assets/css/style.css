@@ -228,11 +228,12 @@ section::before, footer:before{
 
 }
 .whyblends p {
-    width: 50%;
+    width: 40%;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     padding-bottom: 50px;
+    direction: rtl;
 }
 @media(min-width:1024px){
     .ofr-txt{
