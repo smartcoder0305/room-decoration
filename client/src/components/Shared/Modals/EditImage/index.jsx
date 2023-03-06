@@ -107,7 +107,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
     } else {
       console.log('detail', e.detail);
       console.log('zoomvalue', zoomvalue);
-      if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) {
+      if (imageonpopup.imagewidth < 1000 || imageonpopup.imageheight < 1000) {
         e.preventDefault();
        }
        if (e.detail.ratio >= 0.125) {
@@ -123,7 +123,7 @@ const EditModal = ({ handleCloseModal, modalData }) => {
   };
 
   const zoomvalueplus = () => {
-    if (imageonpopup.imagewidth < 1600 || imageonpopup.imageheight < 1600) return;
+    if (imageonpopup.imagewidth < 1000 || imageonpopup.imageheight < 1000) return;
     if (zoomvalue >= 0.125) {
       return;
     } else {
@@ -162,8 +162,9 @@ const EditModal = ({ handleCloseModal, modalData }) => {
       : (<div className="edit-modal__header"></div>)
     }
       <div className="edit-modal__content">
-        <p style={{fontWeight: "600", fontSize: "18px"}}>התאמת תמונה</p>
-        <p style={{fontWeight: "600", fontSize: "14px"}}>הזיזו או הגדילו את התמונה בתוך המסגרת</p>
+        <p style={{fontWeight: "700", fontSize: "18px"}}>עריכת תמונה</p>
+        <p style={{fontWeight: "500", fontSize: "14px"}}>באפשרותכם להזיז או להגדיל את התמונה
+        </p>
         <div className={`${modalData?.frame} cropper-frame`} style={{marginTop: "24px"}}>
           <Cropper
             ref={cropperRef}

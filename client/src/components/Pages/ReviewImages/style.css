@@ -30,8 +30,11 @@
 .aside-checkout {
   text-align: center;
 }
-.aside-checkout h1 {
+.aside-checkout p {
   direction: rtl;
+  margin-bottom: 15px;
+}
+.aside-checkout h1 {
   font-size: 24px;
   line-height: 18px;
   font-weight: 400;
@@ -39,15 +42,14 @@
 }
 .checkout-btn {
   width: 100%;
-  border-color: #FF007C;
-  outline-color: #FF007C;
+  background-color: #087E63;
+  border-color: #087E63;
+  outline-color: #087E63;
 }
 .review-images-wrapper {
   display: grid;
   grid-template-columns: 25% 75%;
   height: calc(100% - 220px);
-}
-.gift-list {
 }
 .gift {
   margin-top: 83px;

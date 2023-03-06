@@ -848,7 +848,7 @@ color: #000000;
     float: left;
 }
 button.checkout-btn {
-    background: #FF007C;
+    background: #087E63;
     color: #fff;
     /*font-size: 18px;*/
     font-size: 16px;
@@ -860,7 +860,7 @@ button.checkout-btn {
     border-radius: 5px;
     /*width: 212.9px;*/
     height: 50px;
-    border-color: #FF007C;
+    border-color: #087E63;
 }
 
 .cart_item tr td{
@@ -1386,7 +1386,7 @@ font-weight: bold;
     font-size: 30px;
 line-height: 21px;
 text-align: center;
-color: #FF007C;
+color: #087E63;
 }
 
 
@@ -2068,17 +2068,11 @@ margin-bottom: 110%;
     }
     .file {
         display: block;
-
-        position: absolute;
-        /* bottom: -20px; */
-        /* position: absolute;
-        bottom: 90px; */
-        /* position: fixed;
-        bottom: 120px; */
+        position: flex;
+        justify-content: flex-end;
         right: 10px;
         width: 70px;
         z-index: 1;
-        filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
     }
     .kk{
         display: block;

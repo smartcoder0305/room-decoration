@@ -33,7 +33,7 @@ const AdressModal = (props) => {
                   href="#"
                   // onClick={openCheckoutDrawerMobile}
                   onClick={handleShippingAddressFormSubmit}
-                  style={{ color: "#fe007c" }}
+                  style={{ color: "#087E63" }}
                 >
                   אישור
                 </a>
