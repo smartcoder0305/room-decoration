@@ -20,7 +20,7 @@ const SelectCardModal = ({ style }) => {
     <div className="add-card-modal" style={{ ...style }}>
       <button onClick={() => handleOpenNewCardForm()}>
         תשלום בכרטיס אשראי
-        <img src="/assets/images/plus.svg" alt="add-new-card" />
+        <img src="/assets/images/card-pos.svg" alt="בדיקת כרטיס אשראי" />
       </button>
       {/* {payments.length > 0 && (
       <ul>

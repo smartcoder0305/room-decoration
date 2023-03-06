@@ -15,6 +15,7 @@
     margin-bottom: 0;
     font-size: 14px;
     line-height: 1;
+    direction:rtl;
 }
 .mobile-checkout-button {
     width: calc(100% - 30px);

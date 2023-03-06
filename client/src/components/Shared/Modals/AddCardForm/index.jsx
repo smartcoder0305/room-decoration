@@ -250,7 +250,7 @@ const AddCardForm = () => {
       </div>
       <div className="add-new-card-form__footer">
         <button className="submit" type="submit">
-          הכנס כרטיס
+          אישור ובדיקה
         </button>
         <button onClick={() => handleCloseCardForm()} type="button">ביטול</button>
       </div>

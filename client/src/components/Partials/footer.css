@@ -21,6 +21,11 @@
         grid-column-start: 2;
     }
 }
+@media(max-width:640px){
+    .foo-menu-wrap h6{
+        display: none;
+    }
+        }
 @media screen and (max-width: 767px) {
     .footer-logo {
         display: block;
@@ -31,9 +36,13 @@
     .footer-row {
         grid-template-columns: 1fr;
         gap: 15px;
-        grid-auto-flow: dense;
+        text-align: flex-end;
     }
     .footer-row .footer-column:nth-child(2) {
+        display: none;
+        align-items: flex-end;
+    }
+    .footer-row .footer-column h6 {
         display: none;
     }
     .footer-row .footer-column:last-child {

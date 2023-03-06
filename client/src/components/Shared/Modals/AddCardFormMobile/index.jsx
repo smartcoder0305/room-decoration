@@ -263,7 +263,7 @@ const AddCardFormMobile = () => {
       </div>
       <div className="add-new-card-form-mobile__footer">
         <button className="submit" type="submit">
-        אישור
+        אישור ובדיקה
         </button>
       </div>
       <div style={{display: "flex", padding: "20px", alignItems: "center", justifyContent: "space-between"}}>

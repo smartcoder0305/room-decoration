@@ -98,16 +98,14 @@ export default function Header() {
                   menuhide();
                 }}
               />
-              <img src="/assets/images/stk_logo.svg" alt="" />
+            <img src="/assets/images/betaSVG.svg" alt="" style={{marginTop: "5px"}}/>
+                    &nbsp;&nbsp;
+                    <img src="/assets/images/stk_logo.svg" alt="" />
             </div>
             <ul style={{ display: "grid" }}>
               <li style={{marginBottom: "0px"}}>
                 <NavLink to='upload-your-image'><b>התחל הזמנה</b></NavLink>
                 <img src="/assets/images/arr.svg" alt="תמונות קיר ללא מסמרים"/>
-              </li>
-              <li style={{marginBottom: "0px"}}>
-                <span>דברו איתנו במסנג’ר</span>
-                <img src="/assets/images/mcon1.svg" alt="" />
               </li>
               <li style={{marginBottom: "0px"}}>
                 <a href="https://wa.me/message/PRRDISOYMEUEB1" alt="" target="_blank" rel="noreferrer"><span>דברו איתנו בוואצאפ</span></a>

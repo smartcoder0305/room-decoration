@@ -12,7 +12,6 @@ function index() {
             <section className="banner">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-6 order-1 order-md-2">
                             <div className="ban-img">
                                 <span className="skeleton-loader first-sk-loader"></span>
                             </div>
@@ -23,7 +22,6 @@ function index() {
 
                             </div>
                         </div>
-                    </div>
                 </div>
             </section>
 

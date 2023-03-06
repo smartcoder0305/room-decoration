@@ -966,7 +966,7 @@ margin-right: 20px;
 }
 
 button.checkout-btn {
-    background: #FF007C;
+    background: #087E63;
     color: #fff;
     /*font-size: 18px;*/
     font-size: 16px;
@@ -978,8 +978,8 @@ button.checkout-btn {
     border-radius: 5px;
     /*width: 212.9px;*/
     height: 50px;
-    /* border-color: #FF007C; */
-    outline-color: #FF007C;
+    /* border-color: #087E63; */
+    outline-color: #087E63;
 }
 
 .cart_item tr td {
@@ -1208,8 +1208,8 @@ button.checkout-btn {
 }
 
 .gift ul li img {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 }
 
 .upload-gallery-sec {
@@ -1544,7 +1544,7 @@ input[type=range] {
     font-size: 30px;
     line-height: 21px;
     text-align: center;
-    color: #FF007C;
+    color: #087E63;
 }
 
 
@@ -2337,7 +2337,6 @@ footer:before {
         /* position: fixed;
         bottom: 120px; */
         right: 10px;
-        width: 70px;
         z-index: 1;
         box-shadow: 0px 4px 10px rgba(88, 183, 236, 0.05);
     }
@@ -2366,13 +2365,7 @@ footer:before {
         transition: 0.1s all ease-in-out;
         width: 100%;
         display: block;
-    }
-
-    .site-btn:hover {
-        color: #fff;
-        background: rgb(255, 84, 147);
-    }
-    
+    } 
     .sk-btn {
         padding: 15px;
         /* box-shadow: 0px 0px 5px #000; */
@@ -2641,8 +2634,15 @@ footer:before {
     .my-album {
         /* display: flex; */
         overflow-x: auto;
-        padding-bottom: 60px;
+        overflow-y: hidden;
+        padding-bottom: 160px;
         padding-top: 60px;
+        padding-right: 60px;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .my-album::-webkit-scrollbar {
+        display: none;
     }
     .gg2 {
         background: #f8f8f8;
@@ -2850,16 +2850,9 @@ footer:before {
 
     .file {
         display: block;
-
         position: absolute;
-        /* bottom: -20px; */
-        /* position: absolute;
-        bottom: 90px; */
-        /* position: fixed;
-        bottom: 120px; */
-        bottom: 138px;
-        left: 23px;
-        width: 70px;
+        bottom: 120px;
+        left: 16px;
         z-index: 1;
         box-shadow: 0px 4px 10px rgba(88, 183, 236, 0.05);
     }
@@ -2974,11 +2967,10 @@ footer:before {
     .new-link {
         width: 100%;
         text-align: right;
-        color: #fe007c;
         font-size: 18px;
         font-weight: 600;
         position: relative;
-        padding: 15px 25px 15px 0;
+        padding: 15px 0px 15px 0;
         border: 2px solid #e9e9e9;
         border-left: 0;
         border-right: 0;
@@ -3202,6 +3194,10 @@ footer:before {
         z-index: 97;
         text-align: center;
     }
+    .mobile-stick-bottom p {
+        margin-bottom: 10px;
+        direction: rtl;
+    }
     .mobile-stick-bottom a {
         border: none;
         border-radius: 10px;
@@ -3232,7 +3228,6 @@ footer:before {
 
     .mobile-banner img {
         position: absolute;
-        height: calc((100vh - 300px) / 2);
         width: 100vw;
         z-index: 1;
         bottom: -1px;
@@ -3266,6 +3261,7 @@ footer:before {
         font-weight: 400;
         font-size: 16px;
         line-height: 18px;
+        margin-bottom: 20px;
     }
     .overflowhdn {
         overflow-y: hidden;
@@ -3571,21 +3567,6 @@ footer:before {
         height: 100%;
     }
 
-    .file {
-        display: block;
-
-        position: absolute;
-        /* bottom: -20px; */
-        /* position: absolute;
-        bottom: 90px; */
-        /* position: fixed;
-        bottom: 120px; */
-        right: 4px;
-        width: 70px;
-        z-index: 1;
-        box-shadow: 0px 4px 10px rgba(88, 183, 236, 0.05);
-    }
-
     .kk {
         display: block;
     }
@@ -3702,11 +3683,10 @@ footer:before {
     .new-link {
         width: 100%;
         text-align: right;
-        color: #fe007c;
+        color: #087E63;
         font-size: 18px;
         font-weight: 600;
-        position: relative;
-        padding: 15px 0px 0px 0;
+        margin-right: 19;
         border: 0px solid #e9e9e9;
         border-left: 0;
         border-right: 0;
@@ -3715,7 +3695,7 @@ footer:before {
     .new-link:before {
         position: absolute;
         /*content: '+';*/
-        color: #fe007c;
+        color: #087E63;
         font-size: 28px;
         font-weight: 600;
         right: 0;
@@ -3782,14 +3762,14 @@ footer:before {
         color: #ffffff;
         border-width: 0px;
         line-height: 18px;
-        background-color: #FF1F84;
+        background-color: #087E63;
         border-radius: 8px;
         height: 45px;
     }
 
     .mobile-checkout-pay-btn-container .data-not-full-field {
         background-color: #ffffff !important;
-        color: #FF1F84 !important;
+        color: #087E63 !important;
         width: 100% !important;
     }
 
@@ -3806,7 +3786,7 @@ footer:before {
     }
 
     .my-modal2 .van-wrap span {
-        color: #fe007c;
+        color: #087E63;
         font-weight: 700;
     }
 
@@ -4002,7 +3982,7 @@ box-shadow: 0px 0px 5px rgb(0 0 0 / 10%);
     overflow: hidden;
 }
 .upload-form__item:hover {
-    color: #FF007C;
+    color: #087E63;
 }
 .close-upload-form {
     position: absolute;
@@ -4257,7 +4237,7 @@ border-radius: 10px; */
     position: absolute;
     width: 80px;
     height: 80px;
-    background: #e90c59;
+    background: #087E63;
     transform: rotate(45deg);
 }
 
@@ -4268,7 +4248,7 @@ border-radius: 10px; */
     display: block;
     width: 80px;
     height: 80px;
-    background: #e90c59;
+    background: #087E63;
 }
 
 .ldio-kv0ui0pfesk>div div:before {

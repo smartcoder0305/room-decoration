@@ -177,12 +177,12 @@ const CheckoutMobile = (props) => {
                   אני רוצה שתארזו לי את המשלוח כמתנה
                 </span>&nbsp;
                 <input type="checkbox" style={{width: "14px", height: "25px"}}/>
-                <img src="/assets/file/images/gift.png" style={{width: "25px", height: "25px"}} alt=""/>
+                <img src="/assets/images/giftcart.svg" style={{width: "25px", height: "25px"}} alt=""/>
               </div>
             </div>
 
             <div className="modal-body">
-              <div className="checkout-name-credit-main-div">
+              <div style={{direction: "rtl"}} className="checkout-name-credit-main-div">
                 <span>
                   {selectedAddress ? (
                     <p
@@ -238,12 +238,10 @@ const CheckoutMobile = (props) => {
                         data-toggle="modal"
                         data-target="#addwin"
                         onClick={mySaveCardPopUp}
-                        style={{marginBottom: "26px", fontWeight: 700, fontSize: "14px"}}
+                        style={{marginBottom: "19px", fontWeight: 700, fontSize: "14px"}}
                       >
                         <img
-                          src="/assets/file/images/mycard.svg"
-                          style={{width: "25px", height: "16.42px"}}
-                          alt=""
+                          src="/assets/images/card-cart.svg"
                         />
                         &nbsp;&nbsp;&nbsp;
                         תשלום באשראי
@@ -257,8 +255,7 @@ const CheckoutMobile = (props) => {
                   <p>
                     ההזמנה שלכם זכאית ל
                     <span style={{fontWeight: 500}}>משלוח חינם,&nbsp;</span>
-                    המשלוח צפוי
-                    <br />להגיע אליכם עד
+                    המשלוח צפוי להגיע אליכם עד
                     <span style={{fontWeight: 500}}>{nextTuesday()}</span>
                   </p>
                   <img src="/assets/images/checkout_check.svg" alt="check" />
@@ -274,7 +271,7 @@ const CheckoutMobile = (props) => {
                     {imagecount > 2 && <div>חינם</div>}
                     <div>משלוח</div>
                   </div>
-                  <div className="price__table--row" style={{fontWeight: "700", fontSize: "14px"}}>
+                  <div className="price__table--row" style={{fontWeight: "700", fontSize: "14px", color:"#B12704"}}>
                     <div>
                       ₪&nbsp;
                       {imagecount >= numberOfImages
@@ -306,8 +303,8 @@ const CheckoutMobile = (props) => {
             <button
               type="button"
               className="btn cls pay-by-card-button data-not-full-field"
-              // onClick={openPaymentPopupMobile}
-              style={{fontWeight: 400, color: "FF1F84"}}
+              //onClick={openAddressPopupMobile}
+              style={{fontWeight: 400, color: "31B3B8"}}
             >
               הזינו את פרטי המשלוח והתשלום כדי להמשיך
             </button>

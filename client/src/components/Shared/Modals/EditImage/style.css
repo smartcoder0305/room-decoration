@@ -20,7 +20,7 @@
   padding: 0;
 }
 .edit-modal__header button.edit {
-  color: #fe007c;
+  color: #087E63;
   font-size: 19px;
   line-height: 36px;
   font-weight: 500;
@@ -127,7 +127,7 @@
     font-weight: 600;
   }
   .mobile-save-button {
-    background: #ff1f84;
+    background: #087E63;
     border-radius: 8px;
     position: relative;
     top: -50px;

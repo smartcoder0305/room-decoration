@@ -28,15 +28,17 @@ const Footer = ({existData}) => {
         <div className="container">
           <div className="footer-row">
             <div className="footer-logo">
-              <img src="/assets/images/stk_logo.svg" alt="" />
+            <img src="/assets/images/betaSVG.svg" alt="" style={{marginTop: "5px"}}/>
+                    &nbsp;&nbsp;
+                    <img src="/assets/images/stk_logo.svg" alt="" />
             </div>
-            <div className="footer-column" style={{order: "1"}}>
+            <div className="footer-column" style={{order: "2"}}>
               <div className="foo-content">
                 <div className="foo-wrap">
-                  <h5>יש לכם שאלה? מעוניינים לדבר?</h5>
+                  <h5>יש לכם שאלה? רוצים לדבר איתנו?</h5>
                   <p>דברו עם נציג מצוות התמיכה והשירות.</p>
                 </div>
-                <img src="/assets/images/wa.png" alt="" />
+                <img src="/assets/images/wa.svg" alt="דברו עם בלנדס בוואצאפ" />
                 <div className="ex-wrap">
                   <a
                     onClick={() => {
@@ -55,21 +57,7 @@ const Footer = ({existData}) => {
                 </div>
               </div>
             </div>
-            {width <= 768 && 
-            <div
-              className="footer-column" 
-              style={{order: "3", marginTop: "-20px"}}
-              onClick={() => {
-                if (width > 767) {
-                  modal('open', 'whatsApp');
-                } else {
-                  modal('open', 'whatsAppMobile');
-                }
-              }}>
-                <h6 style={{lineHeight: "31px"}}>דברו איתנו &nbsp;<img src="/assets/file/images/whatsapp_black.png" style={{width: "30px", height: "30px"}} /></h6>
-            </div>
-            }
-            <div className="footer-column" style={{order: "2", display: width <= 768 ? "grid" : null}}>
+            <div className="footer-column" style={{order: "1", display: width <= 768}}>
               <div
                 className="foo-menu-wrap xp"
                 style={{ marginBottom: "20px" }}
@@ -80,7 +68,7 @@ const Footer = ({existData}) => {
                       <li key={index}>
                         <NavLink
                           to={`/page/${data._id}`}
-                          title="leads to the page in facebook"
+                          title="הפייסבוק של בלנדס"
                         >
                           {data.pname}
                         </NavLink>
@@ -93,11 +81,17 @@ const Footer = ({existData}) => {
                 <h6>עקבו אחרינו</h6>
                 <ul className="footer-ul-li">
                   <li>
+                    <img
+                    src="/assets/images/facebook.svg" alt="הפייסבוק של בלנדס"></img>
+                    &nbsp;&nbsp;
                     <a href="https://www.facebook.com/profile.php?id=100086212847385">
                       פייסבוק
                     </a>
                   </li>
                   <li>
+                  <img
+                    src="/assets/images/instagram.svg" alt="האינסטגרם של בלנדס"></img>
+                    &nbsp;&nbsp;
                     <a href="https://www.instagram.com/blends_il/">
                       אינסטגרם
                     </a>
@@ -154,12 +148,12 @@ const Footer = ({existData}) => {
         </div>
       </footer>
       <section className="footer-btm" style={{justifyContent: "center"}}>
-        <div style={{display: "flex", maxWidth: "1110px", justifyContent: "space-between", width: "100%"}}>
+        <div style={{display: "flex", maxWidth: "1110px", justifyContent: "center", width: "100%"}}>
           <p style={{lineHeight: "36px", margin: "0"}}>Copyright Blends 2021-{new Date().getFullYear()} &copy;</p>
           <div className="btm-wrap">
             <NavLink
               to="#"
-              title="leads to a floating screen 2"
+              title="מדיניות פרטיות"
               data-target="#float2"
               data-toggle="modal"
               style={{fontSize: "14px", color: "#C8C8C8", fontWeight: "300", lineHeight: "36px", textDecorationLine: "underline"}}
@@ -169,7 +163,7 @@ const Footer = ({existData}) => {
             </NavLink>
             <NavLink
               to="#"
-              title="leads to a floating screen 3"
+              title="הצהרת נגישות"
               data-target="#float3"
               data-toggle="modal"
               style={{fontSize: "14px", color: "#C8C8C8", fontWeight: "300", lineHeight: "36px", textDecorationLine: "underline"}}

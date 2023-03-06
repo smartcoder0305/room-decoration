@@ -612,7 +612,7 @@ const CheckoutMobile = (props) => {
             <div className="modal-header">
               <div className="van-wrap">
                 <span>
-                  <a href="#" onClick={cardPaymentProcess} style={{ color: "#fe007c" }}>
+                  <a href="#" onClick={cardPaymentProcess} style={{ color: "#087E63" }}>
                     אישור
                   </a>
                 </span>

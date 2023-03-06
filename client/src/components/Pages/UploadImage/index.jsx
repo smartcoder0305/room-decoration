@@ -112,6 +112,8 @@ const UploadImage = () => {
         {!showSpinner ? (
           <div className="form-upload">
             <div className="form-area-upload">
+            <h2>בחרו כמה תמונות ונתחיל</h2>
+              <p>הזמנה ממוצעת מכילה כ8 תמונות</p>
               <input
                 type="file"
                 accept="image/*"
@@ -123,10 +125,8 @@ const UploadImage = () => {
                 style={{ zIndex: "1", height: "100% !important" }}
               />
               <button>
-                <img src="/assets/file/images/plus.svg" alt="plus" />
+                <img src="/assets/file/images/addimage.svg" alt="plus" />
               </button>
-              <h2>בואו נתחיל עם כמה תמונות</h2>
-              <p>הזמנה ממוצעת מכילה כ8 תמונות</p>
             </div>
           </div>
         ) : (

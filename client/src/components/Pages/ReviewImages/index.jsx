@@ -174,7 +174,7 @@ const ReviewImages = () => {
               <div className="content-details fadeIn-bottom">
                 <img
                   src="/assets/file/images/edit_image.svg"
-                  className="edit"
+                  className="עריכת תמונה"
                   data-toggle="modal"
                   data-target="#myModal"
                   onClick={() => edit_seg(im)}
@@ -183,7 +183,7 @@ const ReviewImages = () => {
                 <img
                   src="/assets/file/images/Delete_icon.svg"
                   className="edit"
-                  alt="remove"
+                  alt="הסרת תמונה"
                   onClick={() => deleteImage(im)}
                 />
               </div>
@@ -272,7 +272,6 @@ const ReviewImages = () => {
                   <li>
                   שליח עד הבית
                     <img
-                      style={{ width: "23px" }}
                       src="/assets/file/images/truck-tick.svg"
                       alt="שליח דואר ישראל על לביתכם"
                     />
@@ -315,9 +314,9 @@ const ReviewImages = () => {
         <div className="mobile-checkout">
           <img
             onClick={() => showUploadOptions()}
-            src="/assets/file/images/file.png"
+            src="https://res.cloudinary.com/dzb3a5brn/image/upload/v1678140618/addmore_odqfau.svg"
             className="file"
-            alt="file-icon"
+            alt="הוסף בלנדס נוספים"
           />
           <div className="mobile-checkout-info">
           {imagecount >= 3 &&

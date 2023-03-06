@@ -18,11 +18,11 @@
 }
 
 .image-options__item {
-    padding: 20px 45px;
+    padding: 20px 15px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 18px;
+    gap: 16px;
     font-size: 14px;
     font-weight: 600;
     width: 100%;

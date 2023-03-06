@@ -154,7 +154,7 @@ const Checkout = (props) => {
                 <div>משלוח</div>
               </div>
               <div className="price__table--row"  style={{fontWeight: "400"}}>
-                {imagecount <= 2 && <div>-0.00</div>}
+                {imagecount <= 2 && <div>אין</div>}
                 {imagecount > 2 && <div>-29.90</div>}
                 <div>הטבת כמות</div>
               </div>
