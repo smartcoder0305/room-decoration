@@ -134,7 +134,7 @@ section::before, footer:before{
     vertical-align: middle;
 }
 .about{
-    padding: 0 24px 0 0;
+    padding: 24px 0 0 0;
 }
 
 .banner{
