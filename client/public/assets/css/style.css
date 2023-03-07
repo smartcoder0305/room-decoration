@@ -134,7 +134,7 @@ section::before, footer:before{
     vertical-align: middle;
 }
 .about{
-    padding: 1px 0 0;
+    padding: 0 24px 0 0;
 }
 
 .banner{
@@ -269,7 +269,7 @@ section::before, footer:before{
 }
 .slider-section--wrapper {
     background-color: #F3F6F4;
-    padding: 33px 0 25px;
+    padding: 24px 0 25px;
 }
 .homepage-container {
     max-width: 1300px;
