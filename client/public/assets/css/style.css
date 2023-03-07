@@ -159,6 +159,7 @@ section::before, footer:before{
     margin-bottom: 42px;
     font-size: 18px;
     letter-spacing: 0px;
+    direction: rtl;
 }
 .banner .site-btn {
     max-width: 338px;
