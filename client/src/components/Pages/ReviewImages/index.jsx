@@ -282,6 +282,11 @@ const ReviewImages = () => {
                   </li>
 
                   <li>
+                  הנחה נוספת להזמנה הבאה 
+                    <img src="/assets/file/images/discount-shape.svg" alt="קופון הנחה ללקוחות חוזרים" />
+                  </li>
+
+                  <li>
                   אריזה לשמירה על התמונות
                     <img src="/assets/file/images/bag-happy.svg" alt="קרטון עם מילוי לשמירה על תמונות קיר" />
                   </li>
