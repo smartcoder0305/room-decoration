@@ -100,12 +100,6 @@ const Checkout = (props) => {
         className="cart_sidebar"
         style={{ left: show ? "0px" : "-370px" }}
       >
-        <button
-          className="closebtn"
-          onClick={() => handleCloseModal("checkout")}
-        >
-          <img src="/assets/file/images/close.png" alt="close" />
-        </button>
         <div className="checkout-card-wrapper">
           <div className="card-and-address-buttons">
             <button

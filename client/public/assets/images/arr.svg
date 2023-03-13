@@ -1,3 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="30.6" height="8.837" viewBox="0 0 30.6 8.837">
-  <path id="Path_6" data-name="Path 6" d="M318.576,129.576a.6.6,0,0,0,0,.848l3.818,3.819a.6.6,0,0,0,.849-.849L319.849,130l3.394-3.394a.6.6,0,0,0-.849-.849ZM349,129.4H319v1.2h30Z" transform="translate(-318.4 -125.581)" fill="#ff007c"/>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="9.5" cy="7.5" r="2.5" fill="#8CE9B5"/>
+<path d="M9 10C10.1046 10 11 9.10457 11 8C11 6.89543 10.1046 6 9 6C7.89543 6 7 6.89543 7 8C7 9.10457 7.89543 10 9 10Z" stroke="#292D32" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V10" stroke="#292D32" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15.75 5H21.25" stroke="#292D32" stroke-linecap="round"/>
+<path d="M18.5 7.75V2.25" stroke="#292D32" stroke-linecap="round"/>
+<path d="M2.66992 18.9496L7.59992 15.6396C8.38992 15.1096 9.52992 15.1696 10.2399 15.7796L10.5699 16.0696C11.3499 16.7396 12.6099 16.7396 13.3899 16.0696L17.5499 12.4996C18.3299 11.8296 19.5899 11.8296 20.3699 12.4996L21.9999 13.8996" stroke="#292D32" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -90,17 +90,9 @@ export default function Header() {
           </header>
           <div className="menu" style={{ right: menuShow ? '0' : '-100%' }}>
             <div className="menu-head text-center">
-              <img
-                src="/assets/images/menu-crs.png"
-                alt=""
-                className="crs"
-                onClick={() => {
-                  menuhide();
-                }}
-              />
             <img src="/assets/images/betaSVG.svg" alt="" style={{marginTop: "5px"}}/>
                     &nbsp;&nbsp;
-                    <img src="/assets/images/stk_logo.svg" alt="" />
+                    <img src="/assets/images/stk_logo.svg" alt="בלנדס" />
             </div>
             <ul style={{ display: "grid" }}>
               <li style={{marginBottom: "0px"}}>
@@ -113,6 +105,7 @@ export default function Header() {
               </li>
               <li style={{marginBottom: "0px"}} onClick={() => handleAboutUsModal('CQ')}>
                 <span>שאלות נפוצות</span>
+                <img src="/assets/images/questmenu.svg" alt="" />
               </li>
             </ul>
             <div
